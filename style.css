@@ -1,0 +1,313 @@
+.input-input {
+  border: 0;
+  border: 1px solid #999;
+  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  color: inherit;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: inherit;
+  line-height: 1.4em;
+  margin: 0;
+  padding: 6px;
+  position: relative;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.input-input::-webkit-input-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
+.input-input::-moz-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
+.input-input::input-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.header-container h1 {
+  color: rgba(175, 47, 47, 0.15);
+  font-size: 100px;
+  font-weight: 100;
+  position: absolute;
+  text-align: center;
+  text-rendering: optimizeLegibility;
+  top: -155px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 100%;
+}
+.header-toggle {
+  border: none;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+}
+.header-toggle + label {
+  cursor: pointer;
+  font-size: 0;
+  height: 34px;
+  left: -13px;
+  position: absolute;
+  top: 13px;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  width: 60px;
+  z-index: 1;
+}
+.header-toggle + label:before {
+  color: #e6e6e6;
+  content: '\276F';
+  font-size: 22px;
+  padding: 10px 27px;
+}
+.header-toggle.header-checked + label:before {
+  color: #737373;
+}
+.header-input {
+  background: rgba(0, 0, 0, 0.003);
+  border: none;
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+  padding: 16px 16px 16px 60px;
+}
+/*
+	Hack to remove background from Mobile Safari.
+	Can't use it globally since it destroys checkboxes in Firefox
+*/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .header-toggle {
+    background: none;
+  }
+}
+
+.button-button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  vertical-align: baseline;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main-container {
+  border-top: 1px solid #e6e6e6;
+  position: relative;
+  z-index: 2;
+}
+.main-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.main-list li {
+  border-bottom: 1px solid #ededed;
+  font-size: 24px;
+  position: relative;
+}
+.main-list li .main-edit {
+  display: none;
+}
+.main-list li label {
+  display: block;
+  line-height: 1.2;
+  padding: 15px 15px 15px 60px;
+  transition: color 0.4s;
+  word-break: break-all;
+}
+.main-list li.main-completed label {
+  color: #d9d9d9;
+  text-decoration: line-through;
+}
+.main-list li:last-child {
+  border-bottom: none;
+}
+.main-list li:hover .main-destroy {
+  display: block;
+}
+.main-list li.main-editing {
+  border-bottom: none;
+  padding: 0;
+}
+.main-list li.main-editing .main-edit {
+  display: block;
+  margin: 0 0 0 43px;
+  padding: 12px 16px;
+  width: 506px;
+}
+.main-list li.main-editing .main-view {
+  display: none;
+}
+.main-list li.main-editing:last-child {
+  margin-bottom: -1px;
+}
+.main-toggle {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  bottom: 0;
+  cursor: pointer;
+  height: 40px;
+  margin: auto 0;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 40px;
+}
+.main-toggle + label {
+  /*
+      Firefox requires `#` to be escaped - https://bugzilla.mozilla.org/show_bug.cgi?id=922433
+      IE and Edge requires *everything* to be escaped to render, so we do that instead of just the `#` - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7157459/
+    */
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+.main-toggle:checked + label {
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
+}
+.main-destroy {
+  bottom: 0;
+  color: #cc9a9a;
+  display: none;
+  font-size: 30px;
+  height: 40px;
+  margin: auto 0;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  transition: color 0.2s ease-out;
+  width: 40px;
+}
+.main-destroy:hover {
+  color: #af5b5e;
+}
+.main-destroy:after {
+  content: '\D7';
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .main-toggle {
+    background: none;
+    height: 40px;
+  }
+}
+
+.footer-container {
+  border-top: 1px solid #e6e6e6;
+  color: #777;
+  height: 20px;
+  padding: 10px 15px;
+  text-align: center;
+}
+.footer-container:before {
+  bottom: 0;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
+  content: '';
+  height: 50px;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+}
+.footer-count {
+  float: left;
+  text-align: left;
+}
+.footer-count strong {
+  font-weight: 300;
+}
+.footer-filters {
+  left: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+}
+.footer-filters li {
+  display: inline;
+}
+.footer-filters li a {
+  border-radius: 3px;
+  border: 1px solid transparent;
+  color: inherit;
+  margin: 3px;
+  padding: 3px 7px;
+  text-decoration: none;
+}
+.footer-filters li a:hover {
+  border-color: rgba(175, 47, 47, 0.1);
+}
+.footer-filters li a.footer-selected {
+  border-color: rgba(175, 47, 47, 0.2);
+}
+.footer-clear,
+.footer-clear:active {
+  cursor: pointer;
+  float: right;
+  line-height: 20px;
+  position: relative;
+  text-decoration: none;
+}
+.footer-clear:hover,
+.footer-clear:active:hover {
+  text-decoration: underline;
+}
+@media (max-width: 430px) {
+  .footer-container {
+    height: 50px;
+  }
+  .footer-filters {
+    bottom: 10px;
+  }
+}
+
+.app-container {
+  color: #4d4d4d;
+  margin: 0 auto;
+  max-width: 550px;
+  min-width: 230px;
+}
+.app-content {
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  margin: 130px 0 40px;
+  position: relative;
+}
+.app-info {
+  margin: 65px auto 0;
+  color: #bfbfbf;
+  font-size: 12px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+.app-info p {
+  line-height: 1;
+}
+.app-info a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 400;
+}
+.app-info a:hover {
+  text-decoration: underline;
+}
+
