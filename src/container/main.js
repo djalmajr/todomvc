@@ -1,27 +1,19 @@
 import h from "hyperhtml";
 import cn from "classnames";
 import renderButton from "../components/button";
-import renderCheckbox from "../components/checkbox";
 import renderInput from "../components/input";
 import store from "../store";
-import styles from "./todos.less";
+import styles from "./main.less";
 
 const getTodo = evt => {
   const li = evt.target.closest("li");
   return store.todos[li.dataset.id];
 };
 
-const hideInput = evt => {
-  const li = evt.target.closest("li");
-  const input = li.querySelector(`.${styles.input}`);
-
-  li.classList.remove(styles.editing);
-  input.classList.remove(styles.show);
-};
-
 const handleBlur = evt => {
-  evt.target.value = getTodo(evt).text;
-  hideInput(evt);
+  const todo = getTodo(evt);
+  evt.target.value = todo.text;
+  evt.target.closest("li").classList.remove(styles.editing);
 };
 
 const handleChange = evt => {
@@ -30,22 +22,21 @@ const handleChange = evt => {
 
 const handleEdit = evt => {
   const li = evt.target.closest("li");
-  const input = li.querySelector(`.${styles.input}`);
-
   li.classList.add(styles.editing);
-  input.classList.add(styles.show);
-  input.select();
+  li.querySelector(`.${styles.edit}`).select();
 };
 
 const handleKeyUp = evt => {
   const text = evt.target.value.trim();
+  const li = evt.target.closest("li");
+  const todo = getTodo(evt);
 
   if (evt.key === "Enter" && text) {
-    const todo = getTodo(evt);
     store.updateTodo({ ...todo, text });
-    hideInput(evt);
+    li.classList.remove(styles.editing);
   } else if (evt.key === "Escape") {
-    handleBlur(evt);
+    evt.target.value = todo.text;
+    li.classList.remove(styles.editing);
   }
 };
 
@@ -55,25 +46,24 @@ const handleRemove = evt => {
 
 const renderTodo = todo => {
   const { id, text, completed } = todo;
-  const labelClass = cn(styles.label, { [styles.completed]: completed });
 
   return h.wire(todo)`
-    <li data-id=${id} class=${styles.li}>
-      <div class="${styles.show}">
-        ${renderCheckbox({
-          checked: completed,
-          onChange: handleChange,
-        })}
-        <label class="${labelClass}" ondblclick=${handleEdit}>
-          ${text}
-        </label>
+    <li data-id=${id} class=${cn({ [styles.completed]: completed })}>
+      <div class=${styles.view}>
+        <input
+          type="checkbox"
+          class=${styles.toggle}
+          checked=${completed}
+          onchange=${handleChange}
+        />
+        <label ondblclick=${handleEdit}>${text}</label>
         ${renderButton({
           className: styles.destroy,
           onClick: handleRemove,
         })}
       </div>
       ${renderInput({
-        className: styles.input,
+        className: styles.edit,
         value: text,
         onBlur: handleBlur,
         onKeyUp: handleKeyUp,
@@ -83,9 +73,9 @@ const renderTodo = todo => {
 };
 
 export default () => h.wire()`
-  <div class="${styles.container}">
-    <ul class="${styles.ul}">
+  <section class=${styles.container}>
+    <ul class=${styles.list}>
       ${store.filteredTodos.map(renderTodo)}
     </ul>
-  </div>
+  </section>
 `;

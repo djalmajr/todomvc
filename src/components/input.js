@@ -4,9 +4,12 @@ import styles from "./input.less";
 
 export default (props = {}) => h.wire(props, ":input")`
   <input
-    class=${cn(styles.input, props.className)}
     autofocus=${!!props.autofocus}
+    class=${cn(styles.input, props.className)}
     placeholder=${props.placeholder}
+    value=${props.value}
+    onblur=${props.onBlur}
     onkeypress=${props.onKeyPress}
+    onkeyup=${props.onKeyUp}
   />
 `;

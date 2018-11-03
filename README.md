@@ -1,3 +1,3 @@
 # TodoMVC
 
-A HyperHTML version of [TodoMVC](http://todomvc.com/)
+A [hyperHTML](https://viperhtml.js.org/hyper.html) version of [TodoMVC](http://todomvc.com/)

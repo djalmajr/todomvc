@@ -40,14 +40,14 @@ export default () => {
   }
 
   return h.wire()`
-    <div class="${styles.container}">
-      <span class="${styles.count}">
+    <footer class=${styles.container}>
+      <span class=${styles.count}>
         <strong>${store.incompletedTodos.length}</strong> ${store.remaining}
       </span>
-      <ul class="${styles.filters}">
+      <ul class=${styles.filters}>
         ${["All", "Active", "Completed"].map(renderFilter)}
       </ul>
       ${renderClear()}
-    </div>
+    </footer>
   `;
 };
