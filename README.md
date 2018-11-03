@@ -1,3 +1,3 @@
-# MiniPlayer
+# TodoMVC
 
-BiboTalk miniplayer
+A HyperHTML version of [TodoMVC](http://todomvc.com/)
