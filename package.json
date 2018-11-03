@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "main": "dist/index.html",
   "scripts": {
-    "deploy": "yarn build && gh-pages -b master -d dist",
+    "deploy": "yarn build && gh-pages -d dist",
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode=development",
     "build": "cross-env NODE_ENV=production webpack --mode=production",
     "build:dev": "cross-env NODE_ENV=development webpack --mode=development",
