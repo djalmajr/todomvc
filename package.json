@@ -1,10 +1,11 @@
 {
-  "name": "miniplayer",
+  "name": "todomvc",
+  "private": true,
   "version": "0.0.1",
-  "description": "BiboTalk miniplayer",
+  "description": "A HyperHTML version of TodoMVC",
   "author": "Djalma Jr. <djalmajr@gmail.com>",
   "license": "UNLICENSED",
-  "main": "dist/index.html",
+  "main": "src/index.js",
   "scripts": {
     "deploy": "yarn build && gh-pages -d dist",
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode=development",
@@ -17,7 +18,6 @@
     "classnames": "^2.2.6",
     "director": "^1.2.8",
     "hyperhtml": "^2.16.0",
-    "lodash": "^4.17.11",
     "mobx": "^5.5.2"
   },
   "devDependencies": {

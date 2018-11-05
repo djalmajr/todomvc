@@ -38,13 +38,6 @@ const plugins = [
         entry: DEV ? "umd.js" : "https://unpkg.com/hyperhtml@2.16.0/umd.js",
       },
       {
-        module: "lodash",
-        global: "_",
-        entry: DEV
-          ? "lodash.min.js"
-          : "https://unpkg.com/lodash@4.17.11/lodash.min.js",
-      },
-      {
         module: "mobx",
         global: "mobx",
         entry: DEV
