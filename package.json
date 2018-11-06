@@ -36,7 +36,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "prettier": "prettier --write \"src/**/*.js\"",
     "deploy": "yarn build && gh-pages -d dist",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --mode=development",
+    "start": "cross-env HOT=true NODE_ENV=development webpack-dev-server --mode=development",
     "build": "cross-env NODE_ENV=production webpack --mode=production",
     "build:dev": "cross-env NODE_ENV=development webpack --mode=development",
     "serve": "yarn build && live-server dist --open",
@@ -44,10 +44,7 @@
     "version": "yarn changelog && git add CHANGELOG.md"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "director": "^1.2.8",
-    "hyperhtml": "^2.16.3",
-    "mobx": "^5.5.2"
+    "hyperhtml": "^2.16.3"
   },
   "devDependencies": {
     "autoprefixer": "^9.3.1",

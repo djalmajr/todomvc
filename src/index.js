@@ -1,15 +1,17 @@
-import { bind as hyper } from "hyperhtml";
-import App from "./container/app";
+import { bind as hyper, wire } from "hyperhtml";
+import controller from "./controllers/todos";
 
-const render = component => {
-  const container = document.querySelector("#__wrapper__");
-  hyper(container)`${component}`;
+const app = wire();
+const html = hyper(document.querySelector("#__wrapper__"));
+const getApp = () => require("./views/app").default;
+
+const render = renderApp => {
+  controller.init(todos => html`${renderApp(app, todos)}`);
+  controller.update();
 };
 
 if (module.hot) {
-  module.hot.accept("./container/app", () => {
-    render(require("./container/app").default);
-  });
+  module.hot.accept("./views/app", () => render(getApp()));
 }
 
-render(App);
+render(getApp());
