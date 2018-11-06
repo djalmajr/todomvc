@@ -1,24 +1,24 @@
-import h from "hyperhtml";
+import { wire } from "hyperhtml";
 import Router from "director";
 import store from "../store";
-import renderHeader from "./header";
-import renderMain from "./main";
-import renderFooter from "./footer";
+import Header from "./header";
+import Todos from "./todos";
+import Footer from "./footer";
 import styles from "./app.less";
 
 const router = new Router();
-const routes = ["all", "active", "completed"];
+const routes = store.filters.map(filter => filter.toLowerCase());
 
 routes.forEach(slug => router.on(slug, () => store.setFilter(slug)));
-router.configure({ notfound: () => router.setRoute(filter) });
-router.init("#/all");
+router.configure({ notfound: () => router.setRoute(routes[0]) });
+router.init(`#/${routes[0]}`);
 
-export default () => h.wire()`
+export default () => wire()`
   <div class=${styles.container}>
     <section class=${styles.content}>
-      ${renderHeader()}
-      ${renderMain()}
-      ${renderFooter()}
+      ${new Header()}
+      ${new Todos()}
+      ${new Footer()}
     </section>
     <footer class=${styles.info}>
 			<p>Double-click to edit a todo</p>

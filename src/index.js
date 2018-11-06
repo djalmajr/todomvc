@@ -1,12 +1,9 @@
-import h from "hyperhtml";
-import { autorun } from "mobx";
-import renderApp from "./container/app";
+import { bind as hyper } from "hyperhtml";
+import App from "./container/app";
 
 const render = component => {
-  autorun(() => {
-    const container = document.querySelector("#__wrapper__");
-    h.bind(container)`${component}`;
-  });
+  const container = document.querySelector("#__wrapper__");
+  hyper(container)`${component}`;
 };
 
 if (module.hot) {
@@ -15,4 +12,4 @@ if (module.hot) {
   });
 }
 
-render(renderApp);
+render(App);

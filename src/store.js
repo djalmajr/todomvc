@@ -5,6 +5,8 @@ const CACHE_KEY = "app-todos";
 const store = observable({
   filter: "all",
 
+  filters: ["All", "Active", "Completed"],
+
   todos: JSON.parse(localStorage.getItem(CACHE_KEY) || "{}"),
 
   get allDone() {
@@ -16,7 +18,7 @@ const store = observable({
     return todos.filter(t => !t.completed);
   },
 
-  get activeTodos() {
+  get completedTodos() {
     const todos = Object.values(this.todos);
     return todos.filter(t => t.completed);
   },
@@ -40,6 +42,11 @@ const store = observable({
 
   get showToggle() {
     return !!this.filteredTodos.length;
+  },
+
+  getTodo: function(data) {
+    const id = data.target ? data.target.closest("li").dataset.id : data;
+    return this.todos[id] || {};
   },
 
   setFilter: action(function(filter) {

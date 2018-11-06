@@ -1,8 +1,8 @@
-import h from "hyperhtml";
+import { wire } from "hyperhtml";
 import cn from "classnames";
 import styles from "./input.less";
 
-export default (props = {}) => h.wire(props, ":input")`
+export default (props = {}) => wire(props, ":input")`
   <input
     autofocus=${!!props.autofocus}
     class=${cn(styles.input, props.className)}
