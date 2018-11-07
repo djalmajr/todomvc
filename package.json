@@ -26,6 +26,6 @@
     "hyperhtml": "^2.16.3"
   },
   "devDependencies": {
-    "wprun": "file:../wprun"
+    "wprun": "djalmajr/wprun"
   }
 }
