@@ -1,4 +1,5 @@
 import storage from "../utils/storage";
+import Todo from "../models/todo";
 
 class Controller {
   get hash() {
@@ -34,19 +35,20 @@ class Controller {
   }
 
   init(render) {
-    this.todos = storage.get();
+    this.todos = storage.get().map(t => new Todo(t));
+
     this.update = () => {
       render(this.filtered);
       storage.set(this.todos);
     };
+
     window.onhashchange = this.update;
   }
 
   // Actions
 
   add(text) {
-    const uid = new Date().toJSON().replace(/[^\w]/g, "");
-    this.todos.push({ uid, text, completed: false });
+    this.todos.push(new Todo({ text }));
     this.update();
   }
 
@@ -56,7 +58,7 @@ class Controller {
   }
 
   edit(uid, text) {
-    this.todos[this.indexOf(uid)].text = text;
+    this.todos[this.indexOf(uid)].update({ text });
     this.update();
   }
 
@@ -66,8 +68,7 @@ class Controller {
   }
 
   toggle(uid) {
-    const todo = this.todos[this.indexOf(uid)];
-    todo.completed = !todo.completed;
+    this.todos[this.indexOf(uid)].toggle();
     this.update();
   }
 
@@ -75,7 +76,7 @@ class Controller {
     const completed = !this.allDone;
 
     for (const todo of this.todos) {
-      todo.completed = completed;
+      todo.update({ completed });
     }
 
     this.update();
