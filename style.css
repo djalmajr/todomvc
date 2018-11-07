@@ -1,36 +1,3 @@
-.input-input {
-  border: 0;
-  border: 1px solid #999;
-  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  color: inherit;
-  font-family: inherit;
-  font-size: 24px;
-  font-weight: inherit;
-  line-height: 1.4em;
-  margin: 0;
-  padding: 6px;
-  position: relative;
-  width: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.input-input::-webkit-input-placeholder {
-  color: #e6e6e6;
-  font-style: italic;
-  font-weight: 300;
-}
-.input-input::-moz-placeholder {
-  color: #e6e6e6;
-  font-style: italic;
-  font-weight: 300;
-}
-.input-input::input-placeholder {
-  color: #e6e6e6;
-  font-style: italic;
-  font-weight: 300;
-}
-
 .header-container h1 {
   color: rgba(175, 47, 47, 0.15);
   font-size: 100px;
@@ -85,128 +52,6 @@
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   .header-toggle {
     background: none;
-  }
-}
-
-.button-button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background: none;
-  border: 0;
-  color: inherit;
-  font-family: inherit;
-  font-size: 100%;
-  font-weight: inherit;
-  margin: 0;
-  outline: none;
-  padding: 0;
-  vertical-align: baseline;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.main-container {
-  border-top: 1px solid #e6e6e6;
-  position: relative;
-  z-index: 2;
-}
-.main-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.main-list li {
-  border-bottom: 1px solid #ededed;
-  font-size: 24px;
-  position: relative;
-}
-.main-list li .main-edit {
-  display: none;
-}
-.main-list li label {
-  display: block;
-  line-height: 1.2;
-  padding: 15px 15px 15px 60px;
-  transition: color 0.4s;
-  word-break: break-all;
-}
-.main-list li.main-completed label {
-  color: #d9d9d9;
-  text-decoration: line-through;
-}
-.main-list li:last-child {
-  border-bottom: none;
-}
-.main-list li:hover .main-destroy {
-  display: block;
-}
-.main-list li.main-editing {
-  border-bottom: none;
-  padding: 0;
-}
-.main-list li.main-editing .main-edit {
-  display: block;
-  margin: 0 0 0 43px;
-  padding: 12px 16px;
-  width: 506px;
-}
-.main-list li.main-editing .main-view {
-  display: none;
-}
-.main-list li.main-editing:last-child {
-  margin-bottom: -1px;
-}
-.main-toggle {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border: none;
-  bottom: 0;
-  cursor: pointer;
-  height: 40px;
-  margin: auto 0;
-  opacity: 0;
-  position: absolute;
-  text-align: center;
-  top: 0;
-  width: 40px;
-}
-.main-toggle + label {
-  /*
-      Firefox requires `#` to be escaped - https://bugzilla.mozilla.org/show_bug.cgi?id=922433
-      IE and Edge requires *everything* to be escaped to render, so we do that instead of just the `#` - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7157459/
-    */
-  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
-  background-repeat: no-repeat;
-  background-position: center left;
-}
-.main-toggle:checked + label {
-  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
-}
-.main-destroy {
-  bottom: 0;
-  color: #cc9a9a;
-  display: none;
-  font-size: 30px;
-  height: 40px;
-  margin: auto 0;
-  position: absolute;
-  right: 10px;
-  top: 0;
-  transition: color 0.2s ease-out;
-  width: 40px;
-}
-.main-destroy:hover {
-  color: #af5b5e;
-}
-.main-destroy:after {
-  content: '\D7';
-}
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  .main-toggle {
-    background: none;
-    height: 40px;
   }
 }
 
@@ -280,6 +125,151 @@
   }
 }
 
+.todo-todo {
+  border-bottom: 1px solid #ededed;
+  font-size: 24px;
+  position: relative;
+}
+.todo-todo .todo-edit {
+  display: none;
+}
+.todo-todo label {
+  display: block;
+  line-height: 1.2;
+  padding: 15px 15px 15px 60px;
+  transition: color 0.4s;
+  word-break: break-all;
+}
+.todo-todo.todo-completed label {
+  color: #d9d9d9;
+  text-decoration: line-through;
+}
+.todo-todo:last-child {
+  border-bottom: none;
+}
+.todo-todo:hover .todo-destroy {
+  display: block;
+}
+.todo-todo.todo-editing {
+  border-bottom: none;
+  padding: 0;
+}
+.todo-todo.todo-editing .todo-edit {
+  display: block;
+  margin: 0 0 0 43px;
+  padding: 12px 16px;
+  width: 506px;
+}
+.todo-todo.todo-editing .todo-view {
+  display: none;
+}
+.todo-todo.todo-editing:last-child {
+  margin-bottom: -1px;
+}
+.todo-toggle {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  bottom: 0;
+  cursor: pointer;
+  height: 40px;
+  margin: auto 0;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 40px;
+}
+.todo-toggle + label {
+  /*
+      Firefox requires `#` to be escaped - https://bugzilla.mozilla.org/show_bug.cgi?id=922433
+      IE and Edge requires *everything* to be escaped to render, so we do that instead of just the `#` - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7157459/
+    */
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+.todo-toggle:checked + label {
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
+}
+.todo-destroy {
+  bottom: 0;
+  color: #cc9a9a;
+  display: none;
+  font-size: 30px;
+  height: 40px;
+  margin: auto 0;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  transition: color 0.2s ease-out;
+  width: 40px;
+}
+.todo-destroy:hover {
+  color: #af5b5e;
+}
+.todo-destroy:after {
+  content: '\D7';
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .todo-toggle {
+    background: none;
+    height: 40px;
+  }
+}
+
+input {
+  border: 1px solid #999;
+  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  color: inherit;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: inherit;
+  line-height: 1.4em;
+  margin: 0;
+  padding: 6px;
+  position: relative;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+input:focus {
+  outline: none;
+}
+input::-webkit-input-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
+input::-moz-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
+input::input-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
+button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  vertical-align: baseline;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .app-container {
   color: #4d4d4d;
   margin: 0 auto;
@@ -291,6 +281,16 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   margin: 130px 0 40px;
   position: relative;
+}
+.app-todos {
+  border-top: 1px solid #e6e6e6;
+  position: relative;
+  z-index: 2;
+}
+.app-todos ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .app-info {
   margin: 65px auto 0;

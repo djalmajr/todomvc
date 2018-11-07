@@ -1,79 +1,69 @@
-!function(e){var t={};function o(n){if(t[n])return t[n].exports;var a=t[n]={i:n,l:!1,exports:{}};return e[n].call(a.exports,a,a.exports,o),a.l=!0,a.exports}o.m=e,o.c=t,o.d=function(e,t,n){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var a in e)o.d(n,a,function(t){return e[t]}.bind(null,a));return n},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=10)}([function(e,t){e.exports=hyperHTML},function(e,t){e.exports=mobx},function(e,t,o){e.exports={container:"main-container",list:"main-list",edit:"main-edit",completed:"main-completed",destroy:"main-destroy",editing:"main-editing",view:"main-view",toggle:"main-toggle"}},function(e,t){e.exports=classNames},function(e,t,o){e.exports={container:"footer-container",count:"footer-count",filters:"footer-filters",selected:"footer-selected",clear:"footer-clear"}},function(e,t,o){e.exports={container:"header-container",toggle:"header-toggle",checked:"header-checked",input:"header-input"}},function(e,t,o){e.exports={container:"app-container",content:"app-content",info:"app-info"}},function(e,t){e.exports=Router},function(e,t,o){e.exports={input:"input-input"}},function(e,t,o){e.exports={button:"button-button"}},function(e,t,o){"use strict";o.r(t);var n=o(0),a=o.n(n),l=o(1),i=o(7),r=o.n(i);const c=Object(l.observable)({filter:"all",todos:JSON.parse(localStorage.getItem("app-todos")||"{}"),get allDone(){return this.filteredTodos.every(e=>e.completed)},get incompletedTodos(){return Object.values(this.todos).filter(e=>!e.completed)},get activeTodos(){return Object.values(this.todos).filter(e=>e.completed)},get filteredTodos(){const e=Object.values(this.todos);switch(this.filter){case"active":return e.filter(e=>!e.completed);case"completed":return e.filter(e=>e.completed);default:return e}},get remaining(){return this.incompletedTodos.length>1?"items left":"item left"},get showToggle(){return!!this.filteredTodos.length},setFilter:Object(l.action)(function(e){this.filter=e}),addTodo:Object(l.action)(function(e){const t=(new Date).toJSON().replace(".",":");this.todos[t]={id:t,text:e,completed:!1}}),clearCompleted:Object(l.action)(function(){for(let e in this.todos)this.todos[e].completed&&delete this.todos[e]}),removeTodo:Object(l.action)(function(e){delete this.todos[e.id]}),toggleTodo:Object(l.action)(function(e){this.todos[e.id].completed=!e.completed}),toggleAllTodos:Object(l.action)(function(){const e=!this.allDone;for(let t in this.todos)this.todos[t].completed=e}),updateTodo:Object(l.action)(function(e){this.todos[e.id]=e})});const s=function(e,t,o){let n;return function(...a){const l=this,i=o&&!n;clearTimeout(n),n=setTimeout(function(){n=null,o||e.apply(l,a)},t),i&&e.apply(l,a)}}(e=>{localStorage.setItem("app-todos",JSON.stringify(e))},1e3);Object(l.autorun)(()=>s(Object(l.toJS)(c.todos)));var d=c,u=o(3),p=o.n(u),f=o(8),g=o.n(f),m=(e={})=>a.a.wire(e,":input")`
-  <input
-    autofocus=${!!e.autofocus}
-    class=${p()(g.a.input,e.className)}
-    placeholder=${e.placeholder}
-    value=${e.value}
-    onblur=${e.onBlur}
-    onkeypress=${e.onKeyPress}
-    onkeyup=${e.onKeyUp}
-  />
-`,h=o(5),$=o.n(h);const b=()=>d.showToggle?a.a.wire()`
+!function(t){var e={};function o(n){if(e[n])return e[n].exports;var a=e[n]={i:n,l:!1,exports:{}};return t[n].call(a.exports,a,a.exports,o),a.l=!0,a.exports}o.m=t,o.c=e,o.d=function(t,e,n){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var a in t)o.d(n,a,function(e){return t[e]}.bind(null,a));return n},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o(o.s=6)}([function(t,e,o){"use strict";var n={get:()=>JSON.parse(localStorage.getItem("app-todos")||"[]"),set:function(t,e,o){let n;return function(...a){const i=this,r=o&&!n;clearTimeout(n),n=setTimeout(function(){n=null,o||t.apply(i,a)},e),r&&t.apply(i,a)}}(t=>localStorage.setItem("app-todos",JSON.stringify(t)),1e3)};e.a=new class{get hash(){const t=(location.hash.match(/\w+/g)||[])[0];return"completed"!==t&&"active"!==t?"all":t}get incompleted(){return this.filter("active")}get completed(){return this.filter("completed")}get filtered(){return this.filter(this.hash)}get allDone(){return this.filtered.every(t=>t.completed)}indexOf(t){return this.todos.findIndex(e=>e.uid===t)}filter(t){return"all"===t&&this.todos||this.todos.filter("active"===t?t=>!t.completed:t=>t.completed)}init(t){this.todos=n.get(),this.update=(()=>{t(this.filtered),n.set(this.todos)}),window.onhashchange=this.update}add(t){const e=(new Date).toJSON().replace(/[^\w]/g,"");this.todos.push({uid:e,text:t,completed:!1}),this.update()}clear(){this.todos=this.todos.filter(t=>!t.completed),this.update()}edit(t,e){this.todos[this.indexOf(t)].text=e,this.update()}remove(t){this.todos.splice(this.indexOf(t),1),this.update()}toggle(t){const e=this.todos[this.indexOf(t)];e.completed=!e.completed,this.update()}toggleAll(){const t=!this.allDone;for(const e of this.todos)e.completed=t;this.update()}}},function(t,e){t.exports=hyperHTML},function(t,e,o){t.exports={todo:"todo-todo",edit:"todo-edit",completed:"todo-completed",destroy:"todo-destroy",editing:"todo-editing",view:"todo-view",toggle:"todo-toggle"}},function(t,e,o){t.exports={container:"footer-container",count:"footer-count",filters:"footer-filters",selected:"footer-selected",clear:"footer-clear"}},function(t,e,o){t.exports={container:"header-container",toggle:"header-toggle",checked:"header-checked",input:"header-input"}},function(t,e,o){t.exports={container:"app-container",content:"app-content",todos:"app-todos",info:"app-info"}},function(t,e,o){"use strict";o.r(e);var n=o(1),a=o(0);const i=Object(n.wire)(),r=Object(n.bind)(document.querySelector("#__wrapper__"));(t=>{a.a.init(e=>r`${t(i,e)}`),a.a.update()})(o(7).default)},function(t,e,o){"use strict";o.r(e);var n=o(1),a=o(0),i=o(4),r=o.n(i);var s=t=>t`
+  <header class=${r.a.container}>
+    <h1>todos</h1>
+    ${a.a.filtered.length?Object(n["wire"])()`
     <input
       id="toggle-all"
       type="checkbox"
-      class=${p()($.a.toggle,{[$.a.checked]:d.allDone})}
-      checked=${d.allDone}
-      onchange=${()=>{d.toggleAllTodos()}}
+      class=${`${r.a.toggle} ${a.a.allDone&&r.a.checked}`}
+      checked=${a.a.allDone}
+      onchange=${()=>a.a.toggleAll()}
     />
     <label for="toggle-all">Mark all as complete</label>
-  `:a.a.wire()`${[]}`,v={autofocus:!0,className:$.a.input,placeholder:"What needs to be done?",onKeyPress:e=>{const t=e.target.value.trim();"Enter"===e.key&&t&&(e.target.value="",d.addTodo(t),setTimeout(()=>e.target.focus()))}};var y=o(9),T=o.n(y),j=(e={})=>a.a.wire(e,":button")`
-  <button
-    class=${p()(T.a.button,e.className)}
-    onclick=${e.onClick}
-  >
-    ${e.children}
-  </button>
-`,O=o(2),w=o.n(O);const x=e=>{const t=e.target.closest("li");return d.todos[t.dataset.id]},k=e=>{const t=x(e);e.target.value=t.text,e.target.closest("li").classList.remove(w.a.editing)},S=e=>{const t=e.target.value.trim(),o=e.target.closest("li"),n=x(e);"Enter"===e.key&&t?(d.updateTodo({...n,text:t}),o.classList.remove(w.a.editing)):"Escape"===e.key&&(e.target.value=n.text,o.classList.remove(w.a.editing))},N=e=>{d.removeTodo(x(e))},_=e=>{const{id:t,text:o,completed:n}=e;return a.a.wire(e)`
-    <li data-id=${t} class=${p()({[w.a.completed]:n})}>
-      <div class=${w.a.view}>
+  `:Object(n["wire"])()`${[]}`}
+    <input
+      autofocus
+      class=${r.a.input}
+      placeholder="What needs to be done?"
+      onkeypress=${function(t){const e=t.target.value.trim();"Enter"===t.key&&e&&(t.target.value="",a.a.add(e),setTimeout(()=>t.target.focus()))}}
+    />
+  </header>
+`,c=o(3),l=o.n(c);function d(t){const e=t.toLowerCase();return Object(n["wire"])()`
+    <li><a href=${`#/${e}`} class=${a.a.hash===e&&l.a.selected}>${t}</a></li>
+  `}var u=t=>{if(!a.a.todos.length)return t`${[]}`;const e=a.a.incompleted.length;return t`
+    <footer class=${l.a.container}>
+      <span class=${l.a.count}>
+        <strong>${e}</strong>
+        item${~-e?"s":""} left
+      </span>
+      <ul class=${l.a.filters}>
+        ${["All","Active","Completed"].map(d)}
+      </ul>
+      ${a.a.completed.length?Object(n["wire"])()`
+    <button class=${l.a.clear} onclick=${()=>a.a.clear()}>
+      Clear completed
+    </button>
+  `:Object(n["wire"])()`${[]}`}
+    </footer>
+  `},p=o(2),f=o.n(p);var h=t=>{const{uid:e,text:o,completed:i}=t;return Object(n["wire"])(t)`
+    <li data-uid=${e} class=${`${f.a.todo} ${i&&f.a.completed}`}>
+      <div class=${f.a.view}>
         <input
           type="checkbox"
-          class=${w.a.toggle}
-          checked=${n}
-          onchange=${e=>{d.toggleTodo(x(e))}}
+          class=${f.a.toggle}
+          checked=${i}
+          onchange=${function(t){const e=t.target.closest("li");a.a.toggle(e.dataset.uid)}}
         />
-        <label ondblclick=${e=>{const t=e.target.closest("li");t.classList.add(w.a.editing),t.querySelector(`.${w.a.edit}`).select()}}>${o}</label>
-        ${j({className:w.a.destroy,onClick:N})}
+        <label ondblclick=${function(t){const e=t.target.closest("li");e.classList.add(f.a.editing),e.querySelector(`.${f.a.edit}`).select()}}>${o}</label>
+        <button class=${f.a.destroy} onclick=${function(t){const e=t.target.closest("li");a.a.remove(e.dataset.uid)}} />
       </div>
-      ${m({className:w.a.edit,value:o,onBlur:k,onKeyUp:S})}
+      <input
+        value=${o}
+        class=${f.a.edit}
+        onblur=${function(t){t.target.closest("li").classList.remove(f.a.editing)}}
+        onkeyup=${function(t){const e=t.target.value.trim(),o=t.target.closest("li");"Enter"===t.key&&e?(a.a.edit(o.dataset.uid,e),o.classList.remove(f.a.editing)):"Escape"===t.key&&o.classList.remove(f.a.editing)}}
+      />
     </li>
-  `};var C=o(4),D=o.n(C);const M=e=>{const t=e.toLowerCase();return a.a.wire()`
-    <li>
-      <a href=${`#/${t}`} class=${p()({[D.a.selected]:d.filter===t})}>
-        ${e}
-      </a>
-    </li>
-  `};var P=()=>Object.values(d.todos).length?a.a.wire()`
-    <footer class=${D.a.container}>
-      <span class=${D.a.count}>
-        <strong>${d.incompletedTodos.length}</strong> ${d.remaining}
-      </span>
-      <ul class=${D.a.filters}>
-        ${["All","Active","Completed"].map(M)}
-      </ul>
-      ${d.activeTodos.length?j({className:D.a.clear,children:"Clear completed",onClick(e){e.preventDefault(),d.clearCompleted()}}):a.a.wire()`${[]}`}
-    </footer>
-  `:a.a.wire()`${[]}`,L=o(6),J=o.n(L);const A=new r.a;["all","active","completed"].forEach(e=>A.on(e,()=>d.setFilter(e))),A.configure({notfound:()=>A.setRoute(filter)}),A.init("#/all");(e=>{Object(l.autorun)(()=>{const t=document.querySelector("#__wrapper__");a.a.bind(t)`${e}`})})(()=>a.a.wire()`
-  <div class=${J.a.container}>
-    <section class=${J.a.content}>
-      ${a.a.wire()`
-  <header class=${$.a.container}>
-    <h1>todos</h1>
-    ${b()}
-    ${m(v)}
-  </header>
-`}
-      ${a.a.wire()`
-  <section class=${w.a.container}>
-    <ul class=${w.a.list}>
-      ${d.filteredTodos.map(_)}
-    </ul>
-  </section>
-`}
-      ${P()}
+  `},g=o(5),$=o.n(g);const m=Object(n.wire)(),b=Object(n.wire)();e.default=((t,e)=>t`
+  <div class=${$.a.container}>
+    <section class=${$.a.content}>
+      ${s(m)}
+      <section class=${$.a.todos}>
+        <ul>${e.map(h)}</ul>
+      </section>
+      ${u(b)}
     </section>
-    <footer class=${J.a.info}>
+    <footer class=${$.a.info}>
 			<p>Double-click to edit a todo</p>
 			<p>Written by <a href="https://djalmajr.com">Djalma Jr.</a></p>
 			<p>Not (yet 😆) part of <a href="http://todomvc.com">TodoMVC</a></p>
