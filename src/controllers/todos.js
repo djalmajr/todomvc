@@ -1,7 +1,13 @@
-import storage from "../utils/storage";
-import Todo from "../models/todo";
+import Base from "./base.js";
+import storage from "../utils/storage.js";
+import Todo from "../models/todo.js";
 
-class Controller {
+class Controller extends Base {
+  constructor() {
+    super();
+    this.todos = storage.get().map(t => new Todo(t));
+  }
+
   get hash() {
     const str = (location.hash.match(/\w+/g) || [])[0];
     return str !== "completed" && str !== "active" ? "all" : str;
@@ -35,10 +41,8 @@ class Controller {
   }
 
   init(render) {
-    this.todos = storage.get().map(t => new Todo(t));
-
     this.update = () => {
-      render(this.filtered);
+      render(this);
       storage.set(this.todos);
     };
 
@@ -47,32 +51,41 @@ class Controller {
 
   // Actions
 
-  add(text) {
-    this.todos.push(new Todo({ text }));
-    this.update();
+  onAdd(evt) {
+    const text = evt.target.value.trim();
+
+    if (evt.key === "Enter" && text) {
+      evt.target.value = "";
+      this.todos.push(new Todo({ text }));
+      this.update();
+    }
   }
 
-  clear() {
+  onClear() {
     this.todos = this.todos.filter(t => !t.completed);
     this.update();
   }
 
-  edit(uid, text) {
+  onEdit(evt) {
+    const text = evt.target.value.trim();
+    const uid = evt.target.closest("li").dataset.uid;
     this.todos[this.indexOf(uid)].update({ text });
     this.update();
   }
 
-  remove(uid) {
+  onRemove(evt) {
+    const uid = evt.target.closest("li").dataset.uid;
     this.todos.splice(this.indexOf(uid), 1);
     this.update();
   }
 
-  toggle(uid) {
+  onToggle(evt) {
+    const uid = evt.target.closest("li").dataset.uid;
     this.todos[this.indexOf(uid)].toggle();
     this.update();
   }
 
-  toggleAll() {
+  onToggleAll() {
     const completed = !this.allDone;
 
     for (const todo of this.todos) {

@@ -1,43 +1,31 @@
-import { wire } from "hyperhtml";
-import controller from "../controllers/todos";
-import styles from "./header.less";
+const toggleAll = hyperHTML.wire();
 
-function handleKeyPress(evt) {
-  const text = evt.target.value.trim();
-
-  if (evt.key === "Enter" && text) {
-    evt.target.value = "";
-    controller.add(text);
-    setTimeout(() => evt.target.focus());
-  }
-}
-
-function renderToggle() {
+function ToggleAll(render, controller) {
   if (!controller.filtered.length) {
-    return wire()`${[]}`;
+    return render`${[]}`;
   }
 
-  return wire()`
+  return render`
     <input
       id="toggle-all"
       type="checkbox"
-      class=${`${styles.toggle} ${controller.allDone && styles.checked}`}
+      class=${`header-toggle${controller.allDone ? " checked" : ""}`}
       checked=${controller.allDone}
-      onchange=${() => controller.toggleAll()}
+      onchange=${controller.onToggleAll}
     />
     <label for="toggle-all">Mark all as complete</label>
   `;
 }
 
-export default html => html`
-  <header class=${styles.container}>
-    <h1>todos</h1>
-    ${renderToggle()}
+export default (render, controller) => render`
+  <header class="header">
+    <h1 class="header-title">todos</h1>
+    ${ToggleAll(toggleAll, controller)}
     <input
       autofocus
-      class=${styles.input}
+      class="header-input"
       placeholder="What needs to be done?"
-      onkeypress=${handleKeyPress}
+      onkeypress=${controller.onAdd}
     />
   </header>
 `;

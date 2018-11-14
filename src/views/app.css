@@ -13,28 +13,28 @@ input {
   width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
-  &:focus {
-    outline: none;
-  }
+input:focus {
+  outline: none;
+}
 
-  &::-webkit-input-placeholder {
-    color: #e6e6e6;
-    font-style: italic;
-    font-weight: 300;
-  }
+input::-webkit-input-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
 
-  &::-moz-placeholder {
-    color: #e6e6e6;
-    font-style: italic;
-    font-weight: 300;
-  }
+input::-moz-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
+}
 
-  &::input-placeholder {
-    color: #e6e6e6;
-    font-style: italic;
-    font-weight: 300;
-  }
+input::input-placeholder {
+  color: #e6e6e6;
+  font-style: italic;
+  font-weight: 300;
 }
 
 button {
@@ -53,50 +53,38 @@ button {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
+.app-container {
   color: #4d4d4d;
   margin: 0 auto;
   max-width: 550px;
   min-width: 230px;
 }
 
-.content {
+.app-content {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   margin: 130px 0 40px;
   position: relative;
 }
 
-.todos {
-  border-top: 1px solid #e6e6e6;
-  position: relative;
-  z-index: 2;
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-}
-
-.info {
+.app-info {
   margin: 65px auto 0;
   color: #bfbfbf;
   font-size: 12px;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   text-align: center;
+}
 
-  p {
-    line-height: 1;
-  }
+.app-info p {
+  line-height: 1;
+}
 
-  a {
-    color: inherit;
-    text-decoration: none;
-    font-weight: 400;
+.app-info a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 400;
+}
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+.app-info a:hover {
+  text-decoration: underline;
 }

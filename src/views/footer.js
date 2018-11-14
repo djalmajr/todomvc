@@ -1,45 +1,37 @@
-import { wire } from "hyperhtml";
-import controller from "../controllers/todos";
-import styles from "./footer.less";
+const button = hyperHTML.wire();
+const cn = (hash, curr) => (hash === curr ? "selected" : "");
 
-function renderClear() {
+function ClearButton(render, controller) {
   if (!controller.completed.length) {
-    return wire()`${[]}`;
+    return render`${[]}`;
   }
 
-  return wire()`
-    <button class=${styles.clear} onclick=${() => controller.clear()}>
+  return render`
+    <button class="footer-clear" onclick=${controller.onClear}>
       Clear completed
     </button>
   `;
 }
 
-function renderFilter(text) {
-  const filter = text.toLowerCase();
-  const className = controller.hash === filter && styles.selected;
+export default (render, controller) => {
+  const { hash, incompleted, todos } = controller;
+  const left = incompleted.length;
 
-  return wire()`
-    <li><a href=${`#/${filter}`} class=${className}>${text}</a></li>
-  `;
-}
-
-export default html => {
-  if (!controller.todos.length) {
-    return html`${[]}`;
+  if (!todos.length) {
+    return render`${[]}`;
   }
 
-  const left = controller.incompleted.length;
-
-  return html`
-    <footer class=${styles.container}>
-      <span class=${styles.count}>
-        <strong>${left}</strong>
-        item${~-left ? "s" : ""} left
+  return render`
+    <footer class="footer-container">
+      <span class="footer-count">
+        <strong>${left}</strong> item${~-left ? "s" : ""} left
       </span>
-      <ul class=${styles.filters}>
-        ${["All", "Active", "Completed"].map(renderFilter)}
+      <ul class="footer-filters">
+        <li><a class="${cn(hash, "all")}" href="#/all">All</a></li>
+        <li><a class="${cn(hash, "active")}" href="#/active">Active</a></li>
+        <li><a class="${cn(hash, "completed")}" href="#/completed">Completed</a></li>
       </ul>
-      ${renderClear()}
+      ${ClearButton(button, controller)}
     </footer>
   `;
 };

@@ -1,25 +1,24 @@
-import { wire } from "hyperhtml";
-import renderHeader from "./header";
-import renderFooter from "./footer";
-import renderTodo from "./todo";
-import styles from "./app.less";
+import Header from "./header.js";
+import Footer from "./footer.js";
+import Todos from "./todos.js";
 
-const header = wire();
-const footer = wire();
+const header = hyperHTML.wire();
+const todos = hyperHTML.wire();
+const footer = hyperHTML.wire();
 
-export default (html, todos) => html`
-  <div class=${styles.container}>
-    <section class=${styles.content}>
-      ${renderHeader(header, todos)}
-      <section class=${styles.todos}>
-        <ul>${todos.map(renderTodo)}</ul>
+export default (html, controller) => {
+  return html`
+    <div class="app-container">
+      <section class="app-content">
+        ${Header(header, controller)}
+        ${Todos(todos, controller)}
+        ${Footer(footer, controller)}
       </section>
-      ${renderFooter(footer, todos)}
-    </section>
-    <footer class=${styles.info}>
-			<p>Double-click to edit a todo</p>
-			<p>Written by <a href="https://djalmajr.com">Djalma Jr.</a></p>
-			<p>Not (yet 😆) part of <a href="http://todomvc.com">TodoMVC</a></p>
-		</footer>
-  </div>
-`;
+      <footer class="app-info">
+        <p>Double-click to edit a todo</p>
+        <p>Written by <a href="https://djalmajr.com">Djalma Jr.</a></p>
+        <p>Not (yet 😆) part of <a href="http://todomvc.com">TodoMVC</a></p>
+      </footer>
+    </div>
+  `;
+};
