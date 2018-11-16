@@ -1,5 +1,3 @@
-#! /usr/bin/env node
-
 const fs = require("fs");
 const path = require("path");
 const cheerio = require("cheerio");
@@ -11,7 +9,6 @@ const appPath = DEV ? "../src/index.js" : "bundle.js";
 const copyCmd = DEV ? "" : "cp node_modules/hyperhtml/umd.js dist/hyperhtml.js";
 const tplPath = path.resolve(__dirname, "../public/index.html");
 const outputPath = path.resolve(__dirname, "../dist/index.html");
-
 const $ = cheerio.load(fs.readFileSync(tplPath, "utf8"));
 
 shell.exec(`mkdir -p dist; cp public/*.css dist; ${copyCmd}`);

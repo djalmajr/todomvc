@@ -1,20 +1,10 @@
+import ClearButton from "./clearButton.js";
+
 const button = hyperHTML.wire();
 const cn = (hash, curr) => (hash === curr ? "selected" : "");
 
-function ClearButton(render, controller) {
-  if (!controller.completed.length) {
-    return render`${[]}`;
-  }
-
-  return render`
-    <button class="footer-clear" onclick=${controller.onClear}>
-      Clear completed
-    </button>
-  `;
-}
-
-export default (render, controller) => {
-  const { hash, incompleted, todos } = controller;
+export default (render, props) => {
+  const { hash, incompleted, todos } = props;
   const left = incompleted.length;
 
   if (!todos.length) {
@@ -31,7 +21,7 @@ export default (render, controller) => {
         <li><a class="${cn(hash, "active")}" href="#/active">Active</a></li>
         <li><a class="${cn(hash, "completed")}" href="#/completed">Completed</a></li>
       </ul>
-      ${ClearButton(button, controller)}
+      ${ClearButton(button, props)}
     </footer>
   `;
 };

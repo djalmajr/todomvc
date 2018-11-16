@@ -6,13 +6,13 @@ const header = hyperHTML.wire();
 const todos = hyperHTML.wire();
 const footer = hyperHTML.wire();
 
-export default (html, controller) => {
-  return html`
+export default (render, props) => {
+  return render`
     <div class="app-container">
       <section class="app-content">
-        ${Header(header, controller)}
-        ${Todos(todos, controller)}
-        ${Footer(footer, controller)}
+        ${Header(header, props)}
+        ${Todos(todos, props)}
+        ${Footer(footer, props)}
       </section>
       <footer class="app-info">
         <p>Double-click to edit a todo</p>

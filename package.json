@@ -20,7 +20,7 @@
     "build-css": "npm run concat-css && npm run uglify-css && rm dist/style.css; mv dist/style.min.css dist/style.css",
     "build-js": "echo '/* eslint-disable */' > dist/bundle.js && browserify ./es2015/**.js | uglifyjs -mc warnings=false >> dist/bundle.js",
     "concat-css": "find src -type f -name '*.css' -exec cat {} ';' > dist/style.css",
-    "copy": "./bin/copy.js",
+    "copy": "node scripts/copy.js",
     "serve": "live-server --open=dist .",
     "start": "cross-env NODE_ENV=development npm run copy; npm run concat-css && npm run serve",
     "uglify-css": "uglifycss dist/style.css > dist/style.min.css"
