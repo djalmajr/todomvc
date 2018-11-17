@@ -1,16 +1,7 @@
-import ToggleAll from "./toggleAll.js";
+import todos from "../controllers/todos.js";
 
-const toggleAll = hyperHTML.wire();
+const tpl = _.template(_.unescape($("#header-template").innerHTML));
 
-export default (render, props) => render`
-  <header class="header">
-    <h1 class="header-title">todos</h1>
-    ${ToggleAll(toggleAll, props)}
-    <input
-      autofocus
-      class="header-input"
-      placeholder="What needs to be done?"
-      onkeypress=${props.onAdd}
-    />
-  </header>
-`;
+export default () => {
+  return DOM.create(tpl({ allDone: todos.allDone }));
+};

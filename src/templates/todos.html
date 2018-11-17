@@ -1,0 +1,23 @@
+<script type="text/template" id="todos-template">
+  <section class="todos">
+    <ul>
+      <% todos.map(todo => { %>
+        <li
+          data-uid="<%= todo.uid %>"
+          class="todo<%= todo.completed ? ' completed' : '' %>"
+        >
+          <div class="view">
+            <input
+              type="checkbox"
+              class="toggle"
+              <%= todo.completed ? ' checked' : '' %>
+            />
+            <label><%= todo.text %></label>
+            <button class="destroy"></button>
+          </div>
+          <input class="edit" value="<%= todo.text %>" />
+        </li>
+      <% }) %>
+    </ul>
+  </section>
+</script>

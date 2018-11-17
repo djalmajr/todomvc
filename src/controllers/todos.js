@@ -5,6 +5,7 @@ import Todo from "../models/todo.js";
 class Controller extends Base {
   constructor() {
     super();
+    this.filters = ["all", "active", "completed"];
     this.todos = storage.get().map(t => new Todo(t));
   }
 
@@ -79,10 +80,10 @@ class Controller extends Base {
     this.update();
   }
 
-  onToggle(evt) {
-    const uid = evt.target.closest("li").dataset.uid;
-    this.todos[this.indexOf(uid)].toggle();
-    this.update();
+  toggle(uid) {
+    const idx = this.indexOf(uid);
+    this.todos[idx].toggle();
+    window.emit("todo:changed", this.todos[idx]);
   }
 
   onToggleAll() {

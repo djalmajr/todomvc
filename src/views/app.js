@@ -1,24 +1,14 @@
-import Header from "./header.js";
-import Footer from "./footer.js";
-import Todos from "./todos.js";
+import header from "./header.js";
+import todos from "./todos.js";
+import footer from "./footer.js";
 
-const header = hyperHTML.wire();
-const todos = hyperHTML.wire();
-const footer = hyperHTML.wire();
+export default () => {
+  const el = DOM.create($("#app-template").innerHTML);
+  const content = el.$(".app-content");
 
-export default (render, props) => {
-  return render`
-    <div class="app-container">
-      <section class="app-content">
-        ${Header(header, props)}
-        ${Todos(todos, props)}
-        ${Footer(footer, props)}
-      </section>
-      <footer class="app-info">
-        <p>Double-click to edit a todo</p>
-        <p>Written by <a href="https://djalmajr.com">Djalma Jr.</a></p>
-        <p>Not (yet 😆) part of <a href="http://todomvc.com">TodoMVC</a></p>
-      </footer>
-    </div>
-  `;
+  content.append(header());
+  content.append(todos());
+  content.append(footer());
+
+  return el;
 };

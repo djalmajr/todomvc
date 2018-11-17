@@ -1,56 +1,68 @@
-const { wire } = hyperHTML;
+import todos from "../controllers/todos.js";
 
-function handleBlur(todo, evt) {
-  const li = evt.target.closest("li");
-  li.classList.remove("editing");
-  evt.target.value = todo.text;
-}
+const view = {
+  events: {
+    "change .toggle": "handleToggle",
+    "dblclick label": "edit",
+    "click .destroy": "clear",
+    "keypress .edit": "updateOnEnter",
+    "keydown .edit": "revertOnEscape",
+    "blur .edit": "close",
+  },
 
-function handleDblClick(evt) {
-  const li = evt.target.closest("li");
-  li.classList.add("editing");
-  li.querySelector(".edit").select();
-}
+  el: document.createElement("div"),
 
-function handleKeyUp(props, evt) {
-  const text = evt.target.value.trim();
-  const li = evt.target.closest("li");
+  tpl: _.template(_.unescape($("#todos-template").innerHTML)),
 
-  if (evt.key === "Enter" && text) {
+  init() {
+    for (const key in this.events) {
+      const [event, selector] = key.split(" ");
+      const target = this.el.$(selector);
+
+      if (target) {
+        target.on(event, this[this.events[key]]);
+      }
+    }
+
+    window.on("todo:changed", () => this.render());
+  },
+
+  handleBlur(todo, evt) {
+    const li = evt.target.closest("li");
     li.classList.remove("editing");
-    props.onEdit(evt);
-  } else if (evt.key === "Escape") {
-    li.classList.remove("editing");
-  }
-}
+    evt.target.value = todo.text;
+  },
 
-export default (render, props) => {
-  return render`
-    <section class="todos">
-      <ul>
-        ${props.filtered.map(
-          todo => wire(todo)`
-            <li data-uid=${todo.uid} class=${`todo${todo.completed ? " completed" : ""}`}>
-              <div class="view">
-                <input
-                  type="checkbox"
-                  class="toggle"
-                  checked=${todo.completed}
-                  onchange=${props.onToggle}
-                />
-                <label ondblclick=${handleDblClick}>${todo.text}</label>
-                <button class="destroy" onclick=${props.onRemove} />
-              </div>
-              <input
-                class="edit"
-                value=${todo.text}
-                onblur=${handleBlur.bind(null, todo)}
-                onkeyup=${handleKeyUp.bind(null, props)}
-              />
-            </li>
-          `
-        )}
-      </ul>
-    </section>
-  `;
+  handleDblClick(evt) {
+    const li = evt.target.closest("li");
+    li.classList.add("editing");
+    li.querySelector(".edit").select();
+  },
+
+  handleKeyUp(props, evt) {
+    const text = evt.target.value.trim();
+    const li = evt.target.closest("li");
+
+    if (evt.key === "Enter" && text) {
+      li.classList.remove("editing");
+      props.onEdit(evt);
+    } else if (evt.key === "Escape") {
+      li.classList.remove("editing");
+    }
+  },
+
+  handleToggle(evt) {
+    todos.toggle(evt.target.closest("li").dataset.uid);
+  },
+
+  render() {
+    console.log(this);
+    const content = DOM.create(this.tpl({ todos: todos.filtered }));
+    this.el.append(content);
+    return content;
+  },
 };
+
+view.init();
+
+export default () => view.render();

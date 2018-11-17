@@ -1,0 +1,25 @@
+<script type="text/template" id="footer-template">
+  <footer class="footer">
+    <span class="footer-count">
+      <strong><%= left %></strong>
+      item<%= ~-left ? "s" : "" %> left
+    </span>
+    <ul class="footer-filters">
+      <% for (const filter of filters) { %>
+        <li>
+          <a
+            href="#/<%= filter %>"
+            class="<%= filter === hash ? 'selected' : '' %>"
+          >
+            <%= filter[0].toUpperCase() + filter.slice(1) %>
+          </a>
+        </li>
+      <% } %>
+    </ul>
+    <% if (showClear) { %>
+      <button class="footer-clear">
+        Clear completed
+      </button>
+    <% } %>
+  </footer>
+</script>
