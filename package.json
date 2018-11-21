@@ -19,7 +19,7 @@
     "add-script-dev": "echo '<script src=\"../src/index.js\" type=\"module\"></script>' > dist/script.txt && npm run add-script",
     "add-script-prod": "echo '<script src=\"bundle.js\"></script>' > dist/script.txt && npm run add-script",
     "add-templates": "npm run concat-templates && sed -i '/<!-- templates -->/ r dist/tpls.html' dist/index.html && rm dist/tpls.html",
-    "build": "npm run copy && npm run build-css && npm run build-es2015 && npm run build-js && rm -rf es2015",
+    "build": "npm run copy && npm run add-templates && npm run add-script-prod && npm run build-css && npm run build-es2015 && npm run build-js && rm -rf es2015",
     "build-css": "npm run concat-css && npm run uglify-css && rm dist/style.css && mv dist/style.min.css dist/style.css",
     "build-es2015": "babel src --out-dir es2015 --presets=es2015",
     "build-js": "echo '/* eslint-disable */' > dist/bundle.js && browserify ./es2015/**.js | uglifyjs -mc warnings=false >> dist/bundle.js",
