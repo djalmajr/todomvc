@@ -1,14 +1,30 @@
-import todos from "../controllers/todos.js";
+import controller from "../controllers/todos.js";
 
-const tpl = _.template(_.unescape($("#footer-template").innerHTML));
+class FooterView {
+  get data() {
+    return {
+      hash: controller.hash,
+      filters: controller.filters,
+      left: controller.incompleted.length,
+      showClear: controller.completed.length,
+      hasTodos: !_.isEmpty(controller.todos),
+    };
+  }
 
-export default () => {
-  return DOM.create(
-    tpl({
-      hash: todos.hash,
-      filters: todos.filters,
-      left: todos.incompleted.length,
-      showClear: todos.completed.length,
-    })
-  );
-};
+  constructor() {
+    this.tpl = _.template($("#footer-template").html());
+    this.$el = $(this.tpl(this.data));
+    this.$el.on("click", ".footer-clear", this.handleClear);
+  }
+
+  handleClear() {
+    controller.clear();
+  }
+
+  render() {
+    this.$el.empty().append($(this.tpl(this.data)));
+    return this;
+  }
+}
+
+export default FooterView;

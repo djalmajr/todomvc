@@ -1,14 +1,24 @@
-import header from "./header.js";
-import todos from "./todos.js";
-import footer from "./footer.js";
+import HeaderView from "./header.js";
+import TodosView from "./todos.js";
+import FooterView from "./footer.js";
+import controller from "../controllers/todos.js";
 
-export default () => {
-  const el = DOM.create($("#app-template").innerHTML);
-  const content = el.$(".app-content");
+class AppView {
+  constructor() {
+    this.$el = $($("#app-template").html());
+    controller.on("todos:changed", () => this.render());
+  }
 
-  content.append(header());
-  content.append(todos());
-  content.append(footer());
+  render() {
+    this.$el
+      .find(".app-content")
+      .empty()
+      .append(new HeaderView().$el)
+      .append(new TodosView().$el)
+      .append(new FooterView().$el);
 
-  return el;
-};
+    return this;
+  }
+}
+
+export default AppView;

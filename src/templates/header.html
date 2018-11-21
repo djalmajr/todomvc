@@ -1,13 +1,15 @@
 <script type="text/template" id="header-template">
   <header class="header">
     <h1 class="header-title">todos</h1>
-    <input
-      id="toggle-all"
-      type="checkbox"
-      class="header-toggle<%= allDone ? ' checked' : '' %>"
-      checked="<%= allDone %>"
-    />
-    <label for="toggle-all">Mark all as complete</label>
+    <% if (hasTodos) { %>
+      <input
+        id="toggle-all"
+        type="checkbox"
+        class="header-toggle<%= allDone ? ' checked' : '' %>"
+        checked="<%= allDone %>"
+      />
+      <label for="toggle-all">Mark all as complete</label>
+    <% } %>
     <input autofocus class="header-input" placeholder="What needs to be done?" />
   </header>
-</script>;
+</script>

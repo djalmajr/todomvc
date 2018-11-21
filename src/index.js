@@ -1,5 +1,5 @@
-import app from "./views/app.js";
+import App from "./views/app.js";
 
-const wrapper = $("#__wrapper__");
-wrapper.innerHTML = "";
-wrapper.append(app());
+$("#__wrapper__")
+  .empty()
+  .append(new App().render().$el);
