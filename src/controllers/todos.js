@@ -1,5 +1,12 @@
-import storage from "../utils/storage.js";
+import debounce from "../utils/debounce.js";
 import Todo from "../models/Todo.js";
+
+const KEY = "app-todos";
+
+const storage = {
+  get: () => JSON.parse(localStorage.getItem(KEY) || "[]"),
+  set: debounce(t => localStorage.setItem(KEY, JSON.stringify(t)), 500),
+};
 
 class Controller {
   constructor() {
