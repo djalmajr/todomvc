@@ -15,35 +15,37 @@
     "url": "git@github.com:djalmajr/todomvc.git"
   },
   "scripts": {
-    "babelify": "babel src --out-dir es2015 --presets=es2015",
-    "build": "npm run copy; npm run babelify; npm run build-css; npm run build-js; rm -rf es2015",
-    "build-css": "npm run concat-css && npm run uglify-css && rm dist/style.css; mv dist/style.min.css dist/style.css",
+    "add-script": "sed -i '/<!-- scripts -->/ r dist/script.txt' dist/index.html && rm dist/script.txt",
+    "add-script-dev": "echo '<script src=\"../src/index.js\" type=\"module\"></script>' > dist/script.txt && npm run add-script",
+    "add-script-prod": "echo '<script src=\"bundle.js\"></script>' > dist/script.txt && npm run add-script",
+    "add-templates": "npm run concat-templates && sed -i '/<!-- templates -->/ r dist/tpls.html' dist/index.html && rm dist/tpls.html",
+    "build": "npm run copy && npm run build-css && npm run build-es2015 && npm run build-js && rm -rf es2015",
+    "build-css": "npm run concat-css && npm run uglify-css && rm dist/style.css && mv dist/style.min.css dist/style.css",
+    "build-es2015": "babel src --out-dir es2015 --presets=es2015",
     "build-js": "echo '/* eslint-disable */' > dist/bundle.js && browserify ./es2015/**.js | uglifyjs -mc warnings=false >> dist/bundle.js",
     "concat-css": "find src -type f -name '*.css' -exec cat {} ';' > dist/style.css",
-    "copy": "node scripts/copy.js",
+    "concat-templates": "find src -type f -name '*.html' -exec cat {} ';' > dist/tpls.html",
+    "copy": "rm -rf dist; mkdir dist; cp public/* dist; cp node_modules/jquery/dist/jquery.slim.min.js node_modules/lodash/lodash.min.js dist",
     "serve": "live-server --open=dist .",
-    "start": "cross-env NODE_ENV=development npm run copy; npm run concat-css && npm run serve",
+    "start": "npm run copy && npm run concat-css && npm run add-templates && npm run add-script-dev && npm run serve",
     "uglify-css": "uglifycss dist/style.css > dist/style.min.css"
   },
   "dependencies": {
-    "hyperhtml": "^2.16.7"
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "autoprefixer": "^9.3.1",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
     "babel-preset-es2015": "^6.24.1",
     "browserify": "^16.2.3",
-    "cheerio": "^1.0.0-rc.2",
     "conventional-changelog-cli": "^2.0.11",
-    "cross-env": "^5.2.0",
     "eslint": "^5.9.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.0",
     "gh-pages": "^2.0.1",
     "live-server": "^1.2.0",
     "prettier": "^1.15.2",
-    "shelljs": "^0.8.3",
     "uglifycss": "^0.0.29",
     "uglifyjs": "^2.4.11"
   }

@@ -17,11 +17,11 @@ class Controller {
     this.emit = (...args) => $(window).trigger(...args);
 
     this.filters = ["all", "active", "completed"];
-    this.todos = fp.reduce((res, val) =>
-      fp.merge(res, {
-        [val.uid]: new Todo(val),
-      })
-    )({}, storage.get());
+    this.todos = _.reduce(
+      storage.get(),
+      (res, val) => ((res[val.uid] = new Todo(val)), res),
+      {}
+    );
 
     window.onhashchange = () => this.emit("todos:changed");
     this.on("todos:changed", () => storage.set(this.todos));
