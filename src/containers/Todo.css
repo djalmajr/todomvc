@@ -1,15 +1,3 @@
-.todos {
-  border-top: 1px solid #e6e6e6;
-  position: relative;
-  z-index: 2;
-}
-
-.todos ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 .todo {
   border-bottom: 1px solid #ededed;
   font-size: 24px;

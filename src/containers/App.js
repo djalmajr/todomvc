@@ -1,9 +1,8 @@
-import Header from "./header.js";
-import Footer from "./footer.js";
-import Todos from "./todos.js";
+import Header from "./Header.js";
+import Footer from "./Footer.js";
+import Todo from "./Todo.js";
 
 const header = hyperHTML.wire();
-const todos = hyperHTML.wire();
 const footer = hyperHTML.wire();
 
 export default (render, props) => {
@@ -11,7 +10,9 @@ export default (render, props) => {
     <div class="app-container">
       <section class="app-content">
         ${Header(header, props)}
-        ${Todos(todos, props)}
+        <section class="app-todos">
+          <ul>${props.filtered.map(todo => Todo(todo, props))}</ul>
+        </section>
         ${Footer(footer, props)}
       </section>
       <footer class="app-info">

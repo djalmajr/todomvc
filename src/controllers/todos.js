@@ -1,16 +1,22 @@
-import Base from "./base.js";
 import storage from "../utils/storage.js";
-import Todo from "../models/todo.js";
+import Todo from "../models/Todo.js";
 
-class Controller extends Base {
+class Controller {
   constructor() {
-    super();
-    this.todos = storage.get().map(t => new Todo(t));
+    const cached = storage.get();
+
+    this.todos = Object.keys(cached).reduce((res, uid) => {
+      return (res[uid] = new Todo(cached[uid])), res;
+    }, {});
   }
 
   get hash() {
     const str = (location.hash.match(/\w+/g) || [])[0];
     return str !== "completed" && str !== "active" ? "all" : str;
+  }
+
+  get all() {
+    return this.filter("all");
   }
 
   get incompleted() {
@@ -29,15 +35,14 @@ class Controller extends Base {
     return this.filtered.every(t => t.completed);
   }
 
-  indexOf(uid) {
-    return this.todos.findIndex(t => t.uid === uid);
-  }
+  filter(filter) {
+    const todos = Object.keys(this.todos).map(uid => this.todos[uid]);
 
-  filter(f) {
-    return (
-      (f === "all" && this.todos) ||
-      this.todos.filter(f === "active" ? t => !t.completed : t => t.completed)
-    );
+    if (filter === "all") {
+      return todos;
+    }
+
+    return todos.filter(filter === "active" ? t => !t.completed : t => t.completed);
   }
 
   init(render) {
@@ -51,45 +56,42 @@ class Controller extends Base {
 
   // Actions
 
-  onAdd(evt) {
-    const text = evt.target.value.trim();
-
-    if (evt.key === "Enter" && text) {
-      evt.target.value = "";
-      this.todos.push(new Todo({ text }));
-      this.update();
-    }
+  onAdd(text) {
+    const todo = new Todo({ text });
+    this.todos[todo.uid] = todo;
+    this.update();
   }
 
   onClear() {
-    this.todos = this.todos.filter(t => !t.completed);
+    for (const uid in this.todos) {
+      if (this.todos[uid].completed) {
+        delete this.todos[uid];
+      }
+    }
+
     this.update();
   }
 
-  onEdit(evt) {
-    const text = evt.target.value.trim();
-    const uid = evt.target.closest("li").dataset.uid;
-    this.todos[this.indexOf(uid)].update({ text });
+  onEdit({ uid, text }) {
+    this.todos[uid].update({ text });
     this.update();
   }
 
-  onRemove(evt) {
-    const uid = evt.target.closest("li").dataset.uid;
-    this.todos.splice(this.indexOf(uid), 1);
+  onRemove(uid) {
+    delete this.todos[uid];
     this.update();
   }
 
-  onToggle(evt) {
-    const uid = evt.target.closest("li").dataset.uid;
-    this.todos[this.indexOf(uid)].toggle();
+  onToggle(uid) {
+    this.todos[uid].toggle();
     this.update();
   }
 
   onToggleAll() {
     const completed = !this.allDone;
 
-    for (const todo of this.todos) {
-      todo.update({ completed });
+    for (const uid in this.todos) {
+      this.todos[uid].update({ completed });
     }
 
     this.update();

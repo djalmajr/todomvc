@@ -1,6 +1,15 @@
-import ToggleAll from "./toggleAll.js";
+import ToggleAll from "../components/ToggleAll.js";
 
 const toggleAll = hyperHTML.wire();
+
+const handleAdd = props => evt => {
+  const text = evt.target.value.trim();
+
+  if (evt.key === "Enter" && text) {
+    evt.target.value = "";
+    props.onAdd(text);
+  }
+};
 
 export default (render, props) => render`
   <header class="header">
@@ -10,7 +19,7 @@ export default (render, props) => render`
       autofocus
       class="header-input"
       placeholder="What needs to be done?"
-      onkeypress=${props.onAdd}
+      onkeypress=${handleAdd(props)}
     />
   </header>
 `;

@@ -1,3 +1,5 @@
+const handleChange = props => () => props.onToggleAll();
+
 export default (render, props) => {
   if (!props.filtered.length) {
     return render`${[]}`;
@@ -9,7 +11,7 @@ export default (render, props) => {
       type="checkbox"
       class=${`header-toggle${props.allDone ? " checked" : ""}`}
       checked=${props.allDone}
-      onchange=${props.onToggleAll}
+      onchange=${handleChange(props)}
     />
     <label for="toggle-all">Mark all as complete</label>
   `;
