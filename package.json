@@ -23,7 +23,7 @@
     "build-css": "npm run concat-css && npm run uglify-css && rm dist/style.css && mv dist/style.min.css dist/style.css",
     "build-es2015": "babel src --out-dir es2015 --presets=es2015",
     "build-js": "echo '/* eslint-disable */' > dist/bundle.js && browserify ./es2015/**.js | uglifyjs -mc warnings=false >> dist/bundle.js",
-    "concat-css": "find src -type f -name '*.css' -exec cat {} ';' > dist/style.css",
+    "concat-css": "find src -type f -name '*.css' -exec cat {} ';' >> dist/style.css",
     "concat-templates": "find src -type f -name '*.html' -exec cat {} ';' > dist/tpls.html",
     "copy": "rm -rf dist; mkdir dist; cp public/* dist; cp node_modules/jquery/dist/jquery.slim.min.js node_modules/lodash/lodash.min.js dist",
     "serve": "live-server --open=dist .",
