@@ -15,9 +15,9 @@
     "url": "git@github.com:djalmajr/todomvc.git"
   },
   "scripts": {
-    "add-script": "sed -i '/<!-- scripts -->/ r dist/script.txt' dist/index.html && rm dist/script.txt",
-    "add-script-dev": "echo '<script src=\"../src/index.js\" type=\"module\"></script>' > dist/script.txt && npm run add-script",
-    "add-script-prod": "echo '<script src=\"bundle.js\"></script>' > dist/script.txt && npm run add-script",
+    "add-script": "sed -i.bak '/<!-- scripts -->/ r dist/script.bak' dist/index.html && rm dist/*.bak",
+    "add-script-dev": "echo '<script src=\"../src/index.js\" type=\"module\"></script>' > dist/script.bak && npm run add-script",
+    "add-script-prod": "echo '<script src=\"bundle.js\"></script>' > dist/script.bak && npm run add-script",
     "build": "npm run copy && npm run add-script-prod && npm run build-css && npm run build-es2015 && npm run build-js && rm -rf es2015",
     "build-css": "npm run concat-css && npm run uglify-css && rm dist/style.css && mv dist/style.min.css dist/style.css",
     "build-es2015": "babel src --out-dir es2015 --presets=es2015",
