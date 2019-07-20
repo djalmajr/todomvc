@@ -1,25 +1,27 @@
-import { wire } from "hyperhtml";
-import renderHeader from "./header";
-import renderFooter from "./footer";
-import renderTodo from "./todo";
-import styles from "./app.less";
+import { html } from "https://unpkg.com/lit-html?module";
+import { repeat } from "https://unpkg.com/lit-html/directives/repeat.js?module";
+import controller from "../controllers/todos.js";
+import renderHeader from "./header.js";
+import renderFooter from "./footer.js";
+import renderTodo from "./todo.js";
 
-const header = wire();
-const footer = wire();
+addStyleSheet(__dirname + "/app.css");
 
-export default (html, todos) => html`
-  <div class=${styles.container}>
-    <section class=${styles.content}>
-      ${renderHeader(header, todos)}
-      <section class=${styles.todos}>
-        <ul>${todos.map(renderTodo)}</ul>
+export default () => html`
+  <div class="todo-app">
+    <section class="todo-app__content">
+      ${renderHeader()}
+      <section class="todo-app__todos">
+        <ul>
+          ${repeat(controller.filtered, t => t.uid, renderTodo)}
+        </ul>
       </section>
-      ${renderFooter(footer, todos)}
+      ${renderFooter()}
     </section>
-    <footer class=${styles.info}>
-			<p>Double-click to edit a todo</p>
-			<p>Written by <a href="https://djalmajr.com">Djalma Jr.</a></p>
-			<p>Not (yet 😆) part of <a href="http://todomvc.com">TodoMVC</a></p>
-		</footer>
+    <footer class="todo-app__footer">
+      <p>Double-click to edit a todo</p>
+      <p>Written by <a href="https://djalmajr.com">Djalma Jr.</a></p>
+      <p>Not (yet 😆) part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
   </div>
 `;

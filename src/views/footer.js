@@ -1,14 +1,15 @@
-import { wire } from "hyperhtml";
-import controller from "../controllers/todos";
-import styles from "./footer.less";
+import { html } from "https://unpkg.com/lit-html?module";
+import controller from "../controllers/todos.js";
+
+addStyleSheet(__dirname + "/footer.css");
 
 function renderClear() {
   if (!controller.completed.length) {
-    return wire()`${[]}`;
+    return html``;
   }
 
-  return wire()`
-    <button class=${styles.clear} onclick=${() => controller.clear()}>
+  return html`
+    <button class="todo-footer__clear" @click=${() => controller.clear()}>
       Clear completed
     </button>
   `;
@@ -16,27 +17,29 @@ function renderClear() {
 
 function renderFilter(text) {
   const filter = text.toLowerCase();
-  const className = controller.hash === filter && styles.selected;
+  const liClass = controller.hash === filter && "todo-footer__filter--selected";
 
-  return wire()`
-    <li><a href=${`#/${filter}`} class=${className}>${text}</a></li>
+  return html`
+    <li class=${`todo-footer__filter ${liClass}`}>
+      <a href=${`#/${filter}`}>${text}</a>
+    </li>
   `;
 }
 
-export default html => {
+export default () => {
   if (!controller.todos.length) {
-    return html`${[]}`;
+    return html``;
   }
 
   const left = controller.incompleted.length;
 
   return html`
-    <footer class=${styles.container}>
-      <span class=${styles.count}>
+    <footer class="todo-footer">
+      <span class="todo-footer__count">
         <strong>${left}</strong>
         item${~-left ? "s" : ""} left
       </span>
-      <ul class=${styles.filters}>
+      <ul class="todo-footer__filters">
         ${["All", "Active", "Completed"].map(renderFilter)}
       </ul>
       ${renderClear()}

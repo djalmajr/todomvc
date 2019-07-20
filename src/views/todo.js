@@ -1,10 +1,11 @@
-import { wire } from "hyperhtml";
-import controller from "../controllers/todos";
-import styles from "./todo.less";
+import { html } from "https://unpkg.com/lit-html?module";
+import controller from "../controllers/todos.js";
+
+addStyleSheet(__dirname + "/todo.css");
 
 function handleBlur(evt) {
   const li = evt.target.closest("li");
-  li.classList.remove(styles.editing);
+  li.classList.remove("todo-item--editing");
 }
 
 function handleChange(evt) {
@@ -14,8 +15,8 @@ function handleChange(evt) {
 
 function handleEdit(evt) {
   const li = evt.target.closest("li");
-  li.classList.add(styles.editing);
-  li.querySelector(`.${styles.edit}`).select();
+  li.classList.add("todo-item--editing");
+  li.querySelector(".todo-item__edit").select();
 }
 
 function handleKeyUp(evt) {
@@ -24,9 +25,9 @@ function handleKeyUp(evt) {
 
   if (evt.key === "Enter" && text) {
     controller.edit(li.dataset.uid, text);
-    li.classList.remove(styles.editing);
+    li.classList.remove("todo-item--editing");
   } else if (evt.key === "Escape") {
-    li.classList.remove(styles.editing);
+    li.classList.remove("todo-item--editing");
   }
 }
 
@@ -37,25 +38,25 @@ function handleRemove(evt) {
 
 export default todo => {
   const { uid, text, completed } = todo;
-  const liClass = `${styles.todo} ${completed && styles.completed}`;
+  const liClass = `todo-item ${completed && "todo-item--completed"}`;
 
-  return wire(todo)`
+  return html`
     <li data-uid=${uid} class=${liClass}>
-      <div class=${styles.view}>
+      <div class="todo-item__view">
         <input
           type="checkbox"
-          class=${styles.toggle}
-          checked=${completed}
-          onchange=${handleChange}
+          class="todo-item__toggle"
+          ?checked=${completed}
+          @change=${handleChange}
         />
-        <label ondblclick=${handleEdit}>${text}</label>
-        <button class=${styles.destroy} onclick=${handleRemove} />
+        <label @dblclick=${handleEdit}>${text}</label>
+        <button class="todo-item__destroy" @click=${handleRemove} />
       </div>
       <input
         value=${text}
-        class=${styles.edit}
-        onblur=${handleBlur}
-        onkeyup=${handleKeyUp}
+        class="todo-item__edit"
+        @blur=${handleBlur}
+        @keyup=${handleKeyUp}
       />
     </li>
   `;

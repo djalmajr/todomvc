@@ -1,5 +1,5 @@
-import storage from "../utils/storage";
-import Todo from "../models/todo";
+import storage from "../utils/storage.js";
+import Todo from "../models/todo.js";
 
 class Controller {
   get hash() {
@@ -36,12 +36,7 @@ class Controller {
 
   init(render) {
     this.todos = storage.get().map(t => new Todo(t));
-
-    this.update = () => {
-      render(this.filtered);
-      storage.set(this.todos);
-    };
-
+    this.update = () => (render(), storage.set(this.todos));
     window.onhashchange = this.update;
   }
 

@@ -1,6 +1,7 @@
-import { wire } from "hyperhtml";
-import controller from "../controllers/todos";
-import styles from "./header.less";
+import { html } from "https://unpkg.com/lit-html?module";
+import controller from "../controllers/todos.js";
+
+addStyleSheet(__dirname + "/header.css");
 
 function handleKeyPress(evt) {
   const text = evt.target.value.trim();
@@ -14,30 +15,31 @@ function handleKeyPress(evt) {
 
 function renderToggle() {
   if (!controller.filtered.length) {
-    return wire()`${[]}`;
+    return html``;
   }
 
-  return wire()`
+  return html`
     <input
       id="toggle-all"
       type="checkbox"
-      class=${`${styles.toggle} ${controller.allDone && styles.checked}`}
-      checked=${controller.allDone}
-      onchange=${() => controller.toggleAll()}
+      class=${`todo-header__toggle ${controller.allDone &&
+        "todo-header__toggle--checked"}`}
+      ?checked=${controller.allDone}
+      @change=${() => controller.toggleAll()}
     />
     <label for="toggle-all">Mark all as complete</label>
   `;
 }
 
-export default html => html`
-  <header class=${styles.container}>
+export default () => html`
+  <header class="todo-header">
     <h1>todos</h1>
     ${renderToggle()}
     <input
       autofocus
-      class=${styles.input}
+      class="todo-header__input"
       placeholder="What needs to be done?"
-      onkeypress=${handleKeyPress}
+      @keypress=${handleKeyPress}
     />
   </header>
 `;
