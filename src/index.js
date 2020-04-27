@@ -1,17 +1,28 @@
-import { bind as hyper, wire } from "hyperhtml";
-import controller from "./controllers/todos";
+import { html } from "htm/preact";
+import { render } from "preact";
+import { useMemo, useReducer, useState } from "preact/hooks";
+import { App } from "./containers";
+import {
+  createTodoActions,
+  initTodoState,
+  TodoContext,
+  todoReducer,
+} from "./contexts";
+import { getHash } from "./utils";
+import "./index.css";
 
-const app = wire();
-const html = hyper(document.querySelector("#__wrapper__"));
-const getApp = () => require("./views/app").default;
+const Root = () => {
+  const [hash, setHash] = useState(getHash());
+  const [todos, dispatch] = useReducer(todoReducer, initTodoState);
+  const todoContext = useMemo(() => createTodoActions(dispatch), []);
 
-const render = renderApp => {
-  controller.init(todos => html`${renderApp(app, todos)}`);
-  controller.update();
+  window.onhashchange = () => setHash(getHash());
+
+  return html`
+    <${TodoContext.Provider} value=${{ ...todoContext, todos, hash }}>
+      <${App} />
+    <//>
+  `;
 };
 
-if (module.hot) {
-  module.hot.accept("./views/app", () => render(getApp()));
-}
-
-render(getApp());
+render(html`<${Root} />`, document.querySelector("#root"));

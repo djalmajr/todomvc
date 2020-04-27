@@ -1,12 +1,12 @@
 // https://davidwalsh.name/function-debounce
-function debounce(func, wait, immediate) {
+export function debounce(func, wait, immediate) {
   let timeout;
 
-  return function(...args) {
+  return function (...args) {
     const context = this;
     const callNow = immediate && !timeout;
 
-    const later = function() {
+    const later = function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };
@@ -17,5 +17,3 @@ function debounce(func, wait, immediate) {
     if (callNow) func.apply(context, args);
   };
 }
-
-export default debounce;
