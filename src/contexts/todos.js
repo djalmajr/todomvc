@@ -1,10 +1,11 @@
+import { html } from "htm/preact";
 import { createContext } from "preact";
-import { useContext } from "preact/hooks";
+import { useContext, useMemo, useReducer } from "preact/hooks";
 import { createCache, reduceState } from "../utils";
 
 const todoCache = createCache("app-todos");
 
-const actions = {
+const reducers = {
   add(state, payload) {
     const uid = new Date().toJSON().replace(/[^\w]/g, "");
 
@@ -55,15 +56,15 @@ const actions = {
   },
 };
 
-export function todoReducer(state, { type, payload = {} }) {
-  const newState = (actions[type] || (() => state))(state, payload);
+const reducer = (state, { type, payload = {} }) => {
+  const newState = (reducers[type] || (() => state))(state, payload);
 
   todoCache.set(newState);
 
   return newState;
-}
+};
 
-export const createTodoActions = (dispatch) => ({
+const createActions = (dispatch) => ({
   addTodo: (text) => dispatch({ type: "add", payload: { text } }),
   editTodo: (todo) => dispatch({ type: "edit", payload: todo }),
   removeTodo: (todo) => dispatch({ type: "remove", payload: todo }),
@@ -72,10 +73,27 @@ export const createTodoActions = (dispatch) => ({
   clearCompletedTodos: () => dispatch({ type: "clear" }),
 });
 
-export const initTodoState = todoCache.get();
+const initState = todoCache.get();
 
-export const TodoContext = createContext();
+const Context = createContext(initState);
+
+const useTodoReducer = () => {
+  const [todos, dispatch] = useReducer(reducer, initState);
+  const todoActions = useMemo(() => createActions(dispatch), []);
+
+  return { todos, ...todoActions };
+};
 
 export const withTodos = (child) => (props) => {
-  return child({ ...props, ...useContext(TodoContext) });
+  return child({ ...props, ...useContext(Context) });
+};
+
+export const TodoProvider = ({ children, value = {} }) => {
+  const todoProps = useTodoReducer();
+
+  return html`
+    <${Context.Provider} value=${{ ...todoProps, ...value }}>
+      ${children}
+    <//>
+  `;
 };
