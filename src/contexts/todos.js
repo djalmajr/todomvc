@@ -1,4 +1,3 @@
-import { html } from "htm/preact";
 import { createContext } from "preact";
 import { useContext, useMemo, useReducer } from "preact/hooks";
 import { createCache, reduceState } from "../utils";
@@ -77,7 +76,9 @@ const initState = todoCache.get();
 
 const Context = createContext(initState);
 
-const useTodoReducer = () => {
+export const TodoProvider = Context.Provider;
+
+export const useTodoReducer = () => {
   const [todos, dispatch] = useReducer(reducer, initState);
   const todoActions = useMemo(() => createActions(dispatch), []);
 
@@ -86,14 +87,4 @@ const useTodoReducer = () => {
 
 export const withTodos = (child) => (props) => {
   return child({ ...props, ...useContext(Context) });
-};
-
-export const TodoProvider = ({ children, value = {} }) => {
-  const todoProps = useTodoReducer();
-
-  return html`
-    <${Context.Provider} value=${{ ...todoProps, ...value }}>
-      ${children}
-    <//>
-  `;
 };
