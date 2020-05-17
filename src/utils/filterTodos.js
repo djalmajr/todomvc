@@ -10,6 +10,6 @@ export const filterTodos = (...args) => {
   }
 
   return Object.values(todos).filter(
-    hash === "active" ? (t) => t.completed : (t) => !t.completed
+    hash === "active" ? (t) => !t.completed : (t) => t.completed
   );
 };

@@ -10,7 +10,7 @@ export const Footer = withTodos((props) => {
   const { clearCompletedTodos, hash, todos } = props;
   const allTodos = filterTodos("all", todos);
   const completed = filterTodos("completed", todos);
-  const incompleted = filterTodos("incompleted", todos);
+  const incompleted = filterTodos("active", todos);
   const remaining = incompleted.length;
 
   if (!allTodos.length) return null;
