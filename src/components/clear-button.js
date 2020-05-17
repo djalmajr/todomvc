@@ -1,4 +1,4 @@
-import { html } from "htm/preact";
+import React from "react";
 import "./clear-button.css";
 
 export const ClearButton = ({ isEmpty, onClick }) => {
@@ -6,9 +6,9 @@ export const ClearButton = ({ isEmpty, onClick }) => {
     return null;
   }
 
-  return html`
-    <button class="clear-button" onclick=${onClick}>
+  return (
+    <button className="clear-button" onClick={onClick}>
       Clear completed
     </button>
-  `;
+  );
 };

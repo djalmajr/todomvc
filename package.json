@@ -20,8 +20,8 @@
     "eject": "react-app-rewired eject"
   },
   "dependencies": {
-    "htm": "^3.0.4",
-    "preact": "^10.4.1"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "customize-cra": "^0.9.1",

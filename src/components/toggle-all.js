@@ -1,4 +1,4 @@
-import { html } from "htm/preact";
+import React from "react";
 import "./toggle-all.css";
 
 export const ToggleAll = ({ allDone, isEmpty, onChange }) => {
@@ -6,14 +6,16 @@ export const ToggleAll = ({ allDone, isEmpty, onChange }) => {
     return null;
   }
 
-  return html`
-    <input
-      id="toggle-all"
-      type="checkbox"
-      class=${`toggle-all ${allDone && "toggle-all--checked"}`}
-      checked=${allDone}
-      onchange=${onChange}
-    />
-    <label for="toggle-all">Mark all as complete</label>
-  `;
+  return (
+    <>
+      <input
+        id="toggle-all"
+        type="checkbox"
+        className={`toggle-all ${allDone && "toggle-all--checked"}`}
+        checked={allDone}
+        onChange={onChange}
+      />
+      <label htmlFor="toggle-all">Mark all as complete</label>
+    </>
+  );
 };

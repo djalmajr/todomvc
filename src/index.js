@@ -1,6 +1,5 @@
-import { html } from "htm/preact";
-import { render } from "preact";
-import { useState } from "preact/hooks";
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 import { App } from "./containers";
 import { TodoProvider, useTodoReducer } from "./contexts";
 import { getHash } from "./utils";
@@ -12,11 +11,11 @@ const Root = () => {
 
   window.onhashchange = () => setHash(getHash());
 
-  return html`
-    <${TodoProvider} value=${{ ...todoProps, hash }}>
-      <${App} />
-    <//>
-  `;
+  return (
+    <TodoProvider value={{ ...todoProps, hash }}>
+      <App />
+    </TodoProvider>
+  );
 };
 
-render(html`<${Root} />`, document.querySelector("#root"));
+ReactDOM.render(<Root />, document.querySelector("#root"));

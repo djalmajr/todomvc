@@ -1,5 +1,4 @@
-import { useRef, useState } from "preact/hooks";
-import { html } from "htm/preact";
+import React, { useRef, useState } from "react";
 import { withTodos } from "../contexts";
 import { classNames as cn } from "../utils";
 import "./todo.css";
@@ -31,25 +30,25 @@ export const Todo = withTodos((props) => {
     editing && "todo--editing"
   );
 
-  return html`
-    <li class=${cname}>
-      <div class="todo__view">
+  return (
+    <li className={cname}>
+      <div className="todo__view">
         <input
           type="checkbox"
-          class="todo__toggle"
-          checked=${todo.completed}
-          onchange=${() => toggleTodo(todo)}
+          className="todo__toggle"
+          checked={todo.completed}
+          onChange={() => toggleTodo(todo)}
         />
-        <label ondblclick=${handleDblClick}>${todo.text}</label>
-        <button class="todo__destroy" onclick=${() => removeTodo(todo)} />
+        <label onDoubleClick={handleDblClick}>{todo.text}</label>
+        <button className="todo__destroy" onClick={() => removeTodo(todo)} />
       </div>
       <input
-        ref=${inputRef}
-        class="todo__edit"
-        value=${todo.text}
-        onblur=${() => setEditing(false)}
-        onkeyup=${handleKeyUp}
+        ref={inputRef}
+        className="todo__edit"
+        defaultValue={todo.text}
+        onBlur={() => setEditing(false)}
+        onKeyUp={handleKeyUp}
       />
     </li>
-  `;
+  );
 });

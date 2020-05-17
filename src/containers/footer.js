@@ -1,4 +1,4 @@
-import { html } from "htm/preact";
+import React from "react";
 import { ClearButton } from "../components";
 import { withTodos } from "../contexts";
 import { filterTodos } from "../utils";
@@ -13,26 +13,34 @@ export const Footer = withTodos((props) => {
   const incompleted = filterTodos("incompleted", todos);
   const remaining = incompleted.length;
 
-  if (!allTodos.length) return html``;
+  if (!allTodos.length) return null;
 
-  return html`
-    <footer class="footer__container">
-      <span class="footer__count">
-        <strong>${remaining}</strong> item${~-remaining ? "s" : ""} left
+  return (
+    <footer className="footer__container">
+      <span className="footer__count">
+        <strong>{remaining}</strong> item{~-remaining ? "s" : ""} left
       </span>
-      <ul class="footer__filters">
-        <li><a class="${cn(hash, "all")}" href="#/all">All</a></li>
-        <li><a class="${cn(hash, "active")}" href="#/active">Active</a></li>
+      <ul className="footer__filters">
         <li>
-          <a class="${cn(hash, "completed")}" href="#/completed">
+          <a className={cn(hash, "all")} href="#/all">
+            All
+          </a>
+        </li>
+        <li>
+          <a className={cn(hash, "active")} href="#/active">
+            Active
+          </a>
+        </li>
+        <li>
+          <a className={cn(hash, "completed")} href="#/completed">
             Completed
           </a>
         </li>
       </ul>
-      <${ClearButton}
-        isEmpty=${!completed.length}
-        onClick=${() => clearCompletedTodos()}
+      <ClearButton
+        isEmpty={!completed.length}
+        onClick={() => clearCompletedTodos()}
       />
     </footer>
-  `;
+  );
 });

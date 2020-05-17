@@ -1,4 +1,4 @@
-import { html } from "htm/preact";
+import React from "react";
 import { withTodos } from "../contexts";
 import { ToggleAll } from "../components";
 import { filterTodos } from "../utils";
@@ -18,20 +18,20 @@ export const Header = withTodos((props) => {
     }
   };
 
-  return html`
-    <header class="header">
-      <h1 class="header__title">todos</h1>
-      <${ToggleAll}
-        allDone=${allDone}
-        isEmpty=${!filtered.length}
-        onChange=${toggleAllTodos}
+  return (
+    <header className="header">
+      <h1 className="header__title">todos</h1>
+      <ToggleAll
+        allDone={allDone}
+        isEmpty={!filtered.length}
+        onChange={toggleAllTodos}
       />
       <input
-        autofocus
-        class="header__input"
+        autoFocus
+        className="header__input"
         placeholder="What needs to be done?"
-        onkeypress=${handleAdd}
+        onKeyPress={handleAdd}
       />
     </header>
-  `;
+  );
 });
