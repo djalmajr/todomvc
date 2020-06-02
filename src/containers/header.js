@@ -1,12 +1,11 @@
 import React from "react";
-import { withTodos } from "../contexts";
 import { ToggleAll } from "../components";
-import { filterTodos } from "../utils";
+import { withTodos } from "../contexts";
+import { filterTodos } from "../selectors";
 import "./header.css";
 
-export const Header = withTodos((props) => {
-  const { addTodo, hash, todos, toggleAllTodos } = props;
-  const filtered = filterTodos(hash, todos);
+export const Header = withTodos(({ addTodo, route, todos, toggleAllTodos }) => {
+  const filtered = filterTodos(route.slug, todos);
   const allDone = filtered.every((t) => t.completed);
 
   const handleAdd = (evt) => {

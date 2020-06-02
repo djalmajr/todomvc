@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { App } from "./containers";
-import { TodoProvider, useTodoReducer } from "./contexts";
-import { getHash } from "./utils";
+import { Router, TodosProvider, useTodos } from "./contexts";
 import "./index.css";
 
 const Root = () => {
-  const [hash, setHash] = useState(getHash());
-  const todoProps = useTodoReducer();
-
-  window.onhashchange = () => setHash(getHash());
+  const [todos, actions] = useTodos();
 
   return (
-    <TodoProvider value={{ ...todoProps, hash }}>
-      <App />
-    </TodoProvider>
+    <TodosProvider value={{ todos, ...actions }}>
+      <Router>
+        <App />
+      </Router>
+    </TodosProvider>
   );
 };
 

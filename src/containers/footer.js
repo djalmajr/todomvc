@@ -1,16 +1,16 @@
 import React from "react";
 import { ClearButton } from "../components";
 import { withTodos } from "../contexts";
-import { filterTodos } from "../utils";
+import { filterTodos } from "../selectors";
 import "./footer.css";
 
 const cn = (hash, curr) => (hash === curr ? "selected" : "");
 
 export const Footer = withTodos((props) => {
-  const { clearCompletedTodos, hash, todos } = props;
-  const allTodos = filterTodos("all", todos);
-  const completed = filterTodos("completed", todos);
-  const incompleted = filterTodos("active", todos);
+  const { clearCompletedTodos, route, todos } = props;
+  const allTodos = filterTodos("/", todos);
+  const completed = filterTodos("/completed", todos);
+  const incompleted = filterTodos("/active", todos);
   const remaining = incompleted.length;
 
   if (!allTodos.length) return null;
@@ -22,17 +22,17 @@ export const Footer = withTodos((props) => {
       </span>
       <ul className="footer__filters">
         <li>
-          <a className={cn(hash, "all")} href="#/all">
+          <a className={cn(route.slug, "/")} href="#/">
             All
           </a>
         </li>
         <li>
-          <a className={cn(hash, "active")} href="#/active">
+          <a className={cn(route.slug, "/active")} href="#/active">
             Active
           </a>
         </li>
         <li>
-          <a className={cn(hash, "completed")} href="#/completed">
+          <a className={cn(route.slug, "/completed")} href="#/completed">
             Completed
           </a>
         </li>
