@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, withTodos } from "../contexts";
+import { Route } from "../components";
+import { withTodos } from "../contexts";
 import { filterTodos } from "../selectors";
 import { Footer } from "./footer";
 import { Header } from "./header";

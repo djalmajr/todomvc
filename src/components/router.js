@@ -13,8 +13,7 @@ const getSlug = () => {
 /**
  * @example
  *
- * const params = getParams('/posts/{{id}}');
- * console.log(params); // logs { id: 1 }
+ * getParams('/posts/{{id}}'); // returns { id: <value> }
  *
  * @param {string} path
  * @returns {Record<string, string>} params

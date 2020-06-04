@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router } from "./components";
 import { App } from "./containers";
-import { Router, TodosProvider, useTodos } from "./contexts";
+import { TodosProvider, useTodos } from "./contexts";
 import "./index.css";
 
 const Root = () => {

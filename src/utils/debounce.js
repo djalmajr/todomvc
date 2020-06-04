@@ -1,19 +1,19 @@
+import { curryN } from "./curryN";
+
 // https://davidwalsh.name/function-debounce
-export function debounce(func, wait, immediate) {
+export const debounce = curryN(2, function (wait, func) {
   let timeout;
 
   return function (...args) {
     const context = this;
-    const callNow = immediate && !timeout;
-
     const later = function () {
       timeout = null;
-      if (!immediate) func.apply(context, args);
+      func.apply(context, args);
     };
 
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
 
-    if (callNow) func.apply(context, args);
+    if (!timeout) func.apply(context, args);
   };
-}
+});
