@@ -13,6 +13,5 @@ function _get(...args) {
   return fn(data, str2path(str));
 }
 
-export const getOr = curryN(3, _get);
-
 export const get = curryN(2, _get);
+export const getOr = curryN(3, _get);
