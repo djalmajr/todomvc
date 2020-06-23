@@ -1,4 +1,4 @@
-import { curryN } from "../utils";
+import { curryN } from "../helpers/curryN.js";
 
 export const filterTodos = curryN(2, (filter, todos) => {
   if (filter === "/") {
