@@ -6,7 +6,7 @@ export function emit(ctx, name, data) {
   ctx.dispatchEvent(
     new CustomEvent(name, {
       bubbles: true,
-      composed: !!ctx.shadowRoot,
+      composed: true,
       detail: data,
     })
   );
