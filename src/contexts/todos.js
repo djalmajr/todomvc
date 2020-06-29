@@ -46,3 +46,7 @@ export const [TodoContext, useTodos] = createContext({
     },
   }),
 });
+
+if (!customElements.get("todo-provider")) {
+  customElements.define("todo-provider", TodoContext.Provider);
+}

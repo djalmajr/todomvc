@@ -1,4 +1,8 @@
-import { html, useContext } from "https://unpkg.com/haunted/haunted.js";
+import {
+  component,
+  html,
+  useContext,
+} from "https://unpkg.com/haunted/haunted.js";
 import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
 import { repeat } from "https://unpkg.com/lit-html/directives/repeat.js";
 import { RouterContext } from "../contexts/router.js";
@@ -81,7 +85,7 @@ export function TodoApp() {
   useStyles(this, [style]);
 
   return html`
-    <awc-route .match=${["/", "/active", "/completed"]}>
+    <ac-route .match=${["/", "/active", "/completed"]}>
       <section class="content">
         <todo-header
           .allDone=${allDone}
@@ -119,9 +123,20 @@ export function TodoApp() {
         <p>Written by <a href="https://djalmajr.com">Djalma Jr.</a></p>
         <p>Not part of <a href="http://todomvc.com">TodoMVC</a></p>
       </footer>
-    </awc-route>
-    <awc-route match="*">
+    </ac-route>
+    <ac-route match="/hello/{name}">
+      <ac-router-consumer .render=${sayHello}></ac-router-consumer>
+    </ac-route>
+    <ac-route match="*">
       <h1 style="margin-top:3em;text-align:center">Not Found</h1>
-    </awc-route>
+    </ac-route>
   `;
+}
+
+const sayHello = ({ params = {} }) => {
+  return html`Hello ${params.name}`;
+};
+
+if (!customElements.get("todo-app")) {
+  customElements.define("todo-app", component(TodoApp));
 }

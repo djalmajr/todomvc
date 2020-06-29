@@ -1,4 +1,4 @@
-import { html } from "https://unpkg.com/haunted/haunted.js";
+import { component, html } from "https://unpkg.com/haunted/haunted.js";
 import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
 import { emit } from "../helpers/dom.js";
 import { useStyles } from "../hooks/useStyles.js";
@@ -140,3 +140,7 @@ export function TodoFooter({ empty, remaining, slug, visible }) {
 }
 
 TodoFooter.observedAttributes = ["slug"];
+
+if (!customElements.get("todo-footer")) {
+  customElements.define("todo-footer", component(TodoFooter));
+}

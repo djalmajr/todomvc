@@ -28,7 +28,7 @@ export const getParams = (path) => {
 };
 
 export const getRouteProps = () => {
-  const routes = querySelectorAllDeep("awc-route");
+  const routes = querySelectorAllDeep("ac-route");
   const route = { slug: getSlug() };
 
   if (routes.length) {

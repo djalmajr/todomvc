@@ -1,6 +1,14 @@
-import { component as $ } from "https://unpkg.com/haunted/haunted.js";
+export function $(query, recursive = false, container = document) {
+  const fn = recursive ? "querySelectorAll" : "querySelector";
+  const validator = recursive ? (el) => el.length : (el) => el;
+  const element = container[fn](query);
 
-// type Listener = EventListenerOrEventListenerObject;
+  if (validator(element) || container === document) {
+    return element;
+  }
+
+  return $(query, container.host.getRootNode(), recursive);
+}
 
 export function emit(ctx, name, data) {
   ctx.dispatchEvent(
@@ -25,13 +33,5 @@ export function off(el, evtName, callback) {
 
   for (const name of names) {
     el.removeEventListener(name, callback);
-  }
-}
-
-export function define(name, element, options) {
-  if (!customElements.get(name)) {
-    const isBool = typeof options === "boolean";
-    const el = isBool ? element : $(element);
-    customElements.define(name, el, isBool ? {} : options);
   }
 }

@@ -1,4 +1,4 @@
-import { html, useRef } from "https://unpkg.com/haunted/haunted.js";
+import { component, html, useRef } from "https://unpkg.com/haunted/haunted.js";
 import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
 import { classNames as cn } from "../helpers/classNames.js";
 import { ref } from "../helpers/directives.js";
@@ -121,4 +121,8 @@ export function TodoHeader() {
       />
     </header>
   `;
+}
+
+if (!customElements.get("todo-header")) {
+  customElements.define("todo-header", component(TodoHeader));
 }
