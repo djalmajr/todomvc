@@ -1,14 +1,9 @@
-import {
-  component,
-  html,
-  useContext,
-} from "https://unpkg.com/haunted/haunted.js";
+import { component, html } from "https://unpkg.com/haunted/haunted.js";
 import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
 import { repeat } from "https://unpkg.com/lit-html/directives/repeat.js";
-import { RouterContext } from "../contexts/router.js";
-import { TodoContext } from "../contexts/todos.js";
+import { useRouter } from "../components/ac-router.js";
 import { useStyles } from "../hooks/useStyles.js";
-import { filterTodos } from "../selectors/filterTodos.js";
+import { filterTodos, useTodos } from "./todo-store.js";
 
 const style = css`
   :host {
@@ -70,19 +65,19 @@ export function TodoApp() {
     clearCompletedTodos,
     editTodo,
     removeTodo,
-    toggleTodo,
-    toggleAllTodos,
     todos,
-  } = useContext(TodoContext);
+    toggleAllTodos,
+    toggleTodo,
+  } = useTodos();
 
-  const { slug } = useContext(RouterContext);
+  const { slug } = useRouter();
   const filtered = filterTodos(slug, todos);
   const completed = filterTodos("/completed", todos);
   const incompleted = filterTodos("/active", todos);
   const allDone = filtered.every((t) => t.completed);
   const hasTodos = filtered.length > 0;
 
-  useStyles(this, [style]);
+  useStyles(this, style);
 
   return html`
     <ac-route .match=${["/", "/active", "/completed"]}>
@@ -124,12 +119,8 @@ export function TodoApp() {
         <p>Not part of <a href="http://todomvc.com">TodoMVC</a></p>
       </footer>
     </ac-route>
-    <ac-route match="/hello/{name}">
-      <ac-router-consumer .render=${sayHello}></ac-router-consumer>
-    </ac-route>
-    <ac-route match="*">
-      <h1 style="margin-top:3em;text-align:center">Not Found</h1>
-    </ac-route>
+    <ac-route match="/hello/{name}" .render=${sayHello}></ac-route>
+    <ac-route match="*" redirect="/"></ac-route>
   `;
 }
 

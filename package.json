@@ -2,7 +2,7 @@
   "name": "todomvc",
   "private": true,
   "version": "0.1.0",
-  "description": "An Haunted version of TodoMVC",
+  "description": "A Haunted version of TodoMVC",
   "author": "Djalma Jr. <djalmajr@gmail.com>",
   "license": "UNLICENSED",
   "main": "src/index.js",
@@ -15,9 +15,12 @@
   },
   "scripts": {
     "build": "microbundle -i src/index.js -o dist/index.js --no-pkg-main -f module",
-    "start": "microbundle -i src/index.js -o dist/index.js --no-pkg-main -f module watch"
+    "serve": "live-server --port=8887 --watch=dist .",
+    "start": "concurrently 'npm run build watch' 'npm run serve'"
   },
   "devDependencies": {
-    "microbundle": "^0.12.2"
+    "concurrently": "^5.2.0",
+    "live-server": "^1.2.1",
+    "microbundle": "^0.12.3"
   }
 }

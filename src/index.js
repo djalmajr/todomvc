@@ -1,27 +1,18 @@
-import {
-  html,
-  render,
-  useEffect,
-  virtual,
-} from "https://unpkg.com/haunted/haunted.js";
-import { todoCache, useTodos } from "./contexts/todos.js";
+import { html, render, virtual } from "https://unpkg.com/haunted/haunted.js";
 import "./components/ac-router.js";
-import "./components/todo-app.js";
-import "./components/todo-footer.js";
-import "./components/todo-header.js";
-import "./components/todo-item.js";
+import "./containers/todo-app.js";
+import "./containers/todo-footer.js";
+import "./containers/todo-header.js";
+import "./containers/todo-item.js";
+import "./containers/todo-store.js";
 
 const Root = virtual(function () {
-  const [todoState, todoActions] = useTodos();
-
-  useEffect(() => todoCache.set(todoState), [todoState]);
-
   return html`
-    <todo-provider .value=${{ todos: todoState, ...todoActions }}>
-      <ac-router>
+    <ac-router>
+      <todo-store>
         <todo-app></todo-app>
-      </ac-router>
-    </todo-provider>
+      </todo-store>
+    </ac-router>
   `;
 });
 

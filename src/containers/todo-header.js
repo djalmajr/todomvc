@@ -1,8 +1,8 @@
 import { component, html, useRef } from "https://unpkg.com/haunted/haunted.js";
 import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
-import { classNames as cn } from "../helpers/classNames.js";
-import { ref } from "../helpers/directives.js";
+import { classNames as cn } from "../helpers/utils.js";
 import { emit } from "../helpers/dom.js";
+import { ref } from "../helpers/directive.js";
 import { useStyles } from "../hooks/useStyles.js";
 import inputStyle from "../styles/input.css.js";
 
