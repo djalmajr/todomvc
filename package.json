@@ -14,7 +14,7 @@
     "url": "git@github.com:djalmajr/todomvc.git"
   },
   "scripts": {
-    "build": "microbundle -i src/index.js -o dist/index.js --no-pkg-main -f module",
+    "build": "microbundle -i src/index.js -o dist/index.js --no-pkg-main -f modern",
     "serve": "live-server --port=8887 --watch=dist .",
     "start": "concurrently 'npm run build watch' 'npm run serve'"
   },
