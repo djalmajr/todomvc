@@ -1,4 +1,4 @@
-import { curryN } from "./function.js";
+import { curryN } from './function.js';
 import {
   isArray,
   isFunction,
@@ -6,7 +6,7 @@ import {
   isUndefined,
   keys,
   values,
-} from "./object.js";
+} from './object.js';
 
 const compare = curryN(4, function (method, defaults, filter, arr) {
   let result;
@@ -22,8 +22,8 @@ const compare = curryN(4, function (method, defaults, filter, arr) {
   return isUndefined(result) ? defaults : result;
 });
 
-export const find = compare("find", undefined);
+export const find = compare('find', undefined);
 
-export const filter = compare("filter", undefined);
+export const filter = compare('filter', undefined);
 
-export const findIndex = compare("findIndex", -1);
+export const findIndex = compare('findIndex', -1);

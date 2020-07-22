@@ -1,16 +1,16 @@
-import { component, html } from "https://unpkg.com/haunted/haunted.js";
-import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
-import { repeat } from "https://unpkg.com/lit-html/directives/repeat.js";
-import { useRouter } from "../components/ac-router.js";
-import { useStyles } from "../hooks/useStyles.js";
-import { filterTodos, useTodos } from "./todo-store.js";
+import { component, html } from 'haunted';
+import { css } from 'lit-element/lib/css-tag';
+import { repeat } from 'lit-html/directives/repeat.js';
+import { useRouter } from '../components/ac-router.js';
+import { useStyles } from '../hooks/useStyles.js';
+import { filterTodos, useTodos } from './todo-store.js';
 
 const style = css`
   :host {
     color: #4d4d4d;
     display: block;
     font-weight: 300;
-    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
     margin: 0 auto;
     max-width: 550px;
@@ -72,15 +72,15 @@ export function TodoApp() {
 
   const { slug } = useRouter();
   const filtered = filterTodos(slug, todos);
-  const completed = filterTodos("/completed", todos);
-  const incompleted = filterTodos("/active", todos);
+  const completed = filterTodos('/completed', todos);
+  const incompleted = filterTodos('/active', todos);
   const allDone = filtered.every((t) => t.completed);
   const hasTodos = filtered.length > 0;
 
   useStyles(this, style);
 
   return html`
-    <ac-route .match=${["/", "/active", "/completed"]}>
+    <ac-route .match=${['/', '/active', '/completed']}>
       <section class="content">
         <todo-header
           .allDone=${allDone}
@@ -128,6 +128,6 @@ const sayHello = ({ params = {} }) => {
   return html`Hello ${params.name}`;
 };
 
-if (!customElements.get("todo-app")) {
-  customElements.define("todo-app", component(TodoApp));
+if (!customElements.get('todo-app')) {
+  customElements.define('todo-app', component(TodoApp));
 }

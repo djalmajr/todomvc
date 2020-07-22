@@ -1,4 +1,4 @@
-import { curryN } from "./function.js";
+import { curryN } from './function.js';
 
 /**
  * Remove accents from a string.
@@ -11,7 +11,7 @@ import { curryN } from "./function.js";
  * @returns string without accents
  */
 export const deburr = (str) =>
-  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 export const contains = (str, query) =>
   deburr(str).toLowerCase().includes(deburr(query).toLowerCase());

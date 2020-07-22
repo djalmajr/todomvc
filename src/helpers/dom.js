@@ -1,5 +1,5 @@
 export function $(query, recursive = false, container = document) {
-  const fn = recursive ? "querySelectorAll" : "querySelector";
+  const fn = recursive ? 'querySelectorAll' : 'querySelector';
   const validator = recursive ? (el) => el.length : (el) => el;
   const element = container[fn](query);
 

@@ -1,9 +1,5 @@
-import {
-  createContext,
-  useMemo,
-  useReducer,
-} from "https://unpkg.com/haunted/haunted.js";
-import { debounce } from "./function.js";
+import { createContext, useMemo, useReducer } from 'haunted';
+import { debounce } from './function.js';
 
 function create({ initState, reducers, actions: createActions }) {
   const Context = createContext(initState);
@@ -25,8 +21,8 @@ function create({ initState, reducers, actions: createActions }) {
 export { create as createContext };
 
 export const createCache = (key) => ({
-  get: () => JSON.parse(localStorage.getItem(key) || "{}"),
+  get: () => JSON.parse(localStorage.getItem(key) || '{}'),
   set: debounce(1000, (t) => localStorage.setItem(key, JSON.stringify(t))),
 });
 
-export const classNames = (...args) => args.filter(Boolean).join(" ");
+export const classNames = (...args) => args.filter(Boolean).join(' ');

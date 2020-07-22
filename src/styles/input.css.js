@@ -1,4 +1,4 @@
-import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
+import { css } from 'lit-element/lib/css-tag';
 
 export default css`
   input {

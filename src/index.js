@@ -1,10 +1,10 @@
-import { html, render, virtual } from "https://unpkg.com/haunted/haunted.js";
-import "./components/ac-router.js";
-import "./containers/todo-app.js";
-import "./containers/todo-footer.js";
-import "./containers/todo-header.js";
-import "./containers/todo-item.js";
-import "./containers/todo-store.js";
+import { html, render, virtual } from 'haunted';
+import './components/ac-router.js';
+import './containers/todo-app.js';
+import './containers/todo-footer.js';
+import './containers/todo-header.js';
+import './containers/todo-item.js';
+import './containers/todo-store.js';
 
 const Root = virtual(function () {
   return html`
@@ -16,4 +16,4 @@ const Root = virtual(function () {
   `;
 });
 
-render(Root(), document.querySelector("#root"));
+render(Root(), document.querySelector('#root'));

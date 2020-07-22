@@ -1,5 +1,5 @@
-import { useLayoutEffect } from "https://unpkg.com/haunted/haunted.js";
-import { supportsAdoptingStyleSheets } from "https://unpkg.com/lit-element/lib/css-tag.js";
+import { useLayoutEffect } from 'haunted';
+import { supportsAdoptingStyleSheets } from 'lit-element/lib/css-tag';
 
 export function useStyles(el, css) {
   const styles = [].concat(css);
@@ -35,7 +35,7 @@ export function useStyles(el, css) {
       );
     } else {
       styles.forEach((s) => {
-        const style = document.createElement("style");
+        const style = document.createElement('style');
         style.textContent = s.cssText;
         el.shadowRoot.appendChild(style);
       });

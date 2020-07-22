@@ -5,21 +5,21 @@ import {
   useContext,
   useEffect,
   useState,
-} from "https://unpkg.com/haunted/haunted.js";
+} from 'haunted';
 import {
   querySelectorAllDeep,
   querySelectorDeep,
-} from "https://unpkg.com/query-selector-shadow-dom";
-import { find } from "../helpers/collection.js";
-import { curryN } from "../helpers/function.js";
+} from 'query-selector-shadow-dom';
+import { find } from '../helpers/collection.js';
+import { curryN } from '../helpers/function.js';
 
-const compare = curryN(2, (slug, path = "") => {
-  return slug.match(new RegExp(`^${path}$`, "g")) || getParams(path);
+const compare = curryN(2, (slug, path = '') => {
+  return slug.match(new RegExp(`^${path}$`, 'g')) || getParams(path);
 });
 
 export const getSlug = () => {
   const { hash } = window.location;
-  return hash ? hash.replace(/^\/?#\/?(.*?)\/?$/g, "/$1") : "/";
+  return hash ? hash.replace(/^\/?#\/?(.*?)\/?$/g, '/$1') : '/';
 };
 
 export const getParams = (path) => {
@@ -27,7 +27,7 @@ export const getParams = (path) => {
 
   if (args) {
     const found = getSlug().match(
-      new RegExp(path.replace(/{(.+?)}/g, "([\\w-]+)"))
+      new RegExp(path.replace(/{(.+?)}/g, '([\\w-]+)'))
     );
 
     if (found) {
@@ -44,15 +44,15 @@ export const getParams = (path) => {
 };
 
 export const getRouteProps = () => {
-  const routes = querySelectorAllDeep("ac-route");
+  const routes = querySelectorAllDeep('ac-route');
   const route = { slug: getSlug() };
 
   if (routes.length) {
-    const compare = (match = "") => {
-      if (match === "*") return false;
+    const compare = (match = '') => {
+      if (match === '*') return false;
 
       const params = getParams(match);
-      const result = route.slug.match(new RegExp(`^${match}$`, "g")) || params;
+      const result = route.slug.match(new RegExp(`^${match}$`, 'g')) || params;
 
       result && (route.match = match);
       params && (route.params = params);
@@ -66,8 +66,8 @@ export const getRouteProps = () => {
       }
     }
 
-    if (!route.match && find({ match: "*" }, routes)) {
-      route.match = "*";
+    if (!route.match && find({ match: '*' }, routes)) {
+      route.match = '*';
     }
   }
 
@@ -82,22 +82,22 @@ function Route({ match, redirect, render }) {
   const route = useRouter();
 
   useEffect(() => {
-    const router = querySelectorDeep("ac-router");
+    const router = querySelectorDeep('ac-router');
 
     if (!router) {
-      console.error("Place the route inside a <ac-router>");
+      console.error('Place the route inside a <ac-router>');
     }
   }, []);
 
-  if (match === "*") {
-    if (route.match !== "*") return "";
+  if (match === '*') {
+    if (route.match !== '*') return '';
   } else if (!match || ![].concat(match).some(compare(route.slug))) {
-    return "";
+    return '';
   }
 
   if (redirect) {
     window.location.hash = redirect;
-    return "";
+    return '';
   }
 
   return render
@@ -105,7 +105,7 @@ function Route({ match, redirect, render }) {
     : html`<slot></slot>`;
 }
 
-Route.observedAttributes = ["match", "redirect"];
+Route.observedAttributes = ['match', 'redirect'];
 
 function Router({ render }) {
   const [route, setRoute] = useState({ slug: getSlug() });
@@ -114,10 +114,10 @@ function Router({ render }) {
   window.onhashchange = changeRoute;
 
   useEffect(() => {
-    const instances = querySelectorAllDeep("ac-router");
+    const instances = querySelectorAllDeep('ac-router');
 
     if (instances.length > 1) {
-      console.error("Only one declaration of <ac-router> is allowed");
+      console.error('Only one declaration of <ac-router> is allowed');
     }
 
     setTimeout(changeRoute);
@@ -132,15 +132,15 @@ function Router({ render }) {
   `;
 }
 
-if (!customElements.get("ac-router-provider")) {
-  customElements.define("ac-router-consumer", Context.Consumer);
-  customElements.define("ac-router-provider", Context.Provider);
+if (!customElements.get('ac-router-provider')) {
+  customElements.define('ac-router-consumer', Context.Consumer);
+  customElements.define('ac-router-provider', Context.Provider);
 }
 
-if (!customElements.get("ac-route")) {
-  customElements.define("ac-route", component(Route));
+if (!customElements.get('ac-route')) {
+  customElements.define('ac-route', component(Route));
 }
 
-if (!customElements.get("ac-router")) {
-  customElements.define("ac-router", component(Router));
+if (!customElements.get('ac-router')) {
+  customElements.define('ac-router', component(Router));
 }

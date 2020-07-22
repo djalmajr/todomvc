@@ -1,11 +1,11 @@
-import { curryN } from "./function.js";
+import { curryN } from './function.js';
 
 export const { isArray } = Array;
 export const { assign, freeze, keys, values } = Object;
 
-export const isObject = (a) => typeof a === "object";
-export const isFunction = (a) => typeof a === "function";
-export const isUndefined = (a) => typeof a === "undefined";
+export const isObject = (a) => typeof a === 'object';
+export const isFunction = (a) => typeof a === 'function';
+export const isUndefined = (a) => typeof a === 'undefined';
 
 export function isEqual(a, b) {
   const aLen = keys(a || {}).length;
@@ -47,7 +47,7 @@ export const str2path = (str) => {
   const rx1 = /[.|\]|[]/g;
   const rx2 = /[^a-zA-Z0-9_.[\]]/g;
 
-  return str.replace(rx2, "").split(rx1).filter(Boolean);
+  return str.replace(rx2, '').split(rx1).filter(Boolean);
 };
 
 export const set = curryN(3, (...args) => {

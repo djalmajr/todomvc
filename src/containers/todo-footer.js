@@ -1,12 +1,12 @@
-import { component, html } from "https://unpkg.com/haunted/haunted.js";
-import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
-import { emit } from "../helpers/dom.js";
-import { useStyles } from "../hooks/useStyles.js";
-import buttonStyle from "../styles/button.css.js";
+import { component, html } from 'haunted';
+import { css } from 'lit-element/lib/css-tag';
+import { emit } from '../helpers/dom.js';
+import { useStyles } from '../hooks/useStyles.js';
+import buttonStyle from '../styles/button.css.js';
 
 const style = css`
   :host {
-    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     line-height: 1.4em;
   }
@@ -24,7 +24,7 @@ const style = css`
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6,
       0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
       0 17px 2px -6px rgba(0, 0, 0, 0.2);
-    content: "";
+    content: '';
     height: 50px;
     left: 0;
     overflow: hidden;
@@ -95,41 +95,41 @@ const style = css`
   }
 `;
 
-const cn = (hash, curr) => (hash === curr ? "selected" : "");
+const cn = (hash, curr) => (hash === curr ? 'selected' : '');
 
 export function TodoFooter({ empty, remaining, slug, visible }) {
   useStyles(this, [buttonStyle, style]);
 
   const renderClear = () => {
-    if (empty) return "";
+    if (empty) return '';
 
     return html`
-      <button class="clear" @click=${() => emit(this, "clear")}>
+      <button class="clear" @click=${() => emit(this, 'clear')}>
         Clear completed
       </button>
     `;
   };
 
-  if (!visible) return "";
+  if (!visible) return '';
 
   return html`
     <footer class="footer__container">
       <span class="footer__count">
-        <strong>${remaining}</strong> item${~-remaining ? "s" : ""} left
+        <strong>${remaining}</strong> item${~-remaining ? 's' : ''} left
       </span>
       <ul class="footer__filters">
         <li>
-          <a class=${cn(slug, "/")} href="#/">
+          <a class=${cn(slug, '/')} href="#/">
             All
           </a>
         </li>
         <li>
-          <a class=${cn(slug, "/active")} href="#/active">
+          <a class=${cn(slug, '/active')} href="#/active">
             Active
           </a>
         </li>
         <li>
-          <a class=${cn(slug, "/completed")} href="#/completed">
+          <a class=${cn(slug, '/completed')} href="#/completed">
             Completed
           </a>
         </li>
@@ -139,8 +139,8 @@ export function TodoFooter({ empty, remaining, slug, visible }) {
   `;
 }
 
-TodoFooter.observedAttributes = ["slug"];
+TodoFooter.observedAttributes = ['slug'];
 
-if (!customElements.get("todo-footer")) {
-  customElements.define("todo-footer", component(TodoFooter));
+if (!customElements.get('todo-footer')) {
+  customElements.define('todo-footer', component(TodoFooter));
 }

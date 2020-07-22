@@ -13,14 +13,28 @@
     "type": "git",
     "url": "git@github.com:djalmajr/todomvc.git"
   },
+  "browserslist": "> 0.25%, not dead",
   "scripts": {
-    "build": "microbundle -i src/index.js -o dist/index.js --no-pkg-main -f modern",
-    "serve": "live-server --port=8887 --watch=dist .",
-    "start": "concurrently 'npm run build watch' 'npm run serve'"
+    "build": "rollup -c",
+    "build:dev": "rollup -c -w",
+    "prettier:format": "prettier --write \"src/**/*.js\"",
+    "prettier:lint": "prettier --check \"src/**/*.js\"",
+    "serve": "sirv dist --port 8887",
+    "start": "run-p build:dev serve"
+  },
+  "dependencies": {
+    "haunted": "^4.7.0",
+    "lit-element": "^2.3.1",
+    "lit-html": "^1.2.1",
+    "query-selector-shadow-dom": "^0.6.0"
   },
   "devDependencies": {
-    "concurrently": "^5.2.0",
-    "live-server": "^1.2.1",
-    "microbundle": "^0.12.3"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "rollup": "^2.22.1",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-esm-import-to-url": "^2.1.0",
+    "rollup-plugin-terser": "^6.1.0",
+    "sirv-cli": "^1.0.3"
   }
 }

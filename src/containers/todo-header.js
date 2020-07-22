@@ -1,15 +1,15 @@
-import { component, html, useRef } from "https://unpkg.com/haunted/haunted.js";
-import { css } from "https://unpkg.com/lit-element/lib/css-tag.js";
-import { classNames as cn } from "../helpers/utils.js";
-import { emit } from "../helpers/dom.js";
-import { ref } from "../helpers/directive.js";
-import { useStyles } from "../hooks/useStyles.js";
-import inputStyle from "../styles/input.css.js";
+import { component, html, useRef } from 'haunted';
+import { css } from 'lit-element/lib/css-tag';
+import { classNames as cn } from '../helpers/utils.js';
+import { emit } from '../helpers/dom.js';
+import { ref } from '../helpers/directive.js';
+import { useStyles } from '../hooks/useStyles.js';
+import inputStyle from '../styles/input.css.js';
 
 const style = css`
   :host {
     display: flex;
-    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     line-height: 1.4em;
     width: 100%;
@@ -57,7 +57,7 @@ const style = css`
 
   .toggle-all + label:before {
     color: #e6e6e6;
-    content: "❯";
+    content: '❯';
     font-size: 22px;
     padding: 10px 27px;
   }
@@ -83,24 +83,24 @@ export function TodoHeader() {
   const handleKeyPress = (evt) => {
     const text = inputRef.current.value.trim();
 
-    if (evt.key === "Enter" && text) {
-      inputRef.current.value = "";
-      emit(this, "add", text);
+    if (evt.key === 'Enter' && text) {
+      inputRef.current.value = '';
+      emit(this, 'add', text);
     }
   };
 
   const renderToggleAll = () => {
     if (!this.showCheck) {
-      return "";
+      return '';
     }
 
     return html`
       <input
         id="toggle-all"
         type="checkbox"
-        class="${cn("toggle-all", this.allDone && "checked")}"
+        class="${cn('toggle-all', this.allDone && 'checked')}"
         ?checked=${this.allDone}
-        @change=${() => emit(this, "toggle")}
+        @change=${() => emit(this, 'toggle')}
       />
       <label for="toggle-all">Mark all as complete</label>
     `;
@@ -123,6 +123,6 @@ export function TodoHeader() {
   `;
 }
 
-if (!customElements.get("todo-header")) {
-  customElements.define("todo-header", component(TodoHeader));
+if (!customElements.get('todo-header')) {
+  customElements.define('todo-header', component(TodoHeader));
 }

@@ -1,25 +1,20 @@
-import {
-  component,
-  html,
-  useContext,
-  useEffect,
-} from "https://unpkg.com/haunted/haunted.js";
-import { getSlug } from "../components/ac-router.js";
-import { curryN } from "../helpers/function.js";
-import { freeze, keys, set, values } from "../helpers/object.js";
-import { createCache, createContext } from "../helpers/utils.js";
+import { component, html, useContext, useEffect } from 'haunted';
+import { getSlug } from '../components/ac-router.js';
+import { curryN } from '../helpers/function.js';
+import { freeze, keys, set, values } from '../helpers/object.js';
+import { createCache, createContext } from '../helpers/utils.js';
 
-const todoCache = createCache("app-todos");
+const todoCache = createCache('app-todos');
 
 const empty = freeze({ todos: {} });
 
 export const filterTodos = curryN(2, (filter, todos) => {
-  if (filter === "/") {
+  if (filter === '/') {
     return values(todos);
   }
 
   return values(todos).filter(
-    filter === "/active" ? (t) => !t.completed : (t) => t.completed
+    filter === '/active' ? (t) => !t.completed : (t) => t.completed
   );
 });
 
@@ -28,16 +23,16 @@ const [Context, useStore] = createContext({
     todos: todoCache.get(),
   },
   actions: (dispatch) => ({
-    addTodo: (text) => dispatch({ type: "addTodo", payload: { text } }),
-    editTodo: (todo) => dispatch({ type: "editTodo", payload: todo }),
-    removeTodo: (uid) => dispatch({ type: "removeTodo", payload: { uid } }),
-    toggleTodo: (uid) => dispatch({ type: "toggleTodo", payload: { uid } }),
-    toggleAllTodos: () => dispatch({ type: "toggleAllTodos" }),
-    clearCompletedTodos: () => dispatch({ type: "clearCompletedTodos" }),
+    addTodo: (text) => dispatch({ type: 'addTodo', payload: { text } }),
+    editTodo: (todo) => dispatch({ type: 'editTodo', payload: todo }),
+    removeTodo: (uid) => dispatch({ type: 'removeTodo', payload: { uid } }),
+    toggleTodo: (uid) => dispatch({ type: 'toggleTodo', payload: { uid } }),
+    toggleAllTodos: () => dispatch({ type: 'toggleAllTodos' }),
+    clearCompletedTodos: () => dispatch({ type: 'clearCompletedTodos' }),
   }),
   reducers: (state, payload) => ({
     addTodo() {
-      const uid = new Date().toJSON().replace(/[^\w]/g, "");
+      const uid = new Date().toJSON().replace(/[^\w]/g, '');
       const todo = { uid, completed: false, text: payload.text };
       return set(`todos.${uid}`, todo, state);
     },
@@ -85,11 +80,11 @@ function Store({ render }) {
   `;
 }
 
-if (!customElements.get("todo-provider")) {
-  customElements.define("todo-consumer", Context.Consumer);
-  customElements.define("todo-provider", Context.Provider);
+if (!customElements.get('todo-provider')) {
+  customElements.define('todo-consumer', Context.Consumer);
+  customElements.define('todo-provider', Context.Provider);
 }
 
-if (!customElements.get("todo-store")) {
-  customElements.define("todo-store", component(Store));
+if (!customElements.get('todo-store')) {
+  customElements.define('todo-store', component(Store));
 }

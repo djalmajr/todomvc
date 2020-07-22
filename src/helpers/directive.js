@@ -1,11 +1,8 @@
-import {
-  AttributePart,
-  directive,
-} from "https://unpkg.com/lit-html/lit-html.js";
+import { AttributePart, directive } from 'lit-html';
 
 export const ref = directive((refInstance) => (part) => {
   if (!(part instanceof AttributePart)) {
-    throw new Error("ref directive can only be used as an attribute");
+    throw new Error('ref directive can only be used as an attribute');
   }
 
   refInstance.current = part.committer.element;
