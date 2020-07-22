@@ -13,13 +13,19 @@
     "type": "git",
     "url": "git@github.com:djalmajr/todomvc.git"
   },
-  "browserslist": "> 0.25%, not dead",
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write \"src/**/*.js\""
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
   "scripts": {
     "build": "rollup -c",
     "build:dev": "rollup -c -w",
-    "prettier:format": "prettier --write \"src/**/*.js\"",
-    "prettier:lint": "prettier --check \"src/**/*.js\"",
-    "serve": "sirv dist --port 8887",
+    "serve": "sirv dist --port 8887 --single",
     "start": "run-p build:dev serve"
   },
   "dependencies": {
@@ -29,6 +35,8 @@
     "query-selector-shadow-dom": "^0.6.0"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "husky": "^4.2.5",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "rollup": "^2.22.1",

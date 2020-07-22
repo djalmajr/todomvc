@@ -1,5 +1,5 @@
 import { createContext, useMemo, useReducer } from 'haunted';
-import { debounce } from './function.js';
+import { debounce } from './function';
 
 function create({ initState, reducers, actions: createActions }) {
   const Context = createContext(initState);

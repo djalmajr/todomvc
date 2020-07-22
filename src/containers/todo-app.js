@@ -1,9 +1,9 @@
 import { component, html } from 'haunted';
 import { css } from 'lit-element/lib/css-tag';
-import { repeat } from 'lit-html/directives/repeat.js';
-import { useRouter } from '../components/ac-router.js';
-import { useStyles } from '../hooks/useStyles.js';
-import { filterTodos, useTodos } from './todo-store.js';
+import { repeat } from 'lit-html/directives/repeat';
+import { useRouter } from '../components';
+import { useStyles } from '../hooks';
+import { filterTodos, useTodos } from './todo-store';
 
 const style = css`
   :host {
@@ -76,6 +76,8 @@ export function TodoApp() {
   const incompleted = filterTodos('/active', todos);
   const allDone = filtered.every((t) => t.completed);
   const hasTodos = filtered.length > 0;
+
+  console.log(useRouter());
 
   useStyles(this, style);
 

@@ -1,4 +1,4 @@
-import { curryN } from './function.js';
+import { curryN } from './function';
 
 /**
  * Remove accents from a string.

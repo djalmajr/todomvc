@@ -1,4 +1,4 @@
-import { curryN } from './function.js';
+import { curryN } from './function';
 import {
   isArray,
   isFunction,
@@ -6,7 +6,7 @@ import {
   isUndefined,
   keys,
   values,
-} from './object.js';
+} from './object';
 
 const compare = curryN(4, function (method, defaults, filter, arr) {
   let result;

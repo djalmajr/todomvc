@@ -1,8 +1,8 @@
 import { component, html } from 'haunted';
 import { css } from 'lit-element/lib/css-tag';
-import { emit } from '../helpers/dom.js';
-import { useStyles } from '../hooks/useStyles.js';
-import buttonStyle from '../styles/button.css.js';
+import { emit } from '../helpers';
+import { useStyles } from '../hooks';
+import * as styles from '../styles';
 
 const style = css`
   :host {
@@ -98,7 +98,7 @@ const style = css`
 const cn = (hash, curr) => (hash === curr ? 'selected' : '');
 
 export function TodoFooter({ empty, remaining, slug, visible }) {
-  useStyles(this, [buttonStyle, style]);
+  useStyles(this, [styles.button, style]);
 
   const renderClear = () => {
     if (empty) return '';

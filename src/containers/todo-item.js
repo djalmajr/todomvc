@@ -1,11 +1,7 @@
 import { component, html, useRef, useState } from 'haunted';
 import { css } from 'lit-element/lib/css-tag';
-import { classNames as cn } from '../helpers/utils.js';
-import { emit } from '../helpers/dom.js';
-import { ref } from '../helpers/directive.js';
-import { useStyles } from '../hooks/useStyles.js';
-import buttonStyle from '../styles/button.css.js';
-import inputStyle from '../styles/input.css.js';
+import { classNames as cn, emit, ref } from '../helpers';
+import { useStyles } from '../hooks';
 
 const style = css`
   :host {
@@ -142,7 +138,7 @@ export function TodoItem({ todo }) {
     setTimeout(() => inputRef.current.select());
   };
 
-  useStyles(this, [buttonStyle, inputStyle, style]);
+  useStyles(this, [styles.button, styles.input, style]);
 
   return html`
     <li class=${cn(todo.completed && 'completed', editing && 'editing')}>

@@ -1,8 +1,14 @@
 import { component, html, useContext, useEffect } from 'haunted';
-import { getSlug } from '../components/ac-router.js';
-import { curryN } from '../helpers/function.js';
-import { freeze, keys, set, values } from '../helpers/object.js';
-import { createCache, createContext } from '../helpers/utils.js';
+import { getSlug } from '../components';
+import {
+  createCache,
+  createContext,
+  curryN,
+  freeze,
+  keys,
+  set,
+  values,
+} from '../helpers';
 
 const todoCache = createCache('app-todos');
 

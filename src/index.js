@@ -1,10 +1,6 @@
 import { html, render, virtual } from 'haunted';
-import './components/ac-router.js';
-import './containers/todo-app.js';
-import './containers/todo-footer.js';
-import './containers/todo-header.js';
-import './containers/todo-item.js';
-import './containers/todo-store.js';
+import './components';
+import './containers';
 
 const Root = virtual(function () {
   return html`

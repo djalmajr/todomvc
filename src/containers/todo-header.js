@@ -1,10 +1,8 @@
 import { component, html, useRef } from 'haunted';
 import { css } from 'lit-element/lib/css-tag';
-import { classNames as cn } from '../helpers/utils.js';
-import { emit } from '../helpers/dom.js';
-import { ref } from '../helpers/directive.js';
-import { useStyles } from '../hooks/useStyles.js';
-import inputStyle from '../styles/input.css.js';
+import { classNames as cn, emit, ref } from '../helpers';
+import { useStyles } from '../hooks';
+import * as styles from '../styles';
 
 const style = css`
   :host {
@@ -106,7 +104,7 @@ export function TodoHeader() {
     `;
   };
 
-  useStyles(this, [inputStyle, style]);
+  useStyles(this, [styles.input, style]);
 
   return html`
     <header>

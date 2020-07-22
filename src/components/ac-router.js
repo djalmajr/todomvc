@@ -10,8 +10,7 @@ import {
   querySelectorAllDeep,
   querySelectorDeep,
 } from 'query-selector-shadow-dom';
-import { find } from '../helpers/collection.js';
-import { curryN } from '../helpers/function.js';
+import { curryN, find } from '../helpers';
 
 const compare = curryN(2, (slug, path = '') => {
   return slug.match(new RegExp(`^${path}$`, 'g')) || getParams(path);

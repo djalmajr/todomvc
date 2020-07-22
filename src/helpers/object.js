@@ -1,4 +1,4 @@
-import { curryN } from './function.js';
+import { curryN } from './function';
 
 export const { isArray } = Array;
 export const { assign, freeze, keys, values } = Object;
