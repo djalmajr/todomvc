@@ -1,5 +1,5 @@
 import { component, html, useContext, useEffect } from 'haunted';
-import { getSlug } from '../components';
+import { getSlug } from '~/components';
 import {
   createCache,
   createContext,
@@ -8,7 +8,7 @@ import {
   keys,
   set,
   values,
-} from '../helpers';
+} from '~/helpers';
 
 const todoCache = createCache('app-todos');
 

@@ -23,9 +23,9 @@
     "trailingComma": "es5"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --environment NODE_ENV:production",
     "build:dev": "rollup -c -w",
-    "serve": "sirv dist --port 8887 --single",
+    "serve": "sirv dist --port 8887 --single --dev",
     "start": "run-p build:dev serve"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "query-selector-shadow-dom": "^0.6.0"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "husky": "^4.2.5",
     "npm-run-all": "^4.1.5",

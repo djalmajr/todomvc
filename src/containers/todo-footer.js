@@ -1,8 +1,8 @@
 import { component, html } from 'haunted';
 import { css } from 'lit-element/lib/css-tag';
-import { emit } from '../helpers';
-import { useStyles } from '../hooks';
-import * as styles from '../styles';
+import { emit } from '~/helpers';
+import { useStyles } from '~/hooks';
+import * as styles from '~/styles';
 
 const style = css`
   :host {

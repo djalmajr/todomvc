@@ -50,8 +50,7 @@ export const str2path = (str) => {
   return str.replace(rx2, '').split(rx1).filter(Boolean);
 };
 
-export const set = curryN(3, (...args) => {
-  const [data, val, str] = args.reverse();
+export const set = curryN(3, (str, val, data) => {
   const res = deepClone(data);
 
   const fn = (obj, [key, ...keys]) => {
@@ -72,18 +71,12 @@ export const set = curryN(3, (...args) => {
   return res;
 });
 
-function _get(...args) {
-  const [data, str, val] = args.reverse();
-
+export const get = curryN(2, (str, data) => {
   const fn = (obj, [key, ...keys]) => {
-    if (!keys.length) return obj[key] || val;
-    if (!obj[key]) return val;
+    if (!keys.length) return obj[key];
+    if (!obj[key]) return undefined;
     return fn(obj[key], keys);
   };
 
   return fn(data, str2path(str));
-}
-
-export const get = curryN(2, _get);
-
-export const getOr = curryN(3, _get);
+});

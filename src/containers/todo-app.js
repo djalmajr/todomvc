@@ -1,8 +1,9 @@
 import { component, html } from 'haunted';
 import { css } from 'lit-element/lib/css-tag';
 import { repeat } from 'lit-html/directives/repeat';
-import { useRouter } from '../components';
-import { useStyles } from '../hooks';
+import { useRouter } from '~/components';
+import { keys } from '~/helpers';
+import { useStyles } from '~/hooks';
 import { filterTodos, useTodos } from './todo-store';
 
 const style = css`
@@ -77,8 +78,6 @@ export function TodoApp() {
   const allDone = filtered.every((t) => t.completed);
   const hasTodos = filtered.length > 0;
 
-  console.log(useRouter());
-
   useStyles(this, style);
 
   return html`
@@ -110,7 +109,7 @@ export function TodoApp() {
         <todo-footer
           slug=${slug}
           .empty=${!completed.length}
-          .visible=${Object.keys(todos).length}
+          .visible=${!!keys(todos).length}
           .remaining=${incompleted.length}
           @clear=${clearCompletedTodos}
         ></todo-footer>
