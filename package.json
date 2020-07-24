@@ -1,31 +1,31 @@
 {
-  "name": "todomvc",
-  "private": true,
-  "version": "0.1.0",
-  "description": "A HyperHTML version of TodoMVC",
-  "author": "Djalma Jr. <djalmajr@gmail.com>",
-  "license": "UNLICENSED",
-  "main": "src/index.js",
-  "homepage": "https://github.com/djalmajr/todomvc/tree/master#readme",
-  "bugs": {
-    "url": "https://github.com/djalmajr/todomvc/issues"
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write \"src/**/*.js\""
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:djalmajr/todomvc.git"
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
   "scripts": {
-    "changelog": "run-changelog",
-    "deploy": "run-deploy",
-    "start": "run-start --hot",
-    "build": "run-build",
-    "postversion": "run-postversion",
-    "version": "run-version"
-  },
-  "dependencies": {
-    "hyperhtml": "^2.16.3"
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c -w",
+    "serve": "live-server --port=8889 dist",
+    "start": "npm run build:dev"
   },
   "devDependencies": {
-    "wprun": "djalmajr/wprun"
+    "@rollup/plugin-commonjs": "14.0.0",
+    "@rollup/plugin-node-resolve": "8.4.0",
+    "husky": "4.2.5",
+    "prettier": "2.0.5",
+    "rollup": "2.23.0",
+    "rollup-plugin-copy": "3.3.0",
+    "rollup-plugin-live-server": "^1.0.3",
+    "rollup-plugin-svelte": "5.2.3",
+    "rollup-plugin-terser": "6.1.0",
+    "svelte": "3.24.0"
   }
 }
