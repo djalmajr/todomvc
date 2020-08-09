@@ -1,3 +1,4 @@
+// import "preact/debug";
 import { html } from "htm/preact";
 import { render } from "preact";
 import { App } from "./containers";
