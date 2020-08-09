@@ -1,12 +1,4 @@
-import {
-  assign,
-  createCache,
-  createContext,
-  curryN,
-  keys,
-  set,
-  values,
-} from "../helpers";
+import { createCache, createContext, curryN, set } from "../helpers";
 
 export const todoCache = createCache("app-todos");
 
@@ -17,10 +9,10 @@ export const getHash = () => {
 
 export const filterTodos = curryN(2, (filter, todos) => {
   if (filter === "all") {
-    return values(todos);
+    return Object.values(todos);
   }
 
-  return values(todos).filter(
+  return Object.values(todos).filter(
     filter === "active" ? (t) => !t.completed : (t) => t.completed
   );
 });
@@ -49,20 +41,20 @@ export const [TodoProvider, useTodos, withTodos] = createContext({
       return set(`todos.${uid}`, todo, state);
     },
     clearCompletedTodos() {
-      return keys(state.todos).reduce((res, uid) => {
+      return Object.keys(state.todos).reduce((res, uid) => {
         const todo = state.todos[uid];
         return todo.completed ? res : set(`todos.${uid}`, todo, res);
-      }, assign({}, state, { todos: {} }));
+      }, Object.assign({}, state, { todos: {} }));
     },
     editTodo() {
       return set(`todos.${payload.uid}.text`, payload.text, state);
     },
     removeTodo() {
-      return keys(state.todos)
+      return Object.keys(state.todos)
         .filter((uid) => uid !== payload.uid)
         .reduce(
           (res, uid) => set(`todos.${uid}`, state.todos[uid], res),
-          assign({}, state, { todos: {} })
+          Object.assign({}, state, { todos: {} })
         );
     },
     toggleTodo() {
@@ -71,7 +63,7 @@ export const [TodoProvider, useTodos, withTodos] = createContext({
     toggleAllTodos() {
       const filtered = filterTodos(state.hash, state.todos);
       const completed = filtered.every((t) => t.completed);
-      return keys(state.todos).reduce((res, uid) => {
+      return Object.keys(state.todos).reduce((res, uid) => {
         return set(`todos.${uid}.completed`, !completed, res);
       }, state);
     },

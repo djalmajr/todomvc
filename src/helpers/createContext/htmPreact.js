@@ -1,7 +1,6 @@
 import { html } from "htm/preact";
 import { createContext } from "preact";
 import { useContext, useMemo, useReducer } from "preact/hooks";
-import { debounce } from "./function";
 
 function createCtx({ initState, reducers, actions: createActions }) {
   const Context = createContext(initState);
@@ -31,10 +30,3 @@ function createCtx({ initState, reducers, actions: createActions }) {
 }
 
 export { createCtx as createContext };
-
-export const createCache = (key) => ({
-  get: () => JSON.parse(localStorage.getItem(key) || "{}"),
-  set: debounce(1000, (t) => localStorage.setItem(key, JSON.stringify(t))),
-});
-
-export const classNames = (...args) => args.filter(Boolean).join(" ");
