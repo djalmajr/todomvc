@@ -1,4 +1,5 @@
 import alias from "@rollup/plugin-alias";
+import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import path from "path";
@@ -7,7 +8,7 @@ import css from "rollup-plugin-css-porter";
 import { terser } from "rollup-plugin-terser";
 
 const { NODE_ENV } = process.env;
-const PROD = NODE_ENV === "production";
+const DEV = NODE_ENV !== "production";
 
 const externals = {
   "htm/preact": "htmPreact",
@@ -21,7 +22,6 @@ export default {
   output: {
     file: "dist/index.js",
     format: "iife",
-    plugins: PROD && [terser()],
     sourcemap: true,
     globals: externals,
   },
@@ -30,10 +30,12 @@ export default {
     copy({ targets: [{ src: "public/*", dest: "dist" }] }),
     replace({ process: JSON.stringify({ env: { NODE_ENV } }) }),
     resolve(),
+    commonjs({ transformMixedEsModules: DEV }),
     alias({ entries: { "~": path.resolve(__dirname, "src") } }),
     css({
-      raw: !PROD && "dist/index.css",
-      minified: PROD && "dist/index.css",
+      raw: DEV && "dist/index.css",
+      minified: !DEV && "dist/index.css",
     }),
+    !DEV && terser(),
   ],
 };

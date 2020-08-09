@@ -1,4 +1,7 @@
-// import "preact/debug";
+if (process.env.NODE_ENV === "development") {
+  require("preact/debug");
+}
+
 import { html } from "htm/preact";
 import { render } from "preact";
 import { App } from "./containers";
