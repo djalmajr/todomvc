@@ -1,11 +1,10 @@
 import { html } from "htm/preact";
-import { withTodos } from "../contexts";
 import { ToggleAll } from "../components";
-import { filterTodos } from "../utils";
+import { filterTodos, useTodos } from "../contexts";
 import "./header.css";
 
-export const Header = withTodos((props) => {
-  const { addTodo, hash, todos, toggleAllTodos } = props;
+export const Header = () => {
+  const { addTodo, hash, todos, toggleAllTodos } = useTodos();
   const filtered = filterTodos(hash, todos);
   const allDone = filtered.every((t) => t.completed);
 
@@ -34,4 +33,4 @@ export const Header = withTodos((props) => {
       />
     </header>
   `;
-});
+};

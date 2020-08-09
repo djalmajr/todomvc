@@ -1,13 +1,12 @@
 import { html } from "htm/preact";
 import { ClearButton } from "../components";
-import { withTodos } from "../contexts";
-import { filterTodos } from "../utils";
+import { filterTodos, useTodos } from "../contexts";
 import "./footer.css";
 
 const cn = (hash, curr) => (hash === curr ? "selected" : "");
 
-export const Footer = withTodos((props) => {
-  const { clearCompletedTodos, hash, todos } = props;
+export const Footer = () => {
+  const { clearCompletedTodos, hash, todos } = useTodos();
   const allTodos = filterTodos("all", todos);
   const completed = filterTodos("completed", todos);
   const incompleted = filterTodos("incompleted", todos);
@@ -35,4 +34,4 @@ export const Footer = withTodos((props) => {
       />
     </footer>
   `;
-});
+};

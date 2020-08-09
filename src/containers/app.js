@@ -1,13 +1,17 @@
 import { html } from "htm/preact";
-import { withTodos } from "../contexts";
-import { filterTodos } from "../utils";
+import { useEffect } from "preact/hooks";
+import { filterTodos, useTodos, todoCache } from "../contexts";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { Todo } from "./todo";
 import "./app.css";
 
-export const App = withTodos(({ hash, todos }) => {
+export const App = () => {
+  const { hash, todos, updateHash } = useTodos();
   const filtered = filterTodos(hash, todos);
+
+  useEffect(() => (window.onhashchange = updateHash), [updateHash]);
+  useEffect(() => todoCache.set(todos), [todos]);
 
   return html`
     <div class="app__container">
@@ -27,4 +31,4 @@ export const App = withTodos(({ hash, todos }) => {
       </footer>
     </div>
   `;
-});
+};

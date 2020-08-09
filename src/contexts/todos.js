@@ -1,90 +1,79 @@
-import { createContext } from "preact";
-import { useContext, useMemo, useReducer } from "preact/hooks";
-import { createCache, reduceState } from "../utils";
+import {
+  assign,
+  createCache,
+  createContext,
+  curryN,
+  keys,
+  set,
+  values,
+} from "../helpers";
 
-const todoCache = createCache("app-todos");
+export const todoCache = createCache("app-todos");
 
-const reducers = {
-  add(state, payload) {
-    const uid = new Date().toJSON().replace(/[^\w]/g, "");
-
-    return {
-      ...state,
-      [uid]: {
-        uid,
-        completed: false,
-        text: payload.text,
-      },
-    };
-  },
-  clear(state) {
-    return reduceState((res, uid) =>
-      state[uid].completed ? res : { ...res, [uid]: state[uid] }
-    )(state);
-  },
-  edit(state, payload) {
-    return reduceState((res, uid) => ({
-      ...res,
-      [uid]:
-        payload.uid === uid
-          ? { ...state[uid], text: payload.text }
-          : state[uid],
-    }))(state);
-  },
-  remove(state, payload) {
-    return Object.keys(state)
-      .filter((k) => k !== payload.uid)
-      .reduce((res, uid) => ({ ...res, [uid]: state[uid] }), {});
-  },
-  toggle(state, payload) {
-    return reduceState((res, uid) => ({
-      ...res,
-      [uid]:
-        payload.uid === uid
-          ? { ...state[uid], completed: !state[uid].completed }
-          : state[uid],
-    }))(state);
-  },
-  toggleAll(state) {
-    const completed = Object.keys(state).every((uid) => state[uid].completed);
-
-    return reduceState((res, uid) => ({
-      ...res,
-      [uid]: { ...state[uid], completed: !completed },
-    }))(state);
-  },
+export const getHash = () => {
+  const str = (window.location.hash.match(/\w+/g) || [])[0];
+  return str !== "completed" && str !== "active" ? "all" : str;
 };
 
-const reducer = (state, { type, payload = {} }) => {
-  const newState = (reducers[type] || (() => state))(state, payload);
+export const filterTodos = curryN(2, (filter, todos) => {
+  if (filter === "all") {
+    return values(todos);
+  }
 
-  todoCache.set(newState);
-
-  return newState;
-};
-
-const createActions = (dispatch) => ({
-  addTodo: (text) => dispatch({ type: "add", payload: { text } }),
-  editTodo: (todo) => dispatch({ type: "edit", payload: todo }),
-  removeTodo: (todo) => dispatch({ type: "remove", payload: todo }),
-  toggleTodo: (todo) => dispatch({ type: "toggle", payload: todo }),
-  toggleAllTodos: () => dispatch({ type: "toggleAll" }),
-  clearCompletedTodos: () => dispatch({ type: "clear" }),
+  return values(todos).filter(
+    filter === "active" ? (t) => !t.completed : (t) => t.completed
+  );
 });
 
-const initState = todoCache.get();
-
-const Context = createContext(initState);
-
-export const TodoProvider = Context.Provider;
-
-export const useTodoReducer = () => {
-  const [todos, dispatch] = useReducer(reducer, initState);
-  const todoActions = useMemo(() => createActions(dispatch), []);
-
-  return { todos, ...todoActions };
-};
-
-export const withTodos = (child) => (props) => {
-  return child({ ...props, ...useContext(Context) });
-};
+export const [TodoProvider, useTodos, withTodos] = createContext({
+  initState: {
+    hash: getHash(),
+    todos: todoCache.get(),
+  },
+  actions: (dispatch) => ({
+    updateHash: () => dispatch({ type: "updateHash" }),
+    addTodo: (text) => dispatch({ type: "addTodo", payload: { text } }),
+    editTodo: (todo) => dispatch({ type: "editTodo", payload: todo }),
+    removeTodo: (todo) => dispatch({ type: "removeTodo", payload: todo }),
+    toggleTodo: (todo) => dispatch({ type: "toggleTodo", payload: todo }),
+    toggleAllTodos: () => dispatch({ type: "toggleAllTodos" }),
+    clearCompletedTodos: () => dispatch({ type: "clearCompletedTodos" }),
+  }),
+  reducers: (state, payload) => ({
+    updateHash() {
+      return set("hash", getHash(), state);
+    },
+    addTodo() {
+      const uid = new Date().toJSON().replace(/[^\w]/g, "");
+      const todo = { uid, completed: false, text: payload.text };
+      return set(`todos.${uid}`, todo, state);
+    },
+    clearCompletedTodos() {
+      return keys(state.todos).reduce((res, uid) => {
+        const todo = state.todos[uid];
+        return todo.completed ? res : set(`todos.${uid}`, todo, res);
+      }, assign({}, state, { todos: {} }));
+    },
+    editTodo() {
+      return set(`todos.${payload.uid}.text`, payload.text, state);
+    },
+    removeTodo() {
+      return keys(state.todos)
+        .filter((uid) => uid !== payload.uid)
+        .reduce(
+          (res, uid) => set(`todos.${uid}`, state.todos[uid], res),
+          assign({}, state, { todos: {} })
+        );
+    },
+    toggleTodo() {
+      return set(`todos.${payload.uid}.completed`, (val) => !val, state);
+    },
+    toggleAllTodos() {
+      const filtered = filterTodos(state.hash, state.todos);
+      const completed = filtered.every((t) => t.completed);
+      return keys(state.todos).reduce((res, uid) => {
+        return set(`todos.${uid}.completed`, !completed, res);
+      }, state);
+    },
+  }),
+});

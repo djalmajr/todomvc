@@ -1,17 +1,17 @@
-import { useRef, useState } from "preact/hooks";
 import { html } from "htm/preact";
-import { withTodos } from "../contexts";
-import { classNames as cn } from "../utils";
+import { useRef, useState } from "preact/hooks";
+import { useTodos } from "../contexts";
+import { classNames as cn } from "../helpers";
 import "./todo.css";
 
-export const Todo = withTodos((props) => {
-  const { editTodo, removeTodo, todo, toggleTodo } = props;
+export const Todo = ({ todo }) => {
+  const { editTodo, removeTodo, toggleTodo } = useTodos();
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
 
   const handleDblClick = () => {
     setEditing(true);
-    inputRef.current.select();
+    setTimeout(() => inputRef.current.select());
   };
 
   const handleKeyUp = (evt) => {
@@ -52,4 +52,4 @@ export const Todo = withTodos((props) => {
       />
     </li>
   `;
-});
+};
