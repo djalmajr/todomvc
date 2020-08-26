@@ -1,41 +1,28 @@
-import alias from "@rollup/plugin-alias";
-import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
-import replace from "@rollup/plugin-replace";
-import path from "path";
-import copy from "rollup-plugin-copy";
-import css from "rollup-plugin-css-porter";
-import { terser } from "rollup-plugin-terser";
+import alias from '@rollup/plugin-alias';
+import resolve from '@rollup/plugin-node-resolve';
+import path from 'path';
+import copy from 'rollup-plugin-copy';
+import { terser } from 'rollup-plugin-terser';
 
-const { NODE_ENV } = process.env;
-const DEV = NODE_ENV !== "production";
+const DEV = process.env.NODE_ENV !== 'production';
 
-const externals = {
-  "htm/preact": "htmPreact",
-  "preact/hooks": "preactHooks",
-  htm: "htm",
-  preact: "preact",
+const globals = {
+  uland: 'uland',
 };
 
 export default {
-  input: "src/index.js",
+  input: 'src/index.js',
   output: {
-    file: "dist/index.js",
-    format: "iife",
+    file: 'dist/index.js',
+    format: 'iife',
+    plugins: !DEV && [terser()],
     sourcemap: true,
-    globals: externals,
+    globals,
   },
-  external: Object.keys(externals),
+  external: Object.keys(globals),
   plugins: [
-    copy({ targets: [{ src: "public/*", dest: "dist" }] }),
-    replace({ process: JSON.stringify({ env: { NODE_ENV } }) }),
+    copy({ targets: [{ src: 'public/*', dest: 'dist' }] }),
     resolve(),
-    commonjs({ transformMixedEsModules: DEV }),
-    alias({ entries: { "~": path.resolve(__dirname, "src") } }),
-    css({
-      raw: DEV && "dist/index.css",
-      minified: !DEV && "dist/index.css",
-    }),
-    !DEV && terser(),
+    alias({ entries: { '~': path.resolve(__dirname, 'src') } }),
   ],
 };

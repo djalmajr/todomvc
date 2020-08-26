@@ -1,11 +1,7 @@
-if (process.env.NODE_ENV === "development") {
-  require("preact/debug");
-}
+import { Component, html, render } from 'uland';
+import { App } from './containers';
+import { provideTodos } from './contexts';
 
-import { html } from "htm/preact";
-import { render } from "preact";
-import { App } from "./containers";
-import { TodoProvider } from "./contexts";
-import "./index.css";
+const Root = Component(() => (provideTodos(), html`${App()}`));
 
-render(html`<${TodoProvider}><${App} /><//>`, document.querySelector("#root"));
+render(document.querySelector('#root'), Root);
