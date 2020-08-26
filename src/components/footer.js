@@ -1,6 +1,6 @@
-import { html } from 'uland';
+import { html } from "uland";
 
-const cn = (hash, curr) => (hash === curr ? 'selected' : '');
+const cn = (hash, curr) => (hash === curr ? "selected" : "");
 
 export function Footer({ hash, remaining, visible, onClear }) {
   return html`
@@ -10,13 +10,13 @@ export function Footer({ hash, remaining, visible, onClear }) {
     >
       <span class="float-left text-left">
         <strong class="font-light">${remaining}</strong>
-        item${~-remaining ? 's' : ''} left
+        item${~-remaining ? "s" : ""} left
       </span>
       <ul class="footer__filters xs:bottom-3">
-        <li><a class="${cn(hash, 'all')}" href="#/all">All</a></li>
-        <li><a class="${cn(hash, 'active')}" href="#/active">Active</a></li>
+        <li><a class="${cn(hash, "all")}" href="#/all">All</a></li>
+        <li><a class="${cn(hash, "active")}" href="#/active">Active</a></li>
         <li>
-          <a class="${cn(hash, 'completed')}" href="#/completed">Completed</a>
+          <a class="${cn(hash, "completed")}" href="#/completed">Completed</a>
         </li>
       </ul>
       <button .hidden=${!onClear} class="clear-button" onclick=${onClear}>

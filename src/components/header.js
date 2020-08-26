@@ -1,11 +1,11 @@
-import { html } from 'uland';
+import { html } from "uland";
 
 export function Header({ allDone, onAdd, onToggleAll }) {
   const handleAdd = (evt) => {
     const text = evt.target.value.trim();
 
-    if (evt.key === 'Enter' && text) {
-      evt.target.value = '';
+    if (evt.key === "Enter" && text) {
+      evt.target.value = "";
       onAdd(text);
     }
   };
@@ -17,7 +17,7 @@ export function Header({ allDone, onAdd, onToggleAll }) {
         <input
           id="toggle-all"
           type="checkbox"
-          class=${`toggle-all ${allDone && 'toggle-all--checked'}`}
+          class=${`toggle-all ${allDone && "toggle-all--checked"}`}
           checked=${allDone}
           onchange=${onToggleAll}
         />

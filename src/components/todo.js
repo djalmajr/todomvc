@@ -1,5 +1,5 @@
-import { Component, html, useRef, useState } from 'uland';
-import { classNames as cn } from '../helpers';
+import { Component, html, useRef, useState } from "uland";
+import { classNames as cn } from "../helpers";
 
 function TodoItem({ todo, visible, onEdit, onRemove, onToggle }) {
   const [editing, setEditing] = useState(false);
@@ -13,10 +13,10 @@ function TodoItem({ todo, visible, onEdit, onRemove, onToggle }) {
   const handleKeyUp = (evt) => {
     const text = evt.target.value.trim();
 
-    if (evt.key === 'Enter' && text) {
+    if (evt.key === "Enter" && text) {
       onEdit({ ...todo, text });
       setEditing(false);
-    } else if (evt.key === 'Escape') {
+    } else if (evt.key === "Escape") {
       setEditing(false);
     }
   };
@@ -25,9 +25,9 @@ function TodoItem({ todo, visible, onEdit, onRemove, onToggle }) {
     <li
       .hidden=${!visible}
       class=${cn(
-        'todo',
-        todo.completed && 'todo--completed',
-        editing && 'todo--editing'
+        "todo",
+        todo.completed && "todo--completed",
+        editing && "todo--editing"
       )}
     >
       <div class="todo__view">
