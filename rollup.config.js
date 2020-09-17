@@ -7,7 +7,8 @@ import { terser } from 'rollup-plugin-terser';
 const DEV = process.env.NODE_ENV !== 'production';
 
 const globals = {
-  uland: 'uland',
+  uce: 'uce',
+  'uce-mixins': 'uceMixins',
 };
 
 export default {

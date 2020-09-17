@@ -2,8 +2,6 @@ export * from "./collection/filter";
 export * from "./collection/find";
 export * from "./collection/findIndex";
 
-export * from "./createContext/uland";
-
 export * from "./function/curryN";
 export * from "./function/debounce";
 export * from "./function/flow";

@@ -1,7 +1,7 @@
-import { Component, html, render } from "uland";
-import { App } from "./containers";
-import { provideTodos } from "./contexts";
+import { html, render } from "uce";
+import "./containers/todo-app";
+import "./containers/todo-footer";
+import "./containers/todo-header";
+import "./containers/todo-item";
 
-const Root = Component(() => (provideTodos(), html`${App()}`));
-
-render(document.querySelector("#root"), Root);
+render(document.querySelector("#root"), html`<todo-app />`);
