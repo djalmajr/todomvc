@@ -79,19 +79,19 @@ define("todo-header", mixin(events, {
     allDone: false,
     showCheck: false,
   },
-  handleEvent(evt) {
-    switch (evt.type) {
-      case "change":
-        this.emit("todos:toggle-all");
-        break;
-      case "keypress": {
-        const text = evt.target.value.trim();
-        if (evt.key === "Enter" && text) {
-          evt.target.value = "";
-          this.emit("todos:add", text);
-        }
-        break;
-      }
+  events: {
+    "change .header__toggle": "handleChange",
+    "keypress .header__input": "handleKeyPress",
+  },
+  handleChange() {
+    this.emit("todos:toggle-all");
+  },
+  handleKeyPress(evt) {
+    const text = evt.target.value.trim();
+
+    if (evt.key === "Enter" && text) {
+      evt.target.value = "";
+      this.emit("todos:add", text);
     }
   },
   render() {
@@ -105,7 +105,6 @@ define("todo-header", mixin(events, {
           type="checkbox"
           class="${cn("header__toggle", allDone && "header__toggle--checked")}"
           .checked=${allDone}
-          onchange=${this}
         />
         <label for="toggle-all">Mark all as complete</label>
       </div>
@@ -113,7 +112,6 @@ define("todo-header", mixin(events, {
         autofocus
         class="header__input"
         placeholder="What needs to be done?"
-        onkeypress=${this}
       />
     `;
   },

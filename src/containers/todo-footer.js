@@ -102,6 +102,7 @@ define("todo-footer", mixin(events, {
     remaining: 0,
     visible: false,
   },
+  events: ["click .todo__clear"],
   handleEvent() {
     this.emit("todos:clear-completed");
   },
@@ -130,7 +131,7 @@ define("todo-footer", mixin(events, {
             </a>
           </li>
         </ul>
-        <button .hidden=${empty} class="todo__clear" onclick=${this}>
+        <button .hidden=${empty} class="todo__clear">
           Clear completed
         </button>
       </footer>
