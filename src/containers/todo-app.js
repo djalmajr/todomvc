@@ -1,6 +1,6 @@
 import { css, define, html } from "uce";
 import { events, mixin, state } from "uce-mixins";
-import { createCache, debounce } from "../helpers";
+import { createCache } from "../helpers";
 import { actions, ActionTypes, filterTodos } from "../store";
 
 const todoCache = createCache("app-todos");
