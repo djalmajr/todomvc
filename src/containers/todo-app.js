@@ -1,6 +1,6 @@
 import { css, define, html } from "uce";
 import { events, mixin, state } from "uce-mixins";
-import { createCache } from "../helpers";
+import { createCache, debounce } from "../helpers";
 import { actions, ActionTypes, filterTodos } from "../store";
 
 const todoCache = createCache("app-todos");
@@ -74,9 +74,10 @@ define("todo-app", mixin(events, state, {
   connected() {
     window.onhashchange = () => this.setState({ filter: getFilter() });
   },
-  save({ todos }) {
+  save: debounce(1000, ({ todos }) => {
+    console.log("saved after 1s");
     todoCache.set(todos);
-  },
+  }),
   handleEvent(evt) {
     switch (evt.type) {
       case ActionTypes.ADD:
