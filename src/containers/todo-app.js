@@ -74,10 +74,9 @@ define("todo-app", mixin(events, state, {
   connected() {
     window.onhashchange = () => this.setState({ filter: getFilter() });
   },
-  save: debounce(1000, ({ todos }) => {
-    console.log("saved after 1s");
+  save({ todos }) {
     todoCache.set(todos);
-  }),
+  },
   handleEvent(evt) {
     switch (evt.type) {
       case ActionTypes.ADD:
