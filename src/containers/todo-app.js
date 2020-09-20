@@ -1,8 +1,7 @@
 import { css, define, html } from "uce";
 import { events, mixin, state } from "uce-mixins";
 import { createCache } from "../helpers";
-import * as actions from "../store/actions";
-import { filterTodos } from "../store/selectors";
+import { actions, ActionTypes, filterTodos } from "../store";
 
 const todoCache = createCache("app-todos");
 
@@ -71,14 +70,7 @@ define("todo-app", mixin(events, state, {
     filter: getFilter(),
     todos: todoCache.get(),
   },
-  events: [
-    "todos:add",
-    "todos:edit",
-    "todos:remove",
-    "todos:toggle",
-    "todos:toggle-all",
-    "todos:clear-completed",
-  ],
+  events: Object.values(ActionTypes),
   connected() {
     window.onhashchange = () => this.setState({ filter: getFilter() });
   },
@@ -86,20 +78,21 @@ define("todo-app", mixin(events, state, {
     todoCache.set(todos);
   },
   handleEvent(evt) {
-    const type = evt.type.split(":")[1];
-
-    switch (type) {
-      case "add":
-      case "edit":
-      case "remove":
-      case "toggle":
-        this.setState(actions[`${type}Todo`](evt.detail), this.save);
+    switch (evt.type) {
+      case ActionTypes.ADD:
+      case ActionTypes.EDIT:
+      case ActionTypes.REMOVE:
+      case ActionTypes.TOGGLE:
+        this.setState(actions[evt.type](evt.detail), this.save);
         break;
-      case "clear-completed":
-        this.setState(actions.clearCompletedTodos, this.save);
+      case ActionTypes.CLEAR:
+        this.setState(actions[ActionTypes.CLEAR], this.save);
         break;
-      case "toggle-all":
-        this.setState(actions.toggleAllTodos(this.state.filter), this.save);
+      case ActionTypes.TOGGLE_ALL:
+        this.setState(
+          actions[ActionTypes.TOGGLE_ALL](this.state.filter),
+          this.save
+        );
         break;
     }
   },

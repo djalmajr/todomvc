@@ -1,6 +1,7 @@
 import { css, define } from "uce";
 import { events, mixin } from "uce-mixins";
 import { classNames as cn } from "../helpers";
+import { ActionTypes } from "../store";
 
 const style = (el) => css`
   ${el} {
@@ -63,9 +64,9 @@ const style = (el) => css`
   }
 
   /*
-    Hack to remove background from Mobile Safari.
-    Can't use it globally since it destroys checkboxes in Firefox
-  */
+   * Hack to remove background from Mobile Safari.
+   * Can't use it globally since it destroys checkboxes in Firefox
+   */
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
     ${el} .header__toggle {
       background: none;
@@ -80,19 +81,17 @@ define("todo-header", mixin(events, {
     showCheck: false,
   },
   events: {
-    "change .header__toggle": "handleChange",
-    "keypress .header__input": "handleKeyPress",
-  },
-  handleChange() {
-    this.emit("todos:toggle-all");
-  },
-  handleKeyPress(evt) {
-    const text = evt.target.value.trim();
+    "change .header__toggle"() {
+      this.emit(ActionTypes.TOGGLE_ALL);
+    },
+    "keypress .header__input"(evt) {
+      const text = evt.target.value.trim();
 
-    if (evt.key === "Enter" && text) {
-      evt.target.value = "";
-      this.emit("todos:add", text);
-    }
+      if (evt.key === "Enter" && text) {
+        evt.target.value = "";
+        this.emit(ActionTypes.ADD, text);
+      }
+    },
   },
   render() {
     const { allDone, showCheck } = this;

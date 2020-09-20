@@ -1,5 +1,6 @@
 import { css, define } from "uce";
 import { events, mixin } from "uce-mixins";
+import { ActionTypes } from "../store";
 
 const style = (el) => css`
   ${el} {
@@ -102,10 +103,6 @@ define("todo-footer", mixin(events, {
     remaining: 0,
     visible: false,
   },
-  events: ["click .todo__clear"],
-  handleEvent() {
-    this.emit("todos:clear-completed");
-  },
   render() {
     const { empty, filter, remaining, visible } = this;
 
@@ -131,7 +128,11 @@ define("todo-footer", mixin(events, {
             </a>
           </li>
         </ul>
-        <button .hidden=${empty} class="todo__clear">
+        <button
+          .hidden=${empty}
+          class="todo__clear"
+          onclick=${() => this.emit(ActionTypes.CLEAR)}
+        >
           Clear completed
         </button>
       </footer>

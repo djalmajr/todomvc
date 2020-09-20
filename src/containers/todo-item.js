@@ -1,6 +1,7 @@
 import { css, define } from "uce";
 import { events, mixin } from "uce-mixins";
 import { classNames as cn } from "../helpers";
+import { ActionTypes } from "../store";
 
 const style = (el) => css`
   ${el} {
@@ -133,7 +134,7 @@ define("todo-item", mixin(events, {
 
     if (evt.key === "Enter" && text) {
       this.editing = false;
-      this.emit("todos:edit", { ...this.todo, text });
+      this.emit(ActionTypes.EDIT, { ...this.todo, text });
     } else if (evt.key === "Escape") {
       this.editing = false;
     }
@@ -154,14 +155,14 @@ define("todo-item", mixin(events, {
             type="checkbox"
             class="todo__toggle"
             .checked=${todo.completed}
-            onchange=${() => this.emit("todos:toggle", todo)}
+            onchange=${() => this.emit(ActionTypes.TOGGLE, todo)}
           />
           <label ondblclick=${this.handleDblClick}>
             ${todo.text}
           </label>
           <button
             class="todo__destroy"
-            onclick=${() => this.emit("todos:remove", todo)}
+            onclick=${() => this.emit(ActionTypes.REMOVE, todo)}
           />
         </div>
         <input
