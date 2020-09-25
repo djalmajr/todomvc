@@ -8,7 +8,9 @@ const DEV = process.env.NODE_ENV !== "production";
 
 const globals = {
   uce: "uce",
-  "uce-mixins": "uceMixins",
+  "uce-compose": "uceCompose",
+  "uce-events": "uceEvents",
+  "uce-state": "uceState",
 };
 
 export default {

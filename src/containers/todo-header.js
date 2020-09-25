@@ -1,5 +1,6 @@
 import { css, define } from "uce";
-import { events, mixin } from "uce-mixins";
+import compose from "uce-compose";
+import events from "uce-events";
 import { classNames as cn } from "../helpers";
 import { ActionTypes } from "../store";
 
@@ -74,7 +75,7 @@ const style = (el) => css`
   }
 `;
 
-define("todo-header", mixin(events, {
+define("todo-header", compose(events, {
   style,
   props: {
     allDone: false,

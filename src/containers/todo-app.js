@@ -1,5 +1,7 @@
 import { css, define, html } from "uce";
-import { events, mixin, state } from "uce-mixins";
+import compose from "uce-compose";
+import events from "uce-events";
+import state from "uce-state";
 import { createCache } from "../helpers";
 import { actions, ActionTypes, filterTodos } from "../store";
 
@@ -64,7 +66,7 @@ const style = (el) => css`
   }
 `;
 
-define("todo-app", mixin(events, state, {
+define("todo-app", compose(events, state, {
   style,
   state: {
     filter: getFilter(),

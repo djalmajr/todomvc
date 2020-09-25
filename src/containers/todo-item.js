@@ -1,5 +1,6 @@
 import { css, define } from "uce";
-import { events, mixin } from "uce-mixins";
+import compose from "uce-compose";
+import events from "uce-events";
 import { classNames as cn } from "../helpers";
 import { ActionTypes } from "../store";
 
@@ -118,7 +119,7 @@ const style = (el) => css`
   }
 `;
 
-define("todo-item", mixin(events, {
+define("todo-item", compose(events, {
   style,
   inputRef: {},
   props: {

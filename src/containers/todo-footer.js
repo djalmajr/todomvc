@@ -1,5 +1,6 @@
 import { css, define } from "uce";
-import { events, mixin } from "uce-mixins";
+import compose from "uce-compose";
+import events from "uce-events";
 import { ActionTypes } from "../store";
 
 const style = (el) => css`
@@ -95,7 +96,7 @@ const style = (el) => css`
 
 const cn = (filter, curr) => (filter === curr ? "selected" : "");
 
-define("todo-footer", mixin(events, {
+define("todo-footer", compose(events, {
   style,
   props: {
     empty: true,
