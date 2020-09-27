@@ -1,6 +1,6 @@
 import { html } from "htm/preact";
-import { ToggleAll } from "../components";
 import { filterTodos, useTodos } from "../contexts";
+import { classNames as cn } from "../helpers";
 import "./header.css";
 
 export const Header = () => {
@@ -20,11 +20,16 @@ export const Header = () => {
   return html`
     <header class="header">
       <h1 class="header__title">todos</h1>
-      <${ToggleAll}
-        allDone=${allDone}
-        isEmpty=${!filtered.length}
-        onChange=${toggleAllTodos}
-      />
+      <div hidden=${!filtered.length}>
+        <input
+          id="toggle-all"
+          type="checkbox"
+          class=${cn('header__toggle-all', allDone && "header__toggle-all--checked")}
+          checked=${allDone}
+          onchange=${toggleAllTodos}
+        />
+        <label for="toggle-all">Mark all as complete</label>
+      </div>
       <input
         autofocus
         class="header__input"

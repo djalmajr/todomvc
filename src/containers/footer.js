@@ -1,5 +1,4 @@
 import { html } from "htm/preact";
-import { ClearButton } from "../components";
 import { filterTodos, useTodos } from "../contexts";
 import "./footer.css";
 
@@ -23,15 +22,16 @@ export const Footer = () => {
         <li><a class="${cn(hash, "all")}" href="#/all">All</a></li>
         <li><a class="${cn(hash, "active")}" href="#/active">Active</a></li>
         <li>
-          <a class="${cn(hash, "completed")}" href="#/completed">
-            Completed
-          </a>
+          <a class="${cn(hash, "completed")}" href="#/completed">Completed</a>
         </li>
       </ul>
-      <${ClearButton}
-        isEmpty=${!completed.length}
-        onClick=${() => clearCompletedTodos()}
-      />
+      <button
+        class="footer__clear"
+        hidden=${!completed.length}
+        onclick=${clearCompletedTodos}
+      >
+        Clear completed
+      </button>
     </footer>
   `;
 };

@@ -58,6 +58,19 @@
   border-color: rgba(175, 47, 47, 0.2);
 }
 
+.footer__clear,
+.footer__clear:active {
+  cursor: pointer;
+  float: right;
+  line-height: 20px;
+  position: relative;
+  text-decoration: none;
+}
+
+.footer__clear:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 430px) {
   .footer__container {
     height: 50px;
