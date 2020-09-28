@@ -1,6 +1,6 @@
 import { html } from "htm/preact";
-import { filterTodos, useTodos } from "../contexts";
-import { classNames as cn } from "../helpers";
+import { filterTodos, useTodos } from "../contexts/todos";
+import cn from "../helpers/classNames";
 import "./header.css";
 
 export const Header = () => {
@@ -24,7 +24,10 @@ export const Header = () => {
         <input
           id="toggle-all"
           type="checkbox"
-          class=${cn('header__toggle-all', allDone && "header__toggle-all--checked")}
+          class=${cn(
+            "header__toggle-all",
+            allDone && "header__toggle-all--checked"
+          )}
           checked=${allDone}
           onchange=${toggleAllTodos}
         />

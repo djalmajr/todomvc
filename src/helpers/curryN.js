@@ -9,7 +9,7 @@
  * const toSquare = curryN(2);
  * console.log(toSquare(9)) // logs 81
  */
-export function curryN(...args) {
+export default function curryN(...args) {
   if (args.length < 2) {
     return curryN.bind(null, ...args);
   }

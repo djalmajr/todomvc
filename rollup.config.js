@@ -27,7 +27,7 @@ export default {
   },
   external: Object.keys(externals),
   plugins: [
-    copy({ targets: [{ src: "public/*", dest: "dist" }] }),
+    copy({ targets: [{ src: ["public/favicon.ico", "public/index.html"], dest: "dist" }] }),
     replace({ process: JSON.stringify({ env: { NODE_ENV } }) }),
     resolve(),
     commonjs({ transformMixedEsModules: DEV }),

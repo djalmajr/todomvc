@@ -8,5 +8,6 @@
  * @param {string} str string with accents
  * @returns string without accents
  */
-export const deburr = (str) =>
-  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+export default function deburr(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}

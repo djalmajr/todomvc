@@ -1,7 +1,7 @@
 import { html } from "htm/preact";
 import { useRef, useState } from "preact/hooks";
-import { useTodos } from "../contexts";
-import { classNames as cn } from "../helpers";
+import { useTodos } from "../contexts/todos";
+import cn from "../helpers/classNames";
 import "./todo.css";
 
 export const Todo = ({ todo }) => {

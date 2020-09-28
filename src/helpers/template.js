@@ -1,6 +1,6 @@
-import { curryN } from "../function/curryN";
+import curryN from "./curryN.js";
 
-export const template = curryN(2, (str, obj) => {
+export default curryN(2, (str, obj) => {
   return str.replace(/{{\s*?(.+?)\s*?}}/g, (_, k) => obj[k.trim()]);
   // return str.replace(/{(.+?)}/g, (_, k) => obj[k]);
 });

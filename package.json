@@ -20,8 +20,10 @@
     "printWidth": 80
   },
   "scripts": {
-    "build": "rollup -c --environment NODE_ENV:production",
-    "build:dev": "rollup -c -w --environment NODE_ENV:development",
+    "build": "npm run clean && rollup -c --environment NODE_ENV:production",
+    "build:es": "npm run clean && cp -r public/* src dist && mv dist/imports.html dist/index.html",
+    "build:dev": "npm run clean && rollup -c -w --environment NODE_ENV:development",
+    "clean": "rm -rf dist 2> /dev/null && mkdir dist",
     "serve": "sirv dist --port 8887 --single --dev",
     "start": "run-p build:dev serve"
   },

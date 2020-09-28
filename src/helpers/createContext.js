@@ -2,7 +2,11 @@ import { html } from "htm/preact";
 import { createContext } from "preact";
 import { useContext, useMemo, useReducer } from "preact/hooks";
 
-function createCtx({ initState, reducers, actions: createActions }) {
+export default function createCtx({
+  initState,
+  reducers,
+  actions: createActions,
+}) {
   const Context = createContext(initState);
 
   const useCtx = () => useContext(Context);
@@ -20,13 +24,9 @@ function createCtx({ initState, reducers, actions: createActions }) {
     const actions = useMemo(() => createActions(dispatch), []);
 
     return html`
-      <${Context.Provider} value=${{ ...state, ...actions }}>
-        ${children}
-      <//>
+      <${Context.Provider} value=${{ ...state, ...actions }}>${children}<//>
     `;
   }
 
   return [Provider, useCtx, withCtx];
 }
-
-export { createCtx as createContext };

@@ -1,6 +1,6 @@
 const isObject = (a) => typeof a === "object";
 
-export function isEqual(a, b) {
+export default function isEqual(a, b) {
   const aLen = Object.keys(a || {}).length;
   const bLen = Object.keys(b || {}).length;
 

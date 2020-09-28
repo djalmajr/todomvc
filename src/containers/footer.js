@@ -1,5 +1,5 @@
 import { html } from "htm/preact";
-import { filterTodos, useTodos } from "../contexts";
+import { filterTodos, useTodos } from "../contexts/todos";
 import "./footer.css";
 
 const cn = (hash, curr) => (hash === curr ? "selected" : "");

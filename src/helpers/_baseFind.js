@@ -1,8 +1,8 @@
-import { curryN } from "../function/curryN";
+import curryN from "./curryN.js";
 
 const { keys, values } = Object;
 
-export const baseFind = curryN(4, (method, defaults, filter, arr) => {
+export default curryN(4, (method, defaults, filter, arr) => {
   let result;
 
   if (typeof filter === "function") {
