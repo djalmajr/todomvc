@@ -1,28 +1,40 @@
-import alias from '@rollup/plugin-alias';
-import resolve from '@rollup/plugin-node-resolve';
-import path from 'path';
-import copy from 'rollup-plugin-copy';
-import { terser } from 'rollup-plugin-terser';
+import alias from "@rollup/plugin-alias";
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
+import path from "path";
+import copy from "rollup-plugin-copy";
+import css from "rollup-plugin-css-porter";
+import { terser } from "rollup-plugin-terser";
 
-const DEV = process.env.NODE_ENV !== 'production';
+const { NODE_ENV } = process.env;
+const DEV = NODE_ENV !== "production";
 
-const globals = {
-  uland: 'uland',
+const externals = {
+  uland: "uland",
 };
 
+const files = ["public/favicon.ico", "public/global.css", "public/index.html"];
+
 export default {
-  input: 'src/index.js',
+  input: "src/index.js",
   output: {
-    file: 'dist/index.js',
-    format: 'iife',
-    plugins: !DEV && [terser()],
+    file: "dist/todomvc.js",
+    format: "iife",
     sourcemap: true,
-    globals,
+    globals: externals,
   },
-  external: Object.keys(globals),
+  external: Object.keys(externals),
   plugins: [
-    copy({ targets: [{ src: 'public/*', dest: 'dist' }] }),
+    copy({ targets: [{ src: files, dest: "dist" }] }),
+    replace({ process: JSON.stringify({ env: { NODE_ENV } }) }),
     resolve(),
-    alias({ entries: { '~': path.resolve(__dirname, 'src') } }),
+    commonjs({ transformMixedEsModules: DEV }),
+    alias({ entries: { "~": path.resolve(__dirname, "src") } }),
+    css({
+      raw: DEV && "dist/todomvc.css",
+      minified: !DEV && "dist/todomvc.css",
+    }),
+    !DEV && terser(),
   ],
 };

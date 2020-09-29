@@ -8,14 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="global.css" />
+    <link rel="stylesheet" href="todomvc.css" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root" class="absolute inset-0">
-      <div class="loader"></div>
+    <div id="root">
+      <div class="app__loader">
+        <div class="app__loader__spinner"></div>
+      </div>
     </div>
-    <script src="http://unpkg.com/uland"></script>
-    <script src="index.js"></script>
+    <script src="https://unpkg.com/uland"></script>
+    <script src="todomvc.js"></script>
   </body>
 </html>

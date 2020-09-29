@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "uland": "https://unpkg.com/uland?module"
+  }
+}

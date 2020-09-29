@@ -1,7 +1,7 @@
-import { Component, html, render } from "uland";
-import { App } from "./containers";
-import { provideTodos } from "./contexts";
+import { Component as $, html, render } from "uland";
+import { App } from "./containers/app";
+import { provideTodos } from "./contexts/todos";
 
-const Root = Component(() => (provideTodos(), html`${App()}`));
+const Root = $(() => (provideTodos(), html`${App()}`));
 
 render(document.querySelector("#root"), Root);
