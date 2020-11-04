@@ -1,8 +1,8 @@
-import curryN from "./curryN.js";
+import curry from "./curry.js";
 
 const { keys, values } = Object;
 
-export default curryN(4, (method, defaults, filter, arr) => {
+export default curry((method, defaults, filter, arr) => {
   let result;
 
   if (typeof filter === "function") {

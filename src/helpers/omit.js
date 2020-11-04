@@ -1,7 +1,7 @@
-import curryN from "./curryN.js";
+import curry from "./curry.js";
 import pick from "./pick.js";
 
-export default curryN(2, (attrs, obj) => {
+export default curry((attrs, obj) => {
   const keys = Object.keys(obj).filter((k) => !attrs.includes(k));
   return pick(keys, obj);
 });

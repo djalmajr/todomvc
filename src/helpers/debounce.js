@@ -1,7 +1,7 @@
-import curryN from "./curryN.js";
+import curry from "./curry.js";
 
 // https://davidwalsh.name/function-debounce
-export default curryN(2, (wait, func) => {
+export default curry((wait, func) => {
   let timeout;
 
   return function (...args) {

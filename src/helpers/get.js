@@ -1,7 +1,7 @@
-import curryN from "./curryN.js";
+import curry from "./curry.js";
 import str2path from "./str2path.js";
 
-export default curryN(2, (str, data) => {
+export default curry((str, data) => {
   const fn = (obj, [key, ...keys]) => {
     if (!keys.length) return obj[key];
     if (!obj[key]) return undefined;

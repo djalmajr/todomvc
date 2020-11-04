@@ -1,6 +1,6 @@
 import createCache from "../helpers/createCache";
 import createContext from "../helpers/createContext";
-import curryN from "../helpers/curryN";
+import curry from "../helpers/curry";
 import set from "../helpers/set";
 
 export const todoCache = createCache("app-todos");
@@ -10,13 +10,13 @@ export const getHash = () => {
   return str !== "completed" && str !== "active" ? "all" : str;
 };
 
-export const filterTodos = curryN(2, (filter, todos) => {
+export const filterTodos = curry((filter, todos) => {
   if (filter === "all") {
     return Object.values(todos);
   }
 
   return Object.values(todos).filter(
-    filter === "active" ? (t) => !t.completed : (t) => t.completed
+    filter === "active" ? (t) => t.completed : (t) => !t.completed
   );
 });
 

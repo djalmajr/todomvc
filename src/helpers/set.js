@@ -1,10 +1,10 @@
-import curryN from "./curryN.js";
+import curry from "./curry.js";
 import str2path from "./str2path.js";
 import deepClone from "./deepClone.js";
 
 const isFn = (a) => typeof a === "function";
 
-export default curryN(3, (str, val, data) => {
+export default curry((str, val, data) => {
   const res = deepClone(data);
 
   const fn = (obj, [key, ...keys]) => {
