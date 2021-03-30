@@ -1,8 +1,16 @@
-import debounce from "./debounce.js";
-
-export default function createCache(key) {
+export default function createCache(key, defaults) {
   return {
-    get: () => JSON.parse(localStorage.getItem(key) || "{}"),
-    set: debounce(1000, (t) => localStorage.setItem(key, JSON.stringify(t))),
+    get() {
+      try {
+        return JSON.parse(localStorage.getItem(key)) || defaults;
+      } catch (err) {
+        return defaults;
+      }
+    },
+    set(data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (err) {}
+    },
   };
 }

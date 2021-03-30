@@ -1,26 +1,23 @@
 import curry from "./curry.js";
-import str2path from "./str2path.js";
-import deepClone from "./deepClone.js";
 
-const isFn = (a) => typeof a === "function";
+// https://github.com/fwilkerson/clean-set
 
-export default curry((str, val, data) => {
-  const res = deepClone(data);
+function copy(src) {
+  let to = src && !!src.pop ? [] : {};
+  for (let i in src) to[i] = src[i];
+  return to;
+}
 
-  const fn = (obj, [key, ...keys]) => {
-    if (!keys.length) {
-      obj[key] = isFn(val) ? val(deepClone(obj[key])) : val;
-      return;
-    }
+export default curry(function set(arr, val, src) {
+  arr.split && (arr = arr.split("."));
 
-    if (!obj[key]) {
-      obj[key] = keys[0].match(/^\d+$/g) ? [] : {};
-    }
+  let next = copy(src), last = next; // prettier-ignore
 
-    fn(obj[key], keys);
-  };
+  for (let i = 0, l = arr.length; i < l; i++) {
+    last = last[arr[i]] = i === l - 1
+      ? (val && !!val.call ? val(last[arr[i]]) : val)
+      : copy(last[arr[i]]); // prettier-ignore
+  }
 
-  fn(res, str2path(str));
-
-  return res;
+  return next;
 });

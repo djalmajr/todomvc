@@ -1,14 +1,16 @@
-// if (process.env.NODE_ENV === "development") {
-//   require("preact/debug");
-// }
+import App from "./containers/App.js";
+import render from "./helpers/render.js";
+import store, { todoCache } from "./store.js";
 
-import { html } from "htm/preact";
-import { render } from "preact";
-import { App } from "./containers/app";
-import { TodoProvider } from "./contexts/todos";
-import "./index.css";
+function renderApp() {
+  render(document.querySelector("#root"), App());
+}
 
-render(
-  html`<${TodoProvider}><${App} /><//>`, // prettier-ignore
-  document.querySelector("#root")
-);
+store.subscribe(function ({ todos }) {
+  todoCache.set(todos);
+  renderApp();
+});
+
+window.onhashchange = store.updateHash;
+
+renderApp();

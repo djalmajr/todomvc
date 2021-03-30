@@ -1,8 +1,0 @@
-{
-  "imports": {
-    "htm": "https://unpkg.com/htm@3/dist/htm.module.js",
-    "htm/preact": "https://unpkg.com/htm@3/preact/index.module.js",
-    "preact": "https://unpkg.com/preact@10/dist/preact.module.js",
-    "preact/hooks": "https://unpkg.com/preact@10/hooks/dist/hooks.module.js"
-  }
-}

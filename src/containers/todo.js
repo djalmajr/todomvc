@@ -1,55 +1,51 @@
-import { html } from "htm/preact";
-import { useRef, useState } from "preact/hooks";
-import { useTodos } from "../contexts/todos";
-import cn from "../helpers/classNames";
-import "./todo.css";
+import cn from "../helpers/classNames.js";
+import html from "../helpers/html.js";
+import store from "../store.js";
 
-export const Todo = ({ todo }) => {
-  const { editTodo, removeTodo, toggleTodo } = useTodos();
-  const [editing, setEditing] = useState(false);
-  const inputRef = useRef(null);
+const getByDataUID = (uid) => document.querySelector(`[data-uid="${uid}"]`);
 
-  const handleDblClick = () => {
-    setEditing(true);
-    setTimeout(() => inputRef.current.select());
-  };
+export default function Todo(todo) {
+  const { editTodo, removeTodo, toggleTodo } = store;
 
-  const handleKeyUp = (evt) => {
-    const text = evt.target.value.trim();
+  const showEdit = (show) => {
+    const li = getByDataUID(todo.uid);
 
-    if (evt.key === "Enter" && text) {
-      editTodo({ ...todo, text });
-      setEditing(false);
-    } else if (evt.key === "Escape") {
-      setEditing(false);
+    if (show) {
+      li.classList.add("todo--editing");
+      li.querySelector(".todo__edit").select();
+    } else {
+      li.classList.remove("todo--editing");
     }
   };
 
-  const cname = cn(
-    "todo",
-    todo.completed && "todo--completed",
-    editing && "todo--editing"
-  );
+  const handleKeyUp = (evt) => {
+    switch (evt.key) {
+      case "Enter":
+        editTodo(todo, evt.target.value.trim());
+      case "Escape":
+        getByDataUID(todo.uid).classList.remove("todo--editing");
+        break;
+    }
+  };
 
   return html`
-    <li class=${cname}>
+    <li data-uid=${todo.uid} class=${cn("todo", todo.completed && "todo--completed")}>
       <div class="todo__view">
         <input
           type="checkbox"
           class="todo__toggle"
-          checked=${todo.completed}
-          onchange=${() => toggleTodo(todo)}
+          ?checked=${todo.completed}
+          @change=${() => toggleTodo(todo)}
         />
-        <label ondblclick=${handleDblClick}>${todo.text}</label>
-        <button class="todo__destroy" onclick=${() => removeTodo(todo)} />
+        <label @dblclick=${() => showEdit(true)}>${todo.text}</label>
+        <button class="todo__destroy" @click=${() => removeTodo(todo)}></button>
       </div>
       <input
-        ref=${inputRef}
         class="todo__edit"
         value=${todo.text}
-        onblur=${() => setEditing(false)}
-        onkeyup=${handleKeyUp}
+        @blur=${() => showEdit(false)}
+        @keyup=${handleKeyUp}
       />
     </li>
   `;
-};
+}

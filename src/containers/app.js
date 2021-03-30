@@ -1,28 +1,23 @@
-import { html } from "htm/preact";
-import { useEffect } from "preact/hooks";
-import { filterTodos, useTodos, todoCache } from "../contexts/todos";
-import { Footer } from "./footer";
-import { Header } from "./header";
-import { Todo } from "./todo";
-import "./app.css";
+import html from "../helpers/html.js";
+import store, { filterTodos } from "../store.js";
+import Footer from "./Footer.js";
+import Header from "./Header.js";
+import Todo from "./Todo.js";
 
-export const App = () => {
-  const { hash, todos, updateHash } = useTodos();
+export default function () {
+  const { hash, todos } = store;
   const filtered = filterTodos(hash, todos);
-
-  useEffect(() => (window.onhashchange = updateHash), [updateHash]);
-  useEffect(() => todoCache.set(todos), [todos]);
 
   return html`
     <div class="app__container">
       <section class="app__content">
-        <${Header} />
+        ${Header()}
         <section class="app__todos">
           <ul>
-            ${filtered.map((todo) => html`<${Todo} todo=${todo} />`)}
+            ${filtered.map(Todo)}
           </ul>
         </section>
-        <${Footer} />
+        ${Footer()}
       </section>
       <footer class="app__info">
         <p>Double-click to edit a todo</p>
@@ -31,4 +26,4 @@ export const App = () => {
       </footer>
     </div>
   `;
-};
+}

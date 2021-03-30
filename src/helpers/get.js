@@ -1,12 +1,13 @@
 import curry from "./curry.js";
-import str2path from "./str2path.js";
 
-export default curry((str, data) => {
-  const fn = (obj, [key, ...keys]) => {
-    if (!keys.length) return obj[key];
-    if (!obj[key]) return undefined;
-    return fn(obj[key], keys);
-  };
+// https://github.com/developit/dlv
 
-  return fn(data, str2path(str));
+export default curry(function get(arr, src) {
+  arr.split && (arr = arr.split("."));
+
+  for (let i = 0, l = arr.length; i < l; i++) {
+    src = src ? src[arr[i]] : void 0;
+  }
+
+  return src === void 0 ? def : src;
 });
