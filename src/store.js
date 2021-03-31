@@ -24,49 +24,37 @@ const store = createStore({
   hash: getHash(),
   todos: todoCache.get(),
   updateHash() {
-    return { hash: getHash() };
+    this.hash = getHash();
   },
-  addTodo(_state, text) {
+  addTodo(text) {
     const uid = new Date().toJSON().replace(/[^\w]/g, "");
     const todo = { uid, text, completed: false };
 
-    return {
-      todos: set(uid, todo, this.todos),
-    };
+    this.todos = set(uid, todo, this.todos);
   },
-  clearCompletedTodos({ todos }) {
-    return {
-      todos: values(todos).reduce((res, todo) => {
-        return todo.completed ? res : set(todo.uid, todo, res);
-      }, {}),
-    };
+  clearCompletedTodos() {
+    this.todos = values(this.todos).reduce((res, todo) => {
+      return todo.completed ? res : set(todo.uid, todo, res);
+    }, {});
   },
-  editTodo({ todos }, todo, text) {
-    return {
-      todos: set(`${todo.uid}.text`, text, todos),
-    };
+  editTodo(todo, text) {
+    this.todos = set(`${todo.uid}.text`, text, this.todos);
   },
-  removeTodo({ todos }, { uid }) {
-    return {
-      todos: values(todos)
-        .filter((todo) => todo.uid !== uid)
-        .reduce((res, todo) => set(todo.uid, todo, res), {}),
-    };
+  removeTodo({ uid }) {
+    this.todos = values(this.todos)
+      .filter((todo) => todo.uid !== uid)
+      .reduce((res, todo) => set(todo.uid, todo, res), {});
   },
-  toggleTodo({ todos }, todo) {
-    return {
-      todos: set(`${todo.uid}.completed`, (val) => !val, todos),
-    };
+  toggleTodo(todo) {
+    this.todos = set(`${todo.uid}.completed`, (val) => !val, this.todos);
   },
-  toggleAllTodos({ hash, todos }) {
-    const filtered = filterTodos(hash, todos);
+  toggleAllTodos() {
+    const filtered = filterTodos(this.hash, this.todos);
     const completed = filtered.every((t) => t.completed);
 
-    return {
-      todos: values(todos).reduce((res, todo) => {
-        return set(`${todo.uid}.completed`, !completed, res);
-      }, todos),
-    };
+    this.todos = values(this.todos).reduce((res, todo) => {
+      return set(`${todo.uid}.completed`, !completed, res);
+    }, this.todos);
   },
 });
 

@@ -1,37 +1,62 @@
+import { isFn } from "./is.js";
+
 const fns = Symbol("fns");
 
-const val = Symbol("val");
+// const cached = Symbol("cached");
 
-export default function createStore(obj) {
-  Object.assign(obj, {
-    [fns]: [],
-    [val]: {},
-    subscribe(fn) {
-      this[fns].push(fn);
+export default function createStore(source) {
+  source[fns] = [];
 
-      return () => {
-        const idx = this[fns].findIndex((f) => f === fn);
-        this[fns].splice(idx, 1);
+  Object.keys(source).forEach((key) => {
+    if (isFn(source[key])) {
+      const fn = source[key];
+
+      source[key] = function () {
+        fn.apply(source, arguments);
+        source[fns].forEach((f) => f(source));
       };
-    },
+    }
   });
 
-  return new Proxy(obj, {
-    get(target, property) {
-      var value = target[property];
+  source.subscribe = function (fn) {
+    this[fns].push(fn);
 
-      if (value instanceof Function) {
-        return function (...args) {
-          if (value === obj.subscribe) {
-            return value.apply(target, args);
-          }
+    return () => {
+      const idx = this[fns].findIndex((f) => f === fn);
+      this[fns].splice(idx, 1);
+    };
+  };
 
-          Object.assign(target, value.apply(target, [target, ...args]));
-          target[fns].forEach((fn) => fn(target));
-        };
-      }
+  return source;
 
-      return value;
-    },
-  });
+  // Object.assign(source, {
+  //   [fns]: [],
+  //   subscribe(fn) {
+  //     this[fns].push(fn);
+
+  //     return () => {
+  //       const idx = this[fns].findIndex((f) => f === fn);
+  //       this[fns].splice(idx, 1);
+  //     };
+  //   },
+  // });
+
+  // return new Proxy(source, {
+  //   get(target, property) {
+  //     if (property === cached) return true;
+
+  //     const value = target[property];
+
+  //     if (isFn(value) && value !== source.subscribe && !value[cached]) {
+  //       target[property] = function () {
+  //         value.apply(target, arguments);
+  //         target[fns].forEach((fn) => fn(target));
+  //       };
+
+  //       target[property][cached] = true;
+  //     }
+
+  //     return target[property];
+  //   },
+  // });
 }
