@@ -11,6 +11,6 @@ store.subscribe(function ({ todos }) {
   renderApp();
 });
 
-window.onhashchange = store.updateHash;
+window.onhashchange = store.updateRoute;
 
 renderApp();

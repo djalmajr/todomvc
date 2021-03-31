@@ -5,8 +5,8 @@ import Header from "./Header.js";
 import Todo from "./Todo.js";
 
 export default function () {
-  const { hash, todos } = store;
-  const filtered = filterTodos(hash, todos);
+  const { route, todos } = store;
+  const filtered = filterTodos(route.pathname, todos);
 
   return html`
     <div class="app__container">

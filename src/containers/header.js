@@ -3,14 +3,14 @@ import html from "../helpers/html.js";
 import store, { filterTodos } from "../store.js";
 
 export default function Header() {
-  const { addTodo, hash, todos, toggleAllTodos } = store;
-  const filtered = filterTodos(hash, todos);
+  const { addTodo, route, todos, toggleAllTodos } = store;
+  const filtered = filterTodos(route.pathname, todos);
   const allDone = filtered.every((t) => t.completed);
 
   const handleAdd = (evt) => {
     const text = evt.target.value.trim();
 
-    if (evt.code === "Enter" && text) {
+    if (evt.key === "Enter" && text) {
       evt.target.value = "";
       addTodo(text);
     }
@@ -23,7 +23,10 @@ export default function Header() {
         <input
           id="toggle-all"
           type="checkbox"
-          class=${cn("header__toggle-all", allDone && "header__toggle-all--checked")}
+          class=${cn(
+            "header__toggle-all",
+            allDone && "header__toggle-all--checked"
+          )}
           ?checked=${allDone}
           @change=${toggleAllTodos}
         />

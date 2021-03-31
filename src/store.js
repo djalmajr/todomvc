@@ -7,24 +7,25 @@ const { values } = Object;
 
 export const todoCache = createCache("app-todos", {});
 
-export const getHash = () => {
-  const str = (window.location.hash.match(/\w+/g) || [])[0];
-  return str !== "completed" && str !== "active" ? "all" : str;
-};
+export const getRoute = () => ({
+  pathname: window.location.hash.slice(1) || "/all",
+});
 
-export const filterTodos = curry((filter, todos) => {
-  if (filter === "all") {
+export const filterTodos = curry((pathname, todos) => {
+  if (pathname === "/all") {
     return values(todos);
   }
 
-  return values(todos).filter(filter === "active" ? (t) => !t.completed : (t) => t.completed);
+  return values(todos).filter(
+    pathname === "/active" ? (t) => !t.completed : (t) => t.completed
+  );
 });
 
 const store = createStore({
-  hash: getHash(),
+  route: getRoute(),
   todos: todoCache.get(),
-  updateHash() {
-    this.hash = getHash();
+  updateRoute() {
+    this.route = getRoute();
   },
   addTodo(text) {
     const uid = new Date().toJSON().replace(/[^\w]/g, "");
@@ -49,7 +50,7 @@ const store = createStore({
     this.todos = set(`${todo.uid}.completed`, (val) => !val, this.todos);
   },
   toggleAllTodos() {
-    const filtered = filterTodos(this.hash, this.todos);
+    const filtered = filterTodos(this.route.pathname, this.todos);
     const completed = filtered.every((t) => t.completed);
 
     this.todos = values(this.todos).reduce((res, todo) => {
