@@ -1,13 +1,16 @@
 import filterNodes from "./filterNodes.js";
 import cleanCRLF from "./cleanCRLF.js";
 
-const SECRET = "⚡️";
+const SECRET = "🚀";
+// const SECRET = "⚡️";
 
 const endsWithAttr = (str) => /.*<([a-zA-Z-]+).*\s(.*)="?$/.test(str);
 
 const filterByAttr = (node) => {
   return node.nodeType === Node.ELEMENT_NODE
-    ? node.getAttributeNames().filter((attr) => node.getAttribute(attr) === SECRET)
+    ? node
+        .getAttributeNames()
+        .filter((attr) => node.getAttribute(attr) === SECRET)
     : [];
 };
 
@@ -40,7 +43,7 @@ export default function html(chunks, ...values) {
       const attrs = filterByAttr(node) || [];
 
       if (!attrs.length) {
-        const newNode = node.ownerDocument.createTextNode("");
+        const newNode = document.createTextNode("");
         node.parentNode.replaceChild(newNode, node);
         node = newNode;
       }
@@ -50,13 +53,17 @@ export default function html(chunks, ...values) {
         node = node.parentNode;
       } while (node !== tpl.content);
 
-      return attrs.length ? attrs.map((attr) => path.concat(attr)) : [path.concat("")];
+      return attrs.length
+        ? attrs.map((attr) => path.concat(attr))
+        : [path.concat("")];
     })
     .reduce((res, arr) => res.concat(arr), []);
 
   const updates = paths.map((path) => {
     const attr = path.slice(-1)[0];
-    const node = path.slice(0, -1).reduce((p, i) => p.childNodes[i], tpl.content);
+    const node = path
+      .slice(0, -1)
+      .reduce((p, i) => p.childNodes[i], tpl.content);
 
     return (val) => {
       if (attr) {
