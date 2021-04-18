@@ -1,9 +1,9 @@
-import html from "~/helpers/html";
-import store, { filterTodos } from "~/store";
-import Footer from "./Footer";
-import Header from "./Header";
-import Todo from "./Todo";
-import "./App.css";
+import html from '~/helpers/html';
+import store, { filterTodos } from '~/store';
+import Footer from './Footer';
+import Header from './Header';
+import Todo from './Todo';
+import './App.css';
 
 export default function () {
   const { route, todos } = store;

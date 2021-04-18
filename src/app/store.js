@@ -1,23 +1,23 @@
-import createCache from "~/helpers/createCache";
-import createStore from "~/helpers/createStore";
-import curry from "~/helpers/curry";
-import set from "~/helpers/set";
+import createCache from '~/helpers/createCache';
+import createStore from '~/helpers/createStore';
+import curry from '~/helpers/curry';
+import set from '~/helpers/set';
 
 const { values } = Object;
 
-export const todoCache = createCache("app-todos", {});
+export const todoCache = createCache('app-todos', {});
 
 export const getRoute = () => ({
-  pathname: window.location.hash.slice(1) || "/all",
+  pathname: window.location.hash.slice(1) || '/all',
 });
 
 export const filterTodos = curry((pathname, todos) => {
-  if (pathname === "/all") {
+  if (pathname === '/all') {
     return values(todos);
   }
 
   return values(todos).filter(
-    pathname === "/active" ? (t) => !t.completed : (t) => t.completed
+    pathname === '/active' ? (t) => !t.completed : (t) => t.completed
   );
 });
 
@@ -28,7 +28,7 @@ const store = createStore({
     this.route = getRoute();
   },
   addTodo(text) {
-    const uid = new Date().toJSON().replace(/[^\w]/g, "");
+    const uid = new Date().toJSON().replace(/[^\w]/g, '');
     const todo = { uid, text, completed: false };
 
     this.todos = set(uid, todo, this.todos);

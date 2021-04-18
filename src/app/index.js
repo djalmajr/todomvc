@@ -1,9 +1,9 @@
-import App from "~/containers/App";
-import render from "~/helpers/render";
-import store, { todoCache } from "~/store";
+import App from '~/containers/App';
+import render from '~/helpers/render';
+import store, { todoCache } from '~/store';
 
 function renderApp() {
-  render(document.querySelector("#root"), App());
+  render(document.querySelector('#root'), App());
 }
 
 store.subscribe(({ todos }) => {

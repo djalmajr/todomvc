@@ -1,7 +1,7 @@
-import cn from "~/helpers/classNames";
-import html from "~/helpers/html";
-import store from "~/store";
-import "./Todo.css";
+import cn from '~/helpers/classNames';
+import html from '~/helpers/html';
+import store from '~/store';
+import './Todo.css';
 
 const getByDataUID = (uid) => document.querySelector(`[data-uid="${uid}"]`);
 
@@ -12,26 +12,29 @@ export default function Todo(todo) {
     const li = getByDataUID(todo.uid);
 
     if (show) {
-      li.classList.add("todo--editing");
-      li.querySelector(".todo__edit").select();
+      li.classList.add('todo--editing');
+      li.querySelector('.todo__edit').select();
     } else {
-      li.classList.remove("todo--editing");
+      li.classList.remove('todo--editing');
     }
   };
 
   const handleKeyUp = (evt) => {
     switch (evt.key) {
-      case "Enter":
+      case 'Enter':
         editTodo(todo, evt.target.value.trim());
       // eslint-disable-next-line no-fallthrough
-      case "Escape":
-        getByDataUID(todo.uid).classList.remove("todo--editing");
+      case 'Escape':
+        getByDataUID(todo.uid).classList.remove('todo--editing');
         break;
     }
   };
 
   return html`
-    <li data-uid=${todo.uid} class=${cn("todo", todo.completed && "todo--completed")}>
+    <li
+      data-uid=${todo.uid}
+      class=${cn('todo', todo.completed && 'todo--completed')}
+    >
       <div class="todo__view">
         <input
           type="checkbox"

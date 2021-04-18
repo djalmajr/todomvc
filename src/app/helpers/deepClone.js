@@ -1,7 +1,7 @@
 // http://documentcloud.github.io/underscore-contrib/#snapshot
 
 export default function deepClone(data) {
-  if (data === null || typeof data !== "object") {
+  if (data === null || typeof data !== 'object') {
     return data;
   }
 

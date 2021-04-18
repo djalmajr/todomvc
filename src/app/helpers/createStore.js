@@ -1,4 +1,4 @@
-const fns = Symbol("fns");
+const fns = Symbol('fns');
 
 // const cached = Symbol("cached");
 
@@ -6,7 +6,7 @@ export default function createStore(source) {
   source[fns] = [];
 
   Object.keys(source).forEach((key) => {
-    if (typeof source[key] === "function") {
+    if (typeof source[key] === 'function') {
       const fn = source[key];
 
       source[key] = function (...args) {

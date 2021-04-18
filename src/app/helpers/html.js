@@ -1,7 +1,7 @@
-import cleanCRLF from "./cleanCRLF";
-import filterNodes from "./filterNodes";
+import cleanCRLF from './cleanCRLF';
+import filterNodes from './filterNodes';
 
-const SECRET = "🚀";
+const SECRET = '🚀';
 
 const endsWithAttr = (str) => /.*<([a-zA-Z-]+).*\s(.*)=["']?$/.test(str);
 
@@ -22,7 +22,7 @@ const getNodes = (root) => {
 };
 
 export default function html(chunks, ...values) {
-  const tpl = document.createElement("template");
+  const tpl = document.createElement('template');
 
   tpl.innerHTML = values.reduce((res, _val, idx) => {
     const next = cleanCRLF(chunks[idx + 1]);
@@ -31,7 +31,7 @@ export default function html(chunks, ...values) {
       return `${res}<!--${SECRET}-->${next}`;
     }
 
-    const data = res.slice(-1) === "=" ? `"${SECRET}"` : SECRET;
+    const data = res.slice(-1) === '=' ? `"${SECRET}"` : SECRET;
 
     return res + data + next;
   }, cleanCRLF(chunks[0]));
@@ -42,7 +42,7 @@ export default function html(chunks, ...values) {
       const attrs = filterByAttr(node) || [];
 
       if (!attrs.length) {
-        const newNode = document.createTextNode("");
+        const newNode = document.createTextNode('');
         node.parentNode.replaceChild(newNode, node);
         node = newNode;
       }
@@ -54,7 +54,7 @@ export default function html(chunks, ...values) {
 
       return attrs.length
         ? attrs.map((attr) => path.concat(attr))
-        : [path.concat("")];
+        : [path.concat('')];
     })
     .reduce((res, arr) => res.concat(arr), []);
 
@@ -69,15 +69,15 @@ export default function html(chunks, ...values) {
         node.removeAttribute(attr);
 
         switch (attr[0]) {
-          case "@":
-          case ".": {
-            const prefix = attr[0] === "@" ? "on" : "";
+          case '@':
+          case '.': {
+            const prefix = attr[0] === '@' ? 'on' : '';
             node[prefix + attr.slice(1)] = val;
             break;
           }
-          case "?": {
-            const action = val ? "set" : "remove";
-            node[`${action}Attribute`](attr.slice(1), val === true ? "" : val);
+          case '?': {
+            const action = val ? 'set' : 'remove';
+            node[`${action}Attribute`](attr.slice(1), val === true ? '' : val);
             break;
           }
           default: {
@@ -91,7 +91,7 @@ export default function html(chunks, ...values) {
         if (arr[0] instanceof DocumentFragment) {
           arr.forEach((n) => node.parentNode.insertBefore(n, node));
         } else {
-          node.textContent = arr.map(String).join("");
+          node.textContent = arr.map(String).join('');
         }
       }
     };
