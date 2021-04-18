@@ -1,6 +1,7 @@
-import cn from "../helpers/classNames.js";
-import html from "../helpers/html.js";
-import store, { filterTodos } from "../store.js";
+import cn from "~/helpers/classNames";
+import html from "~/helpers/html";
+import store, { filterTodos } from "~/store";
+import "./Header.css";
 
 export default function Header() {
   const { addTodo, route, todos, toggleAllTodos } = store;

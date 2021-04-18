@@ -1,10 +1,9 @@
-import filterNodes from "./filterNodes.js";
-import cleanCRLF from "./cleanCRLF.js";
+import cleanCRLF from "./cleanCRLF";
+import filterNodes from "./filterNodes";
 
 const SECRET = "🚀";
-// const SECRET = "⚡️";
 
-const endsWithAttr = (str) => /.*<([a-zA-Z-]+).*\s(.*)="?$/.test(str);
+const endsWithAttr = (str) => /.*<([a-zA-Z-]+).*\s(.*)=["']?$/.test(str);
 
 const filterByAttr = (node) => {
   return node.nodeType === Node.ELEMENT_NODE
@@ -15,7 +14,7 @@ const filterByAttr = (node) => {
 };
 
 const getNodes = (root) => {
-  return filterNodes(root, null, function (node) {
+  return filterNodes(root, null, (node) => {
     return node.nodeType === Node.COMMENT_NODE
       ? RegExp(SECRET).test(node.textContent)
       : filterByAttr(node).length;
@@ -29,7 +28,7 @@ export default function html(chunks, ...values) {
     const next = cleanCRLF(chunks[idx + 1]);
 
     if (!endsWithAttr(res)) {
-      return res + `<!--${SECRET}-->` + next;
+      return `${res}<!--${SECRET}-->${next}`;
     }
 
     const data = res.slice(-1) === "=" ? `"${SECRET}"` : SECRET;
@@ -76,10 +75,11 @@ export default function html(chunks, ...values) {
             node[prefix + attr.slice(1)] = val;
             break;
           }
-          case "?":
-            const action = !!val ? "set" : "remove";
+          case "?": {
+            const action = val ? "set" : "remove";
             node[`${action}Attribute`](attr.slice(1), val === true ? "" : val);
             break;
+          }
           default: {
             node.setAttribute(attr, String(val));
             break;

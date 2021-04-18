@@ -1,6 +1,7 @@
-import cn from "../helpers/classNames.js";
-import html from "../helpers/html.js";
-import store from "../store.js";
+import cn from "~/helpers/classNames";
+import html from "~/helpers/html";
+import store from "~/store";
+import "./Todo.css";
 
 const getByDataUID = (uid) => document.querySelector(`[data-uid="${uid}"]`);
 
@@ -22,6 +23,7 @@ export default function Todo(todo) {
     switch (evt.key) {
       case "Enter":
         editTodo(todo, evt.target.value.trim());
+      // eslint-disable-next-line no-fallthrough
       case "Escape":
         getByDataUID(todo.uid).classList.remove("todo--editing");
         break;

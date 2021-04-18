@@ -1,16 +1,23 @@
-import App from "./containers/App.js";
-import render from "./helpers/render.js";
-import store, { todoCache } from "./store.js";
+if ('serviceWorker' in navigator) {
+  (async () => {
+    try {
+      const launch = async () => await import('./app/index.js');
 
-function renderApp() {
-  render(document.querySelector("#root"), App());
+      await navigator.serviceWorker.register('sw.js');
+
+      await navigator.serviceWorker.ready;
+
+      // this launches the React app if the SW has been installed before or immediately after registration
+      // https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#clientsclaim
+      if (navigator.serviceWorker.controller) {
+        await launch();
+      } else {
+        navigator.serviceWorker.addEventListener('controllerchange', launch);
+      }
+    } catch (error) {
+      console.error('Service worker registration failed', error.stack);
+    }
+  })();
+} else {
+  alert('Service Worker is not supported');
 }
-
-store.subscribe(function ({ todos }) {
-  todoCache.set(todos);
-  renderApp();
-});
-
-window.onhashchange = store.updateRoute;
-
-renderApp();

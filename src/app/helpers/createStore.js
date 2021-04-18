@@ -1,5 +1,3 @@
-import { isFn } from "./is.js";
-
 const fns = Symbol("fns");
 
 // const cached = Symbol("cached");
@@ -8,11 +6,11 @@ export default function createStore(source) {
   source[fns] = [];
 
   Object.keys(source).forEach((key) => {
-    if (isFn(source[key])) {
+    if (typeof source[key] === "function") {
       const fn = source[key];
 
-      source[key] = function () {
-        fn.apply(source, arguments);
+      source[key] = function (...args) {
+        fn.apply(source, args);
         source[fns].forEach((f) => f(source));
       };
     }

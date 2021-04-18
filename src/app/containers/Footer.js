@@ -1,6 +1,7 @@
-import curry from "../helpers/curry.js";
-import html from "../helpers/html.js";
-import store, { filterTodos } from "../store.js";
+import curry from "~/helpers/curry";
+import html from "~/helpers/html";
+import store, { filterTodos } from "~/store";
+import "./Footer.css";
 
 const getClassName = curry((curr, value) => (curr === value ? "selected" : ""));
 

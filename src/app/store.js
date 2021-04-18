@@ -1,7 +1,7 @@
-import createCache from "./helpers/createCache.js";
-import createStore from "./helpers/createStore.js";
-import curry from "./helpers/curry.js";
-import set from "./helpers/set.js";
+import createCache from "~/helpers/createCache";
+import createStore from "~/helpers/createStore";
+import curry from "~/helpers/curry";
+import set from "~/helpers/set";
 
 const { values } = Object;
 
