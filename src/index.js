@@ -3,7 +3,7 @@ if ('serviceWorker' in navigator) {
     try {
       const launch = async () => await import('./app/index.js');
 
-      await navigator.serviceWorker.register('sw.js');
+      await navigator.serviceWorker.register('sw.js', { scope: '/app/' });
 
       await navigator.serviceWorker.ready;
 
